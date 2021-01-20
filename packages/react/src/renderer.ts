@@ -1,5 +1,8 @@
 import * as Reconciler from "react-reconciler";
 
+declare const global: any;
+type WithId<T> = T & { __id: string };
+
 jsStrictMode = false;
 console.clear();
 
@@ -19,74 +22,90 @@ const tagToFactoryMap = {
 };
 
 let id = 0;
+let debugMode = false;
+
+const debug = (...args: any[]) => {
+  if (debugMode) {
+    console.log(...args);
+  }
+};
 
 const PixInsightReconciler = Reconciler({
   now: Date.now,
-  getRootHostContext: () => {
-    console.writeln("getRootHostContext");
+  getRootHostContext() {
+    debug("getRootHostContext");
     return rootHostContext;
   },
-  getChildHostContext: () => {
-    console.writeln("getChildHostContext");
+  getChildHostContext() {
+    debug("getChildHostContext");
     return childHostContext;
   },
-  prepareForCommit: () => {
-    console.writeln("prepareForCommit");
+  prepareForCommit() {
+    debug("prepareForCommit");
     return null;
   },
-  resetAfterCommit: () => {
-    console.writeln("resetAfterCommit");
+  resetAfterCommit() {
+    debug("resetAfterCommit");
   },
-  clearContainer: () => {
-    console.writeln("clearContainer");
+  //@ts-ignore
+  clearContainer() {
+    debug("clearContainer");
   },
-  shouldSetTextContent: (type, props) => {
-    console.writeln("shouldSetTextContent");
+  shouldSetTextContent(type, props) {
+    debug("shouldSetTextContent");
     return false;
   },
-  createInstance: (type, props: any) => {
-    console.writeln("createInstance", type, props);
+  createInstance(type: keyof typeof tagToFactoryMap, props: any) {
+    debug("createInstance", type, props);
     let instance = tagToFactoryMap[type]();
+    //@ts-ignore
     instance.__id = type + id++;
     for (const key of Object.keys(props)) {
       instance[key] = props[key];
     }
     return instance;
   },
-  createTextInstance: (text) => {
-    console.writeln("createTextInstance ", text);
+  createTextInstance(text) {
+    debug("createTextInstance ", text);
     const label = new Label();
+    //@ts-ignore
     label.__id = "textNode" + id++;
     label.text = text;
     return label;
   },
-  appendInitialChild: (parent: Sizer, child) => {
-    console.writeln(`appendInitialChild ${parent.__id} ${child.__id}`);
+  appendInitialChild(parent: WithId<Sizer>, child: WithId<Control>) {
+    debug(`appendInitialChild ${parent.__id} ${child.__id}`);
     parent.add(child);
   },
-  appendChild(parent, child) {
-    console.writeln(`appendChild ${parent.__id} ${child.__id}`);
+  appendChild(parent: WithId<Sizer>, child: WithId<Control>) {
+    debug(`appendChild ${parent.__id} ${child.__id}`);
     parent.add(child);
   },
-  finalizeInitialChildren: (domElement, type, props) => {
-    console.writeln("finalizeInitialChildren");
+  finalizeInitialChildren(domElement, type, props) {
+    debug("finalizeInitialChildren");
     return false;
   },
   supportsMutation: true,
-  appendChildToContainer: (parent, child) => {
-    console.writeln(`appendChildToContainer ${parent.__id} ${child.__id}`);
+  appendChildToContainer(parent: WithId<Sizer>, child: WithId<Control>) {
+    debug(`appendChildToContainer ${parent.__id} ${child.__id}`);
     parent.add(child);
   },
-  prepareUpdate(control, type, oldProps, newProps) {
-    console.writeln(
+  prepareUpdate(control: WithId<Control>, type, oldProps, newProps) {
+    debug(
       `prepareUpdate ${control.__id} ${type} ${JSON.stringify({
         oldProps,
       })} ${JSON.stringify({ newProps })}`
     );
     return true;
   },
-  commitUpdate(control, updatePayload, type, oldProps, newProps) {
-    console.writeln(
+  commitUpdate(
+    control: WithId<Control>,
+    updatePayload,
+    type,
+    oldProps,
+    newProps
+  ) {
+    debug(
       `commitUpdate ${type} ${JSON.stringify({
         oldProps,
       })} ${JSON.stringify({ newProps })}`
@@ -96,17 +115,15 @@ const PixInsightReconciler = Reconciler({
       control[propName] = propValue;
     });
   },
-  commitTextUpdate(textInstance, oldText, newText) {
-    console.writeln(
-      `commitTextUpdate ${textInstance.__id} ${oldText} ${newText}`
-    );
+  commitTextUpdate(textInstance: WithId<Label>, oldText, newText) {
+    debug(`commitTextUpdate ${textInstance.__id} ${oldText} ${newText}`);
     textInstance.text = newText;
   },
-  removeChild(parent: Sizer, child: Control) {
-    console.writeln(`removeChild ${parent.__id} ${child.__id}`);
+  removeChild(parent: WithId<Sizer>, child: WithId<Control>) {
+    debug(`removeChild ${parent.__id} ${child.__id}`);
     parent.remove(child);
   },
-} as any);
+});
 
 export function directRender(element, container?, callback?: () => void) {
   if (!container._rootContainer) {
@@ -124,7 +141,12 @@ export function directRender(element, container?, callback?: () => void) {
   );
 }
 
-export function render(element) {
+export function render(
+  element,
+  options: {
+    debug?: boolean;
+  } = {}
+) {
   var dialog = new Dialog();
   dialog.windowTitle = "Hello";
 
@@ -132,16 +154,16 @@ export function render(element) {
   dialog.sizer = sizer;
 
   global.setTimeout = function (cb, ms) {
-    console.log("setTimeout ", ms);
     var timer = new Timer();
     timer.interval = ms / 1000;
     timer.periodic = false;
     timer.onTimeout = function () {
-      console.log("timeout cb ", ms);
       cb();
     };
     timer.start();
   };
+
+  debugMode = options.debug ?? false;
 
   directRender(element, dialog.sizer);
 

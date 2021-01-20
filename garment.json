@@ -5,6 +5,7 @@
       "tasks": {
         "build": {
           "runner": "ts",
+          "buildDependencies": true,
           "input": "{{projectDir}}/src/**/*.ts?(x)",
           "output": "{{projectDir}}/lib"
         }
@@ -21,8 +22,33 @@
       "extends": ["ts-package"]
     },
     "sandbox-script": {
-      "path": "packages/sandbox-script"
+      "path": "packages/sandbox-script",
+      "tasks": {
+        "build": {
+          "runner": "bin",
+          "buildDependencies": true,
+          "options": {
+            "args": "webpack",
+            "stream": true
+          }
+        },
+        "dev": [
+          {
+            "runner": "bin",
+            "buildDependencies": {
+              "task": "build",
+              "watch": true
+            },
+            "options": {
+              "args": "webpack --watch",
+              "stream": true,
+              "longRunning": true
+            }
+          }
+        ]
+      }
     }
   },
-  "schematics": []
+  "schematics": [],
+  "experimentalCacheSubscriptions": true
 }

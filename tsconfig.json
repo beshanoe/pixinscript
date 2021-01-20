@@ -3,9 +3,10 @@
     "module": "commonjs",
     "target": "es5",
     "jsx": "react",
+    "noEmitOnError": true,
     "sourceMap": false,
     "declaration": true,
-    "outDir": "dist",
-    "lib": ["esnext"]
+    "lib": ["esnext"],
+    "types": ["pixinsight-core/types/global"]
   }
 }

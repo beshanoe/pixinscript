@@ -301,10 +301,6 @@ declare class ArcsinhStretch {
   writeIcon: any;
 }
 
-declare class ArrayBuffer {
-  byteLength: any;
-  slice: any;
-}
 declare class AssignICCProfile {
   targetProfile: any;
   mode: any;
@@ -619,6 +615,7 @@ declare class Binarize {
   writeIcon: any;
 }
 declare class Bitmap {
+  constructor(...args: any[]);
   width: any;
   height: any;
   bounds: any;
@@ -677,12 +674,9 @@ declare class Blink {
   readIcon: any;
   writeIcon: any;
 }
-declare class Boolean {
-  toSource: any;
-  toString: any;
-  valueOf: any;
-}
+
 declare class Brush {
+  constructor(...args: any[]);
   color: any;
   style: any;
   stipple: any;
@@ -836,6 +830,7 @@ declare class ChannelMatch {
   writeIcon: any;
 }
 declare class CheckBox {
+  constructor(...args: any[]);
   text: any;
   checked: any;
   state: any;
@@ -1170,6 +1165,7 @@ declare class ConicalGradientBrush {
   angle: any;
 }
 declare class Control {
+  constructor(...args: any[]);
   objectId: any;
   uniqueId: any;
   frameRect: any;
@@ -1591,77 +1587,7 @@ declare class CurvesTransformation {
   Linear: any;
   AkimaSubsplines: any;
 }
-declare class DataView {
-  buffer: any;
-  byteLength: any;
-  byteOffset: any;
-  getInt8: any;
-  getUint8: any;
-  getInt16: any;
-  getUint16: any;
-  getInt32: any;
-  getUint32: any;
-  getFloat32: any;
-  getFloat64: any;
-  setInt8: any;
-  setUint8: any;
-  setInt16: any;
-  setUint16: any;
-  setInt32: any;
-  setUint32: any;
-  setFloat32: any;
-  setFloat64: any;
-}
-declare class Date {
-  getTime: any;
-  getTimezoneOffset: any;
-  getYear: any;
-  getFullYear: any;
-  getUTCFullYear: any;
-  getMonth: any;
-  getUTCMonth: any;
-  getDate: any;
-  getUTCDate: any;
-  getDay: any;
-  getUTCDay: any;
-  getHours: any;
-  getUTCHours: any;
-  getMinutes: any;
-  getUTCMinutes: any;
-  getSeconds: any;
-  getUTCSeconds: any;
-  getMilliseconds: any;
-  getUTCMilliseconds: any;
-  setTime: any;
-  setYear: any;
-  setFullYear: any;
-  setUTCFullYear: any;
-  setMonth: any;
-  setUTCMonth: any;
-  setDate: any;
-  setUTCDate: any;
-  setHours: any;
-  setUTCHours: any;
-  setMinutes: any;
-  setUTCMinutes: any;
-  setSeconds: any;
-  setUTCSeconds: any;
-  setMilliseconds: any;
-  setUTCMilliseconds: any;
-  toUTCString: any;
-  toLocaleFormat: any;
-  toLocaleString: any;
-  toLocaleDateString: any;
-  toLocaleTimeString: any;
-  toDateString: any;
-  toTimeString: any;
-  toISOString: any;
-  toJSON: any;
-  toSource: any;
-  toString: any;
-  valueOf: any;
-  toGMTString: any;
-}
+
 declare class Debayer {
   cfaPattern: any;
   BayerPattern: any;
@@ -2295,6 +2221,7 @@ declare class DynamicPSF {
   Scale_StandardKeywords: any;
 }
 declare class Edit {
+  constructor(...args: any[]);
   text: any;
   caretPosition: any;
   selectionStart: any;
@@ -2359,22 +2286,7 @@ declare class EphemerisHandle {
   stateVector: any;
   stateVectors: any;
 }
-declare class Error {
-  name: any;
-  message: any;
-  fileName: any;
-  lineNumber: any;
-  columnNumber: any;
-  toSource: any;
-  toString: any;
-}
-declare class EvalError {
-  name: any;
-  message: any;
-  fileName: any;
-  lineNumber: any;
-  columnNumber: any;
-}
+
 declare class ExponentialTransformation {
   functionType: any;
   order: any;
@@ -2744,26 +2656,6 @@ declare class FileWatcher {
   removePaths: any;
   clear: any;
 }
-declare class Float32Array {
-  BYTES_PER_ELEMENT: any;
-  length: any;
-  buffer: any;
-  byteLength: any;
-  byteOffset: any;
-  iterator: any;
-  subarray: any;
-  set: any;
-}
-declare class Float64Array {
-  BYTES_PER_ELEMENT: any;
-  length: any;
-  buffer: any;
-  byteLength: any;
-  byteOffset: any;
-  iterator: any;
-  subarray: any;
-  set: any;
-}
 declare class FluxCalibration {
   wavelength: any;
   wavelengthMode: any;
@@ -2882,18 +2774,7 @@ declare class Frame {
   lineWidth: any;
   frameStyle: any;
 }
-declare class Function {
-  toSource: any;
-  toString: any;
-  apply: any;
-  call: any;
-  bind: any;
-  isGenerator: any;
-  length: any;
-  name: any;
-  arguments: any;
-  caller: any;
-}
+
 declare class GREYCstoration {
   amplitude: any;
   numberOfIterations: any;
@@ -3110,6 +2991,7 @@ declare class GradientMergeMosaic {
   Average: any;
 }
 declare class Graphics {
+  constructor(arg);
   pen: any;
   brush: any;
   brushOrigin: any;
@@ -3380,6 +3262,7 @@ declare class ICCProfileTransformation {
   AbsoluteColorimetric: any;
 }
 declare class Image {
+  constructor(...args: any[]);
   isEmpty: any;
   width: any;
   height: any;
@@ -3563,6 +3446,8 @@ declare class Image {
   initializeStatus: any;
   advanceStatus: any;
   completeStatus: any;
+
+  static newFloatImage: any;
 }
 declare class ImageCalibration {
   targetFrames: any;
@@ -3925,6 +3810,7 @@ declare class ImageStatistics {
   assign: any;
 }
 declare class ImageWindow {
+  constructor(...args: any[]);
   isWindow: any;
   isNull: any;
   isClosed: any;
@@ -4212,36 +4098,6 @@ declare class IndigoMount {
   AlignmentMethod_AnalyticalModel: any;
   AlignmentMethod_ServerModel: any;
 }
-declare class Int16Array {
-  BYTES_PER_ELEMENT: any;
-  length: any;
-  buffer: any;
-  byteLength: any;
-  byteOffset: any;
-  iterator: any;
-  subarray: any;
-  set: any;
-}
-declare class Int32Array {
-  BYTES_PER_ELEMENT: any;
-  length: any;
-  buffer: any;
-  byteLength: any;
-  byteOffset: any;
-  iterator: any;
-  subarray: any;
-  set: any;
-}
-declare class Int8Array {
-  BYTES_PER_ELEMENT: any;
-  length: any;
-  buffer: any;
-  byteLength: any;
-  byteOffset: any;
-  iterator: any;
-  subarray: any;
-  set: any;
-}
 declare class IntegerResample {
   zoomFactor: any;
   downsamplingMode: any;
@@ -4281,13 +4137,7 @@ declare class IntegerResample {
   Maximum: any;
   Minimum: any;
 }
-declare class InternalError {
-  name: any;
-  message: any;
-  fileName: any;
-  lineNumber: any;
-  columnNumber: any;
-}
+
 declare class InverseFourierTransform {
   idOfFirstComponent: any;
   idOfSecondComponent: any;
@@ -4383,6 +4233,7 @@ declare class LRGBCombination {
   writeIcon: any;
 }
 declare class Label extends Control {
+  constructor(...args: any[]);
   text: any;
   useRichText: any;
   wordWrapping: any;
@@ -4705,6 +4556,9 @@ declare class Matrix {
   toArray: any;
   toFloat32Array: any;
   toFloat64Array: any;
+
+  static gaussianFilterBySize: any;
+  static fromImage: any;
 }
 declare class MergeCFA {
   sourceCFAImage0: any;
@@ -4739,6 +4593,7 @@ declare class MergeCFA {
   writeIcon: any;
 }
 declare class MessageBox {
+  constructor(...args: any[]);
   text: any;
   caption: any;
   icon: any;
@@ -5049,15 +4904,7 @@ declare class NoiseGenerator {
   PreserveMedian: any;
   PreserveMean: any;
 }
-declare class Number {
-  toSource: any;
-  toString: any;
-  toLocaleString: any;
-  valueOf: any;
-  toFixed: any;
-  toExponential: any;
-  toPrecision: any;
-}
+
 declare class ObserverPosition {
   lambda: any;
   longitude: any;
@@ -5096,6 +4943,7 @@ declare class PDF {
   isPainting: any;
 }
 declare class Pen {
+  constructor(...args: any[]);
   width: any;
   color: any;
   style: any;
@@ -5260,6 +5108,7 @@ declare class PixelMath {
   f64: any;
 }
 declare class Point {
+  constructor(...args: any[]);
   x: any;
   y: any;
   assign: any;
@@ -5561,6 +5410,7 @@ declare class ProcessInstance {
   writeIcon: any;
 }
 declare class PushButton {
+  constructor(...args: any[]);
   text: any;
   icon: any;
   iconWidth: any;
@@ -5591,6 +5441,11 @@ declare class RGBColorSystem {
   rgbToCIELch: any;
   cieLchToRGB: any;
   cieLchToCIELab: any;
+
+  static hue: any;
+  static value: any;
+  static hsvSaturation: any;
+  static hsiSaturation: any;
 }
 declare class RGBWorkingSpace {
   channels: any;
@@ -5637,13 +5492,7 @@ declare class RadioButton {
   onPress: any;
   onRelease: any;
 }
-declare class RangeError {
-  name: any;
-  message: any;
-  fileName: any;
-  lineNumber: any;
-  columnNumber: any;
-}
+
 declare class RangeSelection {
   lowRange: any;
   highRange: any;
@@ -5736,6 +5585,7 @@ declare class ReadoutOptions {
   maximum: any;
 }
 declare class Rect {
+  constructor(...args: any[]);
   x0: any;
   left: any;
   y0: any;
@@ -5807,26 +5657,7 @@ declare class Rect {
   toString: any;
   toArray: any;
 }
-declare class ReferenceError {
-  name: any;
-  message: any;
-  fileName: any;
-  lineNumber: any;
-  columnNumber: any;
-}
-declare class RegExp {
-  lastIndex: any;
-  source: any;
-  global: any;
-  ignoreCase: any;
-  multiline: any;
-  sticky: any;
-  toSource: any;
-  toString: any;
-  compile: any;
-  exec: any;
-  test: any;
-}
+
 declare class Resample {
   xSize: any;
   ySize: any;
@@ -6695,68 +6526,6 @@ declare class Statistics {
   readIcon: any;
   writeIcon: any;
 }
-declare class String {
-  length: any;
-  quote: any;
-  toSource: any;
-  toString: any;
-  valueOf: any;
-  substring: any;
-  toLowerCase: any;
-  toUpperCase: any;
-  charAt: any;
-  charCodeAt: any;
-  contains: any;
-  indexOf: any;
-  lastIndexOf: any;
-  startsWith: any;
-  endsWith: any;
-  trim: any;
-  trimLeft: any;
-  trimRight: any;
-  toLocaleLowerCase: any;
-  toLocaleUpperCase: any;
-  localeCompare: any;
-  repeat: any;
-  match: any;
-  search: any;
-  replace: any;
-  split: any;
-  substr: any;
-  concat: any;
-  slice: any;
-  bold: any;
-  italics: any;
-  fixed: any;
-  fontsize: any;
-  fontcolor: any;
-  link: any;
-  anchor: any;
-  strike: any;
-  small: any;
-  big: any;
-  blink: any;
-  sup: any;
-  sub: any;
-  iterator: any;
-  toBoolean: any;
-  tryToBoolean: any;
-  toFloat: any;
-  tryToFloat: any;
-  toDouble: any;
-  tryToDouble: any;
-  toNumber: any;
-  tryToNumber: any;
-  toInt: any;
-  tryToInt: any;
-  toUInt: any;
-  tryToUInt: any;
-  toInt64: any;
-  tryToInt64: any;
-  toUInt64: any;
-  tryToUInt64: any;
-  unquote: any;
-}
 declare class SubframeSelector {
   routine: any;
   subframes: any;
@@ -6915,13 +6684,6 @@ declare class SurfaceSpline {
   assign: any;
   evaluate: any;
 }
-declare class SyntaxError {
-  name: any;
-  message: any;
-  fileName: any;
-  lineNumber: any;
-  columnNumber: any;
-}
 declare class TGVDenoise {
   rgbkMode: any;
   filterEnabledL: any;
@@ -7024,6 +6786,7 @@ declare class Timer {
   stop: any;
 }
 declare class ToolButton {
+  constructor(...args: any[]);
   text: any;
   icon: any;
   iconWidth: any;
@@ -7140,60 +6903,6 @@ declare class TypeDescription {
   inheritsFrom: any;
   inheritedBy: any;
 }
-declare class TypeError {
-  name: any;
-  message: any;
-  fileName: any;
-  lineNumber: any;
-  columnNumber: any;
-}
-declare class URIError {
-  name: any;
-  message: any;
-  fileName: any;
-  lineNumber: any;
-  columnNumber: any;
-}
-declare class Uint16Array {
-  BYTES_PER_ELEMENT: any;
-  length: any;
-  buffer: any;
-  byteLength: any;
-  byteOffset: any;
-  iterator: any;
-  subarray: any;
-  set: any;
-}
-declare class Uint32Array {
-  BYTES_PER_ELEMENT: any;
-  length: any;
-  buffer: any;
-  byteLength: any;
-  byteOffset: any;
-  iterator: any;
-  subarray: any;
-  set: any;
-}
-declare class Uint8Array {
-  BYTES_PER_ELEMENT: any;
-  length: any;
-  buffer: any;
-  byteLength: any;
-  byteOffset: any;
-  iterator: any;
-  subarray: any;
-  set: any;
-}
-declare class Uint8ClampedArray {
-  BYTES_PER_ELEMENT: any;
-  length: any;
-  buffer: any;
-  byteLength: any;
-  byteOffset: any;
-  iterator: any;
-  subarray: any;
-  set: any;
-}
 declare class UnsharpMask {
   sigma: any;
   amount: any;
@@ -7302,6 +7011,7 @@ declare class Vector {
   toFloat64Array: any;
 }
 declare class VectorGraphics {
+  constructor(...args: any[]);
   pen: any;
   brush: any;
   brushOrigin: any;
@@ -7426,13 +7136,6 @@ declare class ViewList {
   reload: any;
   remove: any;
 }
-declare class WeakMap {
-  has: any;
-  get: any;
-  delete: any;
-  set: any;
-  clear: any;
-}
 declare class WebView {
   hasSelection: any;
   selectedText: any;
@@ -7459,3 +7162,18 @@ declare class WebView {
 
 declare const console: any;
 declare let jsStrictMode: boolean;
+declare const format: any;
+declare function gc(arg: any);
+declare function processEvents();
+
+interface Math {
+  EPSILON: number;
+  MAX: number;
+
+  range: any;
+  pow10: any;
+  roundTo: any;
+  ln: any;
+  frac:any;
+  median: any;
+}

@@ -1,7 +1,7 @@
 //@ts-nocheck
 import "core-js/modules/es.map";
 import * as React from "react";
-import { render } from "../../react/src/renderer";
+import { render } from "pixinsight-react";
 
 function App() {
   const [counter, setCounter] = React.useState(0);
@@ -30,7 +30,7 @@ function App() {
         text="timeout log"
         onClick={() => {
           setTimeout(() => {
-            console.writeln("LOGG!");
+            console.writeln("LszOGG!");
           }, 1000);
         }}
       ></button>

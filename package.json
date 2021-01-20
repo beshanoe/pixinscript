@@ -4,6 +4,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "build": "garment build",
+    "dev": "garment dev"
+  },
   "dependencies": {
     "typescript": "^4.1.3"
   },
@@ -12,6 +16,7 @@
   ],
   "devDependencies": {
     "@garment/cli": "^0.14.0",
+    "@garment/plugin-runner-bin": "^0.14.0",
     "@garment/plugin-runner-ts": "^0.14.0"
   }
 }

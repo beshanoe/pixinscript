@@ -3,7 +3,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": ["es5"],
-    "types": ["pixinsight-core/types/global"]
+    "declaration": false
   },
   "include": ["src/**/*"]
 }

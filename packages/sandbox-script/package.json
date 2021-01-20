@@ -1,7 +1,7 @@
 {
   "name": "sandbox-script",
   "private": "true",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -22,10 +22,17 @@
     "@babel/preset-env": "^7.12.11",
     "babel-loader": "^8.2.2",
     "core-js": "3",
+    "pixinsight-core": "^0.0.0",
+    "pixinsight-react": "^0.0.0",
+    "prettier": "^2.2.1",
     "react": "^17.0.1",
     "ts-loader": "^8.0.14",
     "webpack": "^5.16.0",
-    "webpack-cli": "^4.4.0"
+    "webpack-cli": "^4.4.0",
+    "webpack-sources": "^2.2.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/webpack": "^4.41.26",
+    "@types/webpack-sources": "^2.1.0"
+  }
 }
