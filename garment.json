@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/@garment/workspace/schemas/config.schema.json",
+  "presets": {
+    "ts-package": {
+      "tasks": {
+        "build": {
+          "runner": "ts",
+          "input": "{{projectDir}}/src/**/*.ts?(x)",
+          "output": "{{projectDir}}/lib"
+        }
+      }
+    }
+  },
+  "projects": {
+    "core": {
+      "path": "packages/core",
+      "extends": ["ts-package"]
+    },
+    "react": {
+      "path": "packages/react",
+      "extends": ["ts-package"]
+    },
+    "sandbox-script": {
+      "path": "packages/sandbox-script"
+    }
+  },
+  "schematics": []
+}

@@ -1,0 +1,31 @@
+{
+  "name": "sandbox-script",
+  "private": "true",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "NODE_ENV=development parcel build src/index.tsx --no-minify --no-scope-hoist",
+    "dev": "NODE_ENV=development parcel watch src/index.tsx "
+  },
+  "targets": {
+    "main": {
+      "engines": {
+        "id": ">=8.x"
+      },
+      "includeNodeModules": true,
+      "sourceMap": false
+    }
+  },
+  "dependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babel-loader": "^8.2.2",
+    "core-js": "3",
+    "react": "^17.0.1",
+    "ts-loader": "^8.0.14",
+    "webpack": "^5.16.0",
+    "webpack-cli": "^4.4.0"
+  },
+  "devDependencies": {}
+}
