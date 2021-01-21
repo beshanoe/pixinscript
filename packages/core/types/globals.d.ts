@@ -801,6 +801,8 @@ declare class Image {
   variance: any;
   width: any;
   writeRawFile: any;
+
+  static newFloatImage: any;
 }
 declare class ImageDescription {
   constructor(...args: any[]);
@@ -1079,6 +1081,9 @@ declare class Matrix {
   twoSidedBiweightMidvariance: any;
   twoSidedMAD: any;
   variance: any;
+
+  static gaussianFilterBySize: any;
+  static fromImage: any;
 }
 declare class MessageBox {
   constructor(...args: any[]);
@@ -1284,6 +1289,11 @@ declare class RGBColorSystem {
   srgbGamma: any;
   x: any;
   y: any;
+
+  static hue: any;
+  static value: any;
+  static hsvSaturation: any;
+  static hsiSaturation: any;
 }
 declare class RadialGradientBrush {
   constructor(...args: any[]);

@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "@pixinsight/core/types/globals",
+      "@pixinsight/core/types/controls"
+    ]
+  }
+}

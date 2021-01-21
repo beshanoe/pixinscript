@@ -216,7 +216,7 @@ declare class GroupBox extends Control {
   title: any;
   titleCheckBox: any;
 }
-declare class Label extends Control {
+declare class Label extends Frame {
   clear: any;
   margin: any;
   text: any;
@@ -483,3 +483,5 @@ declare class Sizer {
     unscaledMargin: any;
     unscaledSpacing: any;
   }
+
+

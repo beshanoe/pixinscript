@@ -7,6 +7,6 @@
     "sourceMap": false,
     "declaration": true,
     "lib": ["esnext"],
-    "types": ["pixinsight-core/types/global"]
+    "types": ["@pixinsight/core/types/globals"]
   }
 }

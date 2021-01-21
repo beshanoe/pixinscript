@@ -15,10 +15,25 @@
   "projects": {
     "core": {
       "path": "packages/core",
-      "extends": ["ts-package"]
+      "extends": ["ts-package"],
+      "tasks": {
+        "build": {
+          "runner": "ts",
+          "buildDependencies": true,
+          "input": "{{projectDir}}/src/**/*.ts?(x)",
+          "output": "{{projectDir}}/lib",
+          "options": {
+            "configFile": "{{projectDir}}/tsconfig.json"
+          }
+        }
+      }
     },
     "react": {
       "path": "packages/react",
+      "extends": ["ts-package"]
+    },
+    "ui": {
+      "path": "packages/ui",
       "extends": ["ts-package"]
     },
     "sandbox-script": {
