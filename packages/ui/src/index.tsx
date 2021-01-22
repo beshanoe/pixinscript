@@ -9,6 +9,7 @@ type Props<Base> = Partial<Omit<Base, "constructor">> & {
 type SizerChildProps<Base> = Props<Base> & {
   stretchFactor?: number;
   alignment?: number;
+  children?: React.ReactNode;
 };
 
 declare global {
@@ -17,6 +18,24 @@ declare global {
       picontrol: { [key: string]: any; type: string };
     }
   }
+}
+
+function useCombinedRefs<T>(...refs: React.ForwardedRef<T>[]) {
+  const targetRef = React.useRef<T>();
+
+  React.useEffect(() => {
+    refs.forEach((ref) => {
+      if (!ref || !targetRef.current) return;
+
+      if (typeof ref === "function") {
+        ref(targetRef.current);
+      } else {
+        ref.current = targetRef.current;
+      }
+    });
+  }, [refs]);
+
+  return targetRef;
 }
 
 export function CheckBox(props: SizerChildProps<CheckBox>) {
@@ -67,23 +86,25 @@ export function ToolButton(props: SizerChildProps<ToolButton>) {
 export function TreeBox(props: SizerChildProps<TreeBox>) {
   return <picontrol type="TreeBox" {...props} />;
 }
-export function ViewList({
-  mode,
-  ...props
-}: Props<ViewList> & { mode?: `all` | `main` | `preview` }) {
-  const viewListRef = React.useRef<ViewList>();
+export const ViewList = React.forwardRef<
+  ViewList,
+  Props<ViewList> & { mode?: `all` | `main` | `preview` }
+>(({ mode, ...props }, ref) => {
+  const innerRef = React.useRef<ViewList>(null);
+  const refToUse = useCombinedRefs(ref, innerRef);
+
   React.useEffect(() => {
     if (mode === "main") {
-      viewListRef.current?.getMainViews();
+      refToUse.current?.getMainViews();
     } else if (mode === "preview") {
-      viewListRef.current?.getPreviews();
+      refToUse.current?.getPreviews();
     } else {
-      viewListRef.current?.getAll();
+      refToUse.current?.getAll();
     }
   }, [mode]);
 
-  return <picontrol type="ViewList" ref={viewListRef} {...props} />;
-}
+  return <picontrol type="ViewList" ref={refToUse} {...props} />;
+});
 export function WebView(props: SizerChildProps<WebView>) {
   return <picontrol type="WebView" {...props} />;
 }
@@ -104,8 +125,12 @@ export function VerticalSizer(
   return <picontrol type="Sizer" constructorProps={[true]} {...props} />;
 }
 export function Spacing({ size }: { size: number }) {
-  return <picontrol type="Sizer" spacing={size}>0</picontrol>;
+  return (
+    <picontrol type="Sizer" spacing={size}>
+      0
+    </picontrol>
+  );
 }
-export function Stretch(props: { stretchFactor?: number }) {
-  return <picontrol type="Sizer" {...props}></picontrol>;
+export function Stretch({ stretchFactor = 100 }: { stretchFactor?: number }) {
+  return <picontrol type="Sizer" stretchFactor={stretchFactor}></picontrol>;
 }

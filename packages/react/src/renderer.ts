@@ -8,7 +8,9 @@ type Extended<T> = T & {
   __id: string;
   stretchFactor?: number;
   alignment?: number;
+  parentSizer?: Sizer;
 };
+type Instance = Extended<Control | Sizer>;
 
 jsStrictMode = false;
 console.clear();
@@ -28,6 +30,8 @@ const debug = (...args: any[]) => {
     console.log(...args);
   }
 };
+
+const garbage = new Control();
 
 const PixInsightReconciler = Reconciler({
   supportsMutation: true,
@@ -76,12 +80,15 @@ const PixInsightReconciler = Reconciler({
   ) {
     debug("createInstance", controlType, props);
     let instance = new global[controlType](...(constructorProps ?? []));
-    const instanceProps = {
+    const instanceProps: Record<string, any> = {
       __id: controlType + id++,
       stretchFactor,
       alignment,
       ...props,
     };
+    if (instance instanceof Control) {
+      instanceProps.sizer = new Sizer(true);
+    }
 
     for (const key of Object.keys(instanceProps)) {
       instance[key] = instanceProps[key];
@@ -101,69 +108,86 @@ const PixInsightReconciler = Reconciler({
 
     return label;
   },
-  appendInitialChild(parent: Extended<Sizer>, child: Extended<Control>) {
+  appendInitialChild(parent: Instance, child: Instance) {
     debug(`appendInitialChild ${parent.__id} ${child.__id}`);
     const args = [child, child.stretchFactor];
     if (!(child instanceof Sizer)) {
       args.push(child.alignment);
     }
-    parent.add(...args);
+    const sizer = parent instanceof Sizer ? parent : parent.sizer;
+    child.parentSizer = sizer;
+    sizer.add(...args);
   },
-  appendChild(parent: Extended<Sizer>, child: Extended<Control>) {
+  appendChild(parent: Instance, child: Instance) {
     debug(`appendChild ${parent.__id} ${child.__id}`);
     const args = [child, child.stretchFactor];
     if (!(child instanceof Sizer)) {
       args.push(child.alignment);
     }
-    parent.add(...args);
+    const sizer = parent instanceof Sizer ? parent : parent.sizer;
+    child.parentSizer = sizer;
+    sizer.add(...args);
   },
-  appendChildToContainer(parent: Extended<Sizer>, child: Extended<Control>) {
+  appendChildToContainer(parent: Instance, child: Instance) {
     debug(`appendChildToContainer ${parent.__id} ${child.__id}`);
     const args = [child, child.stretchFactor];
     if (!(child instanceof Sizer)) {
       args.push(child.alignment);
     }
-    parent.add(...args);
+    const sizer = parent instanceof Sizer ? parent : parent.sizer;
+    child.parentSizer = sizer;
+    sizer.add(...args);
   },
   finalizeInitialChildren(domElement, type, props) {
     debug("finalizeInitialChildren");
     return false;
   },
-  insertBefore(
-    parent: Extended<Sizer>,
-    child: Extended<Control>,
-    beforeChild: Extended<Control>
-  ) {
-    const args = [parent.indexOf(beforeChild), child, child.stretchFactor];
+  insertBefore(parent: Instance, child: Instance, beforeChild: Instance) {
+    const sizer = parent instanceof Sizer ? parent : parent.sizer;
+    const args = [sizer.indexOf(beforeChild), child, child.stretchFactor];
     if (!(child instanceof Sizer)) {
       args.push(child.alignment);
     }
-    parent.insert(...args);
+    child.parentSizer = sizer;
+    sizer.insert(...args);
   },
-  removeChild(parent: Extended<Sizer>, child: Extended<Control>) {
+  removeChild(parent: Extended<Control>, child: Extended<Control>) {
     debug(`removeChild ${parent.__id} ${child.__id}`);
-    parent.remove(child);
+    const sizer = parent instanceof Sizer ? parent : parent.sizer;
+    sizer.remove(child);
+    child.parent = garbage;
   },
-  removeChildFromContainer(parent: Extended<Sizer>, child: Extended<Control>) {
+  removeChildFromContainer(
+    parent: Extended<Control>,
+    child: Extended<Control>
+  ) {
     debug(`removeChildFromContainer ${parent.__id} ${child.__id}`);
-    parent.remove(child);
+    const sizer = parent instanceof Sizer ? parent : parent.sizer;
+    sizer.remove(child);
+    child.parent = garbage;
   },
   prepareUpdate(control: Extended<Control>, type, oldProps, newProps) {
     debug(`prepareUpdate ${control.__id} ${type}`);
     return true;
   },
   commitUpdate(
-    control: Extended<Control>,
-    updatePayload,
-    type,
-    oldProps,
-    newProps
+    control: Instance,
+    updatePayload: any,
+    type: string,
+    oldProps: any,
+    newProps: any
   ) {
     debug(`commitUpdate ${control.__id} ${type}`);
     Object.keys(newProps).forEach((propName) => {
       const propValue = newProps[propName];
-      control[propName] = propValue;
+      (control as any)[propName] = propValue;
     });
+    if (newProps.stretchFactor !== oldProps.stretchFactor) {
+      control.parentSizer?.setStretchFactor(control, newProps.stretchFactor);
+    }
+    if (newProps.alignment !== oldProps.alignment) {
+      control.parentSizer?.setAlignment(control, newProps.alignment);
+    }
   },
   commitTextUpdate(textInstance: Extended<Label>, oldText, newText) {
     debug(`commitTextUpdate ${textInstance.__id} ${oldText} ${newText}`);
@@ -171,7 +195,11 @@ const PixInsightReconciler = Reconciler({
   },
 });
 
-export function directRender(element, container?, callback?: () => void) {
+export function directRender(
+  element: React.ReactElement,
+  container: (Control | Sizer) & { _rootContainer?: any },
+  callback?: () => void
+) {
   if (!container._rootContainer) {
     container._rootContainer = PixInsightReconciler.createContainer(
       container,
@@ -183,12 +211,12 @@ export function directRender(element, container?, callback?: () => void) {
     element,
     container._rootContainer,
     null,
-    callback
+    callback ?? (() => null)
   );
 }
 
 export function render(
-  element,
+  element: React.ReactElement,
   options: {
     debug?: boolean;
   } = {}
@@ -199,7 +227,7 @@ export function render(
   var sizer = new Sizer(true);
   dialog.sizer = sizer;
 
-  global.setTimeout = function (cb, ms) {
+  global.setTimeout = function (cb: () => void, ms: number) {
     var timer = new Timer();
     timer.interval = ms / 1000;
     timer.periodic = false;

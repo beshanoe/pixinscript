@@ -6,6 +6,8 @@
     "noEmitOnError": true,
     "sourceMap": false,
     "declaration": true,
+    "strict": true,
+    "strictNullChecks": true,
     "lib": ["esnext"],
     "types": ["@pixinsight/core/types/globals"]
   }

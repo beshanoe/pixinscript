@@ -74,7 +74,7 @@ declare class Control {
   onPaint: any;
   onResize: any;
   onShow: any;
-  parent: any;
+  parent: Control;
   parentToLocal: any;
   physicalPixelsToLogical: any;
   position: any;
@@ -115,7 +115,7 @@ declare class Control {
   setVariableWidth: any;
   show: any;
   showAlias: any;
-  sizer: any;
+  sizer: Sizer;
   smartMinHeight: any;
   smartMinWidth: any;
   stackUnder: any;
@@ -472,7 +472,7 @@ declare class Sizer {
     logicalPixelsToPhysical: any;
     margin: any;
     numberOfItems: any;
-    parentControl: any;
+    parentControl: Control;
     physicalPixelsToLogical: any;
     remove: any;
     scaledMargin: any;
