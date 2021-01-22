@@ -50,9 +50,9 @@
 // POSSIBILITY OF SUCH DAMAGE.
 // ----------------------------------------------------------------------------
 
-import { ImageOp_Sub, ImageOp_Mul } from "../../lib/pjsr/ImageOp";
-import { MorphOp_Median, MorphOp_Dilation } from "../../lib/pjsr/MorphOp";
-import { UndoFlag_NoSwapFile } from "../../lib/pjsr/UndoFlag";
+import { ImageOp_Sub, ImageOp_Mul } from "./ImageOp";
+import { MorphOp_Median, MorphOp_Dilation } from "./MorphOp";
+import { UndoFlag_NoSwapFile } from "./UndoFlag";
 
 /******************************************************************************
  * StarDetector.jsh version 1.25 (April 2016)

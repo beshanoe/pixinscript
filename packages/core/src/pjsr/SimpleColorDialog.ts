@@ -50,8 +50,8 @@
 // POSSIBILITY OF SUCH DAMAGE.
 // ----------------------------------------------------------------------------
 
-import { VerticalSizer, HorizontalSizer } from "../../lib/pjsr/Sizer";
-import { StdDialogCode_Ok } from "../../lib/pjsr/StdDialogCode";
+import { VerticalSizer, HorizontalSizer } from "./Sizer";
+import { StdDialogCode_Ok } from "./StdDialogCode";
 import { Color } from "./Color";
 import { NumericControl } from "./NumericControl";
 

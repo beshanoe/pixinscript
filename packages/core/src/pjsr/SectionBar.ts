@@ -50,10 +50,10 @@
 // POSSIBILITY OF SUCH DAMAGE.
 // ----------------------------------------------------------------------------
 
-import { MouseButton_Left } from "../../lib/pjsr/ButtonCodes";
-import { FocusStyle_NoFocus } from "../../lib/pjsr/FocusStyle";
-import { HorizontalSizer, VerticalSizer } from "../../lib/pjsr/Sizer";
-import { TextAlign_Left, TextAlign_VertCenter } from "../../lib/pjsr/TextAlign";
+import { MouseButton_Left } from "./ButtonCodes";
+import { FocusStyle_NoFocus } from "./FocusStyle";
+import { HorizontalSizer, VerticalSizer } from "./Sizer";
+import { TextAlign_Left, TextAlign_VertCenter } from "./TextAlign";
 
 // ----------------------------------------------------------------------------
 
