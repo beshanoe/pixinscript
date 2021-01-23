@@ -1,3 +1,5 @@
+/// <reference types="../../types/controls" />
+
 export * from "./APASSFlag";
 export * from "./Assert";
 export * from "./BitmapFormat";

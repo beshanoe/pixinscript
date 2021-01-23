@@ -3,38 +3,62 @@
   "presets": {
     "ts-package": {
       "tasks": {
+        "clean": {
+          "runner": "clean",
+          "input": "{{projectDir}}/(es|lib)/**/*"
+        },
         "build": {
           "runner": "ts",
           "buildDependencies": true,
           "input": "{{projectDir}}/src/**/*.ts?(x)",
-          "output": "{{projectDir}}/lib"
-        }
+          "output": "{{projectDir}}/es",
+          "next": ":babel"
+        },
+        "babel": [
+          {
+            "runner": "babel",
+            "input": "{{projectDir}}/es/**/*.js",
+            "output": "{{projectDir}}/lib"
+          },
+          {
+            "runner": "copy",
+            "input": "{{projectDir}}/es/**/*.d.ts",
+            "output": "{{projectDir}}/lib"
+          }
+        ]
       }
     }
   },
   "projects": {
     "core": {
       "path": "packages/core",
-      "extends": ["ts-package"],
+      "extends": [
+        "ts-package"
+      ],
       "tasks": {
         "build": {
           "runner": "ts",
           "buildDependencies": true,
           "input": "{{projectDir}}/src/**/*.ts?(x)",
-          "output": "{{projectDir}}/lib",
+          "output": "{{projectDir}}/es",
           "options": {
             "configFile": "{{projectDir}}/tsconfig.json"
-          }
+          },
+          "next": "ts-package:babel"
         }
       }
     },
     "react": {
       "path": "packages/react",
-      "extends": ["ts-package"]
+      "extends": [
+        "ts-package"
+      ]
     },
     "ui": {
       "path": "packages/ui",
-      "extends": ["ts-package"]
+      "extends": [
+        "ts-package"
+      ]
     },
     "sandbox-script": {
       "path": "packages/sandbox-script",

@@ -1,7 +1,9 @@
 /// <reference types="@pixinsight/core/types/controls" />
 /// <reference types="@pixinsight/core/types/globals" />
 
-import * as Reconciler from "react-reconciler";
+import "core-js/modules/es.map";
+import "core-js/modules/es.object.entries";
+import Reconciler from "react-reconciler";
 
 declare const global: any;
 type Extended<T> = T & {
@@ -11,6 +13,15 @@ type Extended<T> = T & {
   parentSizer?: Sizer;
 };
 type Instance = Extended<Control | Sizer>;
+
+const sizerPropsSet = new Set([
+  "margin",
+  "spacing",
+  "scaledMargin",
+  "scaledSpacing",
+  "unscaledMargin",
+  "unscaledSpacing",
+] as const);
 
 jsStrictMode = false;
 console.clear();
@@ -67,32 +78,41 @@ const PixInsightReconciler = Reconciler({
     _type: "picontrol",
     {
       type: controlType,
+      ctor,
       constructorProps,
       stretchFactor = 0,
       alignment = 0,
       ...props
     }: {
       type: string;
+      ctor: new (...args: any[]) => any;
       constructorProps?: any[];
       stretchFactor?: number;
       alignment?: number;
     }
   ) {
     debug("createInstance", controlType, props);
-    let instance = new global[controlType](...(constructorProps ?? []));
+    let instance = new (ctor ?? global[controlType])(
+      ...(constructorProps ?? [])
+    );
     const instanceProps: Record<string, any> = {
       __id: controlType + id++,
       stretchFactor,
       alignment,
       ...props,
     };
-    if (instance instanceof Control) {
-      instanceProps.sizer = new Sizer(true);
+    if (instance instanceof Control && !instance.sizer) {
+      instance.sizer = new Sizer(true);
     }
 
     for (const key of Object.keys(instanceProps)) {
-      instance[key] = instanceProps[key];
+      if (sizerPropsSet.has(key as any) && instance instanceof Control) {
+        instance.sizer[key as keyof Sizer] = instanceProps[key];
+      } else {
+        instance[key] = instanceProps[key];
+      }
     }
+
     return instance;
   },
   createTextInstance(text) {
@@ -180,7 +200,13 @@ const PixInsightReconciler = Reconciler({
     debug(`commitUpdate ${control.__id} ${type}`);
     Object.keys(newProps).forEach((propName) => {
       const propValue = newProps[propName];
-      (control as any)[propName] = propValue;
+
+      if (sizerPropsSet.has(propName as any)) {
+        const sizer = control instanceof Sizer ? control : control.sizer;
+        sizer[propName as keyof Sizer] = propValue;
+      } else {
+        (control as any)[propName] = propValue;
+      }
     });
     if (newProps.stretchFactor !== oldProps.stretchFactor) {
       control.parentSizer?.setStretchFactor(control, newProps.stretchFactor);
@@ -219,10 +245,13 @@ export function render(
   element: React.ReactElement,
   options: {
     debug?: boolean;
+    dialog?: Partial<Dialog>;
   } = {}
 ) {
   var dialog = new Dialog();
-  dialog.windowTitle = "Hello";
+  Object.entries(options.dialog ?? {}).forEach(([key, value]) => {
+    (<any>dialog)[key] = value;
+  });
 
   var sizer = new Sizer(true);
   dialog.sizer = sizer;

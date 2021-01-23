@@ -15,8 +15,13 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@garment/cli": "^0.14.0",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@garment/cli": "^0.14.1",
+    "@garment/plugin-runner-babel": "^0.14.1",
     "@garment/plugin-runner-bin": "^0.14.0",
-    "@garment/plugin-runner-ts": "^0.14.0"
+    "@garment/plugin-runner-clean": "^0.14.0",
+    "@garment/plugin-runner-copy": "^0.14.0",
+    "@garment/plugin-runner-ts": "^0.14.1"
   }
 }

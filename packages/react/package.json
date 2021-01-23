@@ -2,9 +2,11 @@
   "name": "@pixinsight/react",
   "version": "0.0.0",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "license": "MIT",
   "dependencies": {
     "@pixinsight/core": "^0.0.0",
+    "core-js": "3",
     "react-reconciler": "^0.26.1"
   },
   "devDependencies": {
