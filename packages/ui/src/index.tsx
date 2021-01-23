@@ -6,11 +6,8 @@ import {
 } from "@pixinsight/core";
 import * as React from "react";
 
-type Props<Base> = Partial<Omit<Base, "constructor">> & {
+type SizerChildProps<Base> = Partial<Base> & {
   constructorProps?: any[];
-};
-
-type SizerChildProps<Base> = Props<Base> & {
   stretchFactor?: number;
   alignment?: number;
   children?: React.ReactNode;
@@ -48,87 +45,142 @@ function useCombinedRefs<T>(...refs: React.ForwardedRef<T>[]) {
   return targetRef;
 }
 
-export function CheckBox(props: SizerChildProps<CheckBox>) {
-  return <picontrol type="CheckBox" {...props} />;
-}
+export const UICheckBox = React.forwardRef<CheckBox, SizerChildProps<CheckBox>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="CheckBox" {...props} />;
+  }
+);
 
-export function ComboBox(props: SizerChildProps<ComboBox>) {
-  return <picontrol type="ComboBox" {...props} />;
-}
+export const UIComboBox = React.forwardRef<
+  ComboBox,
+  SizerChildProps<ComboBox> & { items: { text: string; icon?: string }[] }
+>(({ items, ...props }, ref) => {
+  const innerRef = React.useRef<ComboBox>(null);
+  const refToUse = useCombinedRefs(ref, innerRef);
 
-export function Dialog(props: Props<Dialog>) {
-  return <picontrol type="Dialog" {...props} />;
-}
+  React.useEffect(() => {
+    innerRef.current?.clear();
+    for (const item of items) {
+      innerRef.current?.addItem(item.text);
+    }
+  }, [items]);
+  return <picontrol ref={refToUse} type="ComboBox" {...props} />;
+});
 
-export function Edit(props: SizerChildProps<Edit>) {
-  return <picontrol type="Edit" {...props} />;
-}
+export const UIDialog = React.forwardRef<Dialog, SizerChildProps<Dialog>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="Dialog" {...props} />;
+  }
+);
 
-export function Frame(props: SizerChildProps<Frame>) {
-  return <picontrol type="Frame" {...props} />;
-}
+export const UIEdit = React.forwardRef<Edit, SizerChildProps<Edit>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="Edit" {...props} />;
+  }
+);
 
-export function GroupBox(props: SizerChildProps<GroupBox>) {
-  return <picontrol type="GroupBox" {...props} />;
-}
+export const UIFrame = React.forwardRef<Frame, SizerChildProps<Frame>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="Frame" {...props} />;
+  }
+);
 
-export function Label(props: SizerChildProps<Label>) {
-  return <picontrol type="Label" {...props} />;
-}
+export const UIGroupBox = React.forwardRef<GroupBox, SizerChildProps<GroupBox>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="GroupBox" {...props} />;
+  }
+);
 
-export function NumericEdit(props: SizerChildProps<Label>) {
-  return (
-    <picontrol type="NumericEdit" ctor={NumericEditConstructor} {...props} />
-  );
-}
+export const UILabel = React.forwardRef<Label, SizerChildProps<Label>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="Label" {...props} />;
+  }
+);
 
-export function NumericControl(props: SizerChildProps<Label>) {
-  return (
-    <picontrol
-      type="NumericControl"
-      ctor={NumericControlConstructor}
-      {...props}
-    />
-  );
-}
+export const UINumericEdit = React.forwardRef<Label, SizerChildProps<Label>>(
+  (props, ref) => {
+    return (
+      <picontrol
+        ref={ref}
+        type="NumericEdit"
+        ctor={NumericEditConstructor}
+        {...props}
+      />
+    );
+  }
+);
 
-export function PushButton(props: SizerChildProps<PushButton>) {
-  return <picontrol type="PushButton" {...props} />;
-}
+export const UINumericControl = React.forwardRef<Label, SizerChildProps<Label>>(
+  (props, ref) => {
+    return (
+      <picontrol
+        type="NumericControl"
+        ctor={NumericControlConstructor}
+        {...props}
+      />
+    );
+  }
+);
 
-export function RadioButton(props: SizerChildProps<RadioButton>) {
-  return <picontrol type="RadioButton" {...props} />;
-}
+export const UIPushButton = React.forwardRef<
+  PushButton,
+  SizerChildProps<PushButton>
+>((props, ref) => {
+  return <picontrol ref={ref} type="PushButton" {...props} />;
+});
 
-export function ScrollBox(props: SizerChildProps<ScrollBox>) {
-  return <picontrol type="ScrollBox" {...props} />;
-}
+export const UIRadioButton = React.forwardRef<
+  RadioButton,
+  SizerChildProps<RadioButton>
+>((props, ref) => {
+  return <picontrol ref={ref} type="RadioButton" {...props} />;
+});
 
-export function Slider(props: SizerChildProps<Slider>) {
-  return <picontrol type="Slider" {...props} />;
-}
+export const UIScrollBox = React.forwardRef<
+  ScrollBox,
+  SizerChildProps<ScrollBox>
+>((props, ref) => {
+  return <picontrol ref={ref} type="ScrollBox" {...props} />;
+});
 
-export function SpinBox(props: SizerChildProps<SpinBox>) {
-  return <picontrol type="SpinBox" {...props} />;
-}
+export const UISlider = React.forwardRef<Slider, SizerChildProps<Slider>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="Slider" {...props} />;
+  }
+);
 
-export function TabBox(props: SizerChildProps<TabBox>) {
-  return <picontrol type="TabBox" {...props} />;
-}
+export const UISpinBox = React.forwardRef<SpinBox, SizerChildProps<SpinBox>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="SpinBox" {...props} />;
+  }
+);
 
-export function TextBox(props: SizerChildProps<TextBox>) {
-  return <picontrol type="TextBox" {...props} />;
-}
+export const UITabBox = React.forwardRef<TabBox, SizerChildProps<TabBox>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="TabBox" {...props} />;
+  }
+);
 
-export function ToolButton(props: SizerChildProps<ToolButton>) {
-  return <picontrol type="ToolButton" {...props} />;
-}
+export const UITextBox = React.forwardRef<TextBox, SizerChildProps<TextBox>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="TextBox" {...props} />;
+  }
+);
 
-export function TreeBox(props: SizerChildProps<TreeBox>) {
-  return <picontrol type="TreeBox" {...props} />;
-}
+export const UIToolButton = React.forwardRef<
+  ToolButton,
+  SizerChildProps<ToolButton>
+>((props, ref) => {
+  return <picontrol ref={ref} type="ToolButton" {...props} />;
+});
 
-export const ViewList = React.forwardRef<
+export const UITreeBox = React.forwardRef<TreeBox, SizerChildProps<TreeBox>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="TreeBox" {...props} />;
+  }
+);
+
+export const UIViewList = React.forwardRef<
   ViewList,
   SizerChildProps<ViewList> & { mode?: `all` | `main` | `preview` }
 >(({ mode, ...props }, ref) => {
@@ -148,29 +200,31 @@ export const ViewList = React.forwardRef<
   return <picontrol type="ViewList" ref={refToUse} {...props} />;
 });
 
-export function WebView(props: SizerChildProps<WebView>) {
-  return <picontrol type="WebView" {...props} />;
-}
+export const UIWebView = React.forwardRef<WebView, SizerChildProps<WebView>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="WebView" {...props} />;
+  }
+);
 
-export function Sizer(
+export function UISizer(
   props: SizerChildProps<Sizer> & { children?: React.ReactNode }
 ) {
   return <picontrol type="Sizer" {...props} />;
 }
 
-export function HorizontalSizer(
+export function UIHorizontalSizer(
   props: SizerChildProps<Sizer> & { children?: React.ReactNode }
 ) {
   return <picontrol type="Sizer" {...props} />;
 }
 
-export function VerticalSizer(
+export function UIVerticalSizer(
   props: SizerChildProps<Sizer> & { children?: React.ReactNode }
 ) {
   return <picontrol type="Sizer" constructorProps={[true]} {...props} />;
 }
 
-export function Spacing({ size }: { size: number }) {
+export function UISpacing({ size }: { size: number }) {
   return (
     <picontrol type="Sizer" spacing={size}>
       0
@@ -178,6 +232,6 @@ export function Spacing({ size }: { size: number }) {
   );
 }
 
-export function Stretch({ stretchFactor = 100 }: { stretchFactor?: number }) {
+export function UIStretch({ stretchFactor = 100 }: { stretchFactor?: number }) {
   return <picontrol type="Frame" stretchFactor={stretchFactor}></picontrol>;
 }

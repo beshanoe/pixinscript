@@ -4,6 +4,6 @@ import * as React from "react";
 import { ScriptDialog, SCRIPT_NAME } from "./ScriptDialog";
 
 render(<ScriptDialog />, {
-  debug: true,
-  dialog: { windowTitle: `${SCRIPT_NAME} Script` },
+  debug: false,
+  dialog: { windowTitle: `${SCRIPT_NAME} Script`, minWidth: 400 },
 });
