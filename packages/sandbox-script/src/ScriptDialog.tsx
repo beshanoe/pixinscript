@@ -1,7 +1,6 @@
 import {
   FrameStyle_Box,
   TextAlign_Center,
-  TextAlign_Left,
   TextAlign_VertCenter,
 } from "@pixinsight/core";
 import {
@@ -10,6 +9,7 @@ import {
   UIGroupBox,
   UIHorizontalSizer,
   UILabel,
+  UIPushButton,
   UISlider,
   UISpinBox,
   UIStretch,
@@ -18,6 +18,7 @@ import {
 } from "@pixinsight/ui";
 import React, { useState } from "react";
 import { version } from "../package.json";
+import { ImagePreview } from "./ImagePreview";
 
 export const SCRIPT_NAME = "Star De-emphasizer";
 const SCRIPT_DESCRIPTION = `<b> ${SCRIPT_NAME}  v${version}</b> &mdash; This script uses the method suggested by Adam Block to de-emphasize stars.`;
@@ -59,6 +60,8 @@ export function ScriptDialog() {
           stretchFactor={1}
         />
       </UIHorizontalSizer>
+
+      <ImagePreview image={targetView?.image} />
 
       <UIGroupBox title="Structures" spacing={5} margin={5}>
         <UIHorizontalSizer>

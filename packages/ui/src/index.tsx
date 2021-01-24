@@ -1,8 +1,8 @@
 /// <reference types="@pixinsight/core/types/controls" />
 
 import {
-  NumericEdit as NumericEditConstructor,
   NumericControl as NumericControlConstructor,
+  NumericEdit as NumericEditConstructor,
 } from "@pixinsight/core";
 import * as React from "react";
 
@@ -44,6 +44,12 @@ function useCombinedRefs<T>(...refs: React.ForwardedRef<T>[]) {
 
   return targetRef;
 }
+
+export const UIControl = React.forwardRef<Control, SizerChildProps<Control>>(
+  (props, ref) => {
+    return <picontrol ref={ref} type="Control" {...props} />;
+  }
+);
 
 export const UICheckBox = React.forwardRef<CheckBox, SizerChildProps<CheckBox>>(
   (props, ref) => {

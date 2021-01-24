@@ -8,13 +8,10 @@
     "build": "NODE_ENV=development parcel build src/index.tsx --no-minify --no-scope-hoist",
     "dev": "NODE_ENV=development parcel watch src/index.tsx "
   },
-  "targets": {
-    "main": {
-      "engines": {
-        "id": ">=8.x"
-      },
-      "includeNodeModules": true,
-      "sourceMap": false
+  "pixinsight": {
+    "script": {
+      "feature-id": "",
+      "feature-info": ""
     }
   },
   "dependencies": {

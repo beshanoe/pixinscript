@@ -1666,7 +1666,7 @@ declare class View {
   hasProperty: any;
   historyIndex: any;
   id: any;
-  image: any;
+  image: Image;
   importProperties: any;
   initialProcessing: any;
   isMainView: any;

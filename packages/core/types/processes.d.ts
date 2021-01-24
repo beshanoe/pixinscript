@@ -1,3 +1,5 @@
+/// <reference types="./typed-processes" />
+
 declare class ProcessInstance {
   constructor();
   assign: any;
@@ -25,202 +27,6 @@ declare class ProcessInstance {
   validate: any;
   writeIcon: any;
   writeInstanceAddr: any;
-}
-
-declare class ACDNR extends ProcessInstance {
-  Median3x3: any;
-  Median5x5: any;
-  Multiscale: any;
-  None: any;
-  Recursive: any;
-  UnweightedAverage3x3: any;
-  WeightedAverage3x3: any;
-  WeightedAverage5x5: any;
-  amountC: any;
-  amountL: any;
-  applyToChrominance: any;
-  applyToLightness: any;
-  applyToLuminance: any;
-  brightSidesOverdriveC: any;
-  brightSidesOverdriveL: any;
-  brightSidesThresholdC: any;
-  brightSidesThresholdL: any;
-  darkSidesOverdriveC: any;
-  darkSidesOverdriveL: any;
-  darkSidesThresholdC: any;
-  darkSidesThresholdL: any;
-  iterationsC: any;
-  iterationsL: any;
-  maskHighlightsClipping: any;
-  maskMTF: any;
-  maskRemovedWaveletLayers: any;
-  maskShadowsClipping: any;
-  minStructSizeC: any;
-  minStructSizeL: any;
-  prefilterMethodC: any;
-  prefilterMethodL: any;
-  previewMask: any;
-  protectBrightSidesC: any;
-  protectBrightSidesL: any;
-  protectDarkSidesC: any;
-  protectDarkSidesL: any;
-  protectionMethodC: any;
-  protectionMethodL: any;
-  shapeC: any;
-  shapeL: any;
-  sigmaC: any;
-  sigmaL: any;
-  starProtectionC: any;
-  starProtectionL: any;
-  starThresholdC: any;
-  starThresholdL: any;
-  useMaskC: any;
-  useMaskL: any;
-}
-declare class ATrousWaveletTransform extends ProcessInstance {
-  AllPixelChanges: any;
-  DecreasingPixels: any;
-  Disabled: any;
-  Hyperbolic: any;
-  IncreasingPixels: any;
-  Ln: any;
-  Log10: any;
-  NoFunction: any;
-  curveBreakPoint: any;
-  deringing: any;
-  deringingBright: any;
-  deringingDark: any;
-  highRange: any;
-  largeScaleFunction: any;
-  layers: any;
-  linear: any;
-  lowRange: any;
-  noiseThreshold: any;
-  noiseThresholding: any;
-  noiseThresholdingAmount: any;
-  outputDeringingMaps: any;
-  previewLayer: any;
-  previewMode: any;
-  scaleDelta: any;
-  scalingFunctionColFilter: any;
-  scalingFunctionData: any;
-  scalingFunctionName: any;
-  scalingFunctionNoiseSigma: any;
-  scalingFunctionRowFilter: any;
-  softThresholding: any;
-  toChrominance: any;
-  toLuminance: any;
-  useMultiresolutionSupport: any;
-}
-declare class ATrousWaveletTransformV1 extends ProcessInstance {
-  AllPixelChanges: any;
-  DecreasingPixels: any;
-  DirectionalMultiway: any;
-  Disabled: any;
-  Hyperbolic: any;
-  IncreasingPixels: any;
-  Ln: any;
-  Log10: any;
-  Morphological: any;
-  NoFunction: any;
-  Recursive: any;
-  SignificantStructures: any;
-  curveBreakPoint: any;
-  highRange: any;
-  largeScaleFunction: any;
-  layers: any;
-  linear: any;
-  lowRange: any;
-  noiseThreshold: any;
-  noiseThresholdingAmount: any;
-  previewLayer: any;
-  previewMode: any;
-  scaleDelta: any;
-  scalingFunctionData: any;
-  scalingFunctionKernelSize: any;
-  scalingFunctionName: any;
-  scalingFunctionNoiseLayers: any;
-  scalingFunctionNoiseSigma: any;
-  toChrominance: any;
-  toLuminance: any;
-  version: any;
-}
-declare class AdaptiveStretch extends ProcessInstance {
-  maxCurvePoints: any;
-  noiseThreshold: any;
-  protection: any;
-  roiX0: any;
-  roiX1: any;
-  roiY0: any;
-  roiY1: any;
-  useProtection: any;
-  useROI: any;
-}
-declare class Annotation extends ProcessInstance {
-  annotationColor: any;
-  annotationFont: any;
-  annotationFontBold: any;
-  annotationFontItalic: any;
-  annotationFontShadow: any;
-  annotationFontSize: any;
-  annotationFontUnderline: any;
-  annotationLeaderPositionX: any;
-  annotationLeaderPositionY: any;
-  annotationOpacity: any;
-  annotationPositionX: any;
-  annotationPositionY: any;
-  annotationShowLeader: any;
-  annotationText: any;
-}
-declare class ArcsinhStretch extends ProcessInstance {
-  blackPoint: any;
-  previewClipped: any;
-  protectHighlights: any;
-  stretch: any;
-  useRGBWS: any;
-}
-declare class AssignICCProfile extends ProcessInstance {
-  AssignDefaultProfile: any;
-  AssignNewProfile: any;
-  LeaveUntagged: any;
-  mode: any;
-  targetProfile: any;
-}
-declare class AssistedColorCalibration extends ProcessInstance {
-  BlueCorrectionFactor: any;
-  GreenCorrectionFactor: any;
-  HistogramHighlights: any;
-  HistogramMidtones: any;
-  HistogramShadows: any;
-  SaturationBoost: any;
-  backgroundRef: any;
-  redCorrectionFactor: any;
-}
-declare class AutoHistogram extends ProcessInstance {
-  Gamma: any;
-  Logarithm: any;
-  MTF: any;
-  clip: any;
-  clipHighB: any;
-  clipHighG: any;
-  clipHighR: any;
-  clipLowB: any;
-  clipLowG: any;
-  clipLowR: any;
-  clipTogether: any;
-  isGammaEnabled: any;
-  isGlobalGamma: any;
-  isGlobalHistogramClip: any;
-  isHistogramClipEnabled: any;
-  medianB: any;
-  medianG: any;
-  medianR: any;
-  stretch: any;
-  stretchMethod: any;
-  stretchTogether: any;
-  targetMedianB: any;
-  targetMedianG: any;
-  targetMedianR: any;
 }
 declare class AutomaticBackgroundExtractor extends ProcessInstance {
   Divide: any;
@@ -295,94 +101,7 @@ declare class B3Estimator extends ProcessInstance {
   thermalMap: any;
   thermalMapViewId: any;
 }
-declare class BackgroundNeutralization extends ProcessInstance {
-  Rescale: any;
-  RescaleAsNeeded: any;
-  TargetBackground: any;
-  Truncate: any;
-  backgroundHigh: any;
-  backgroundLow: any;
-  backgroundReferenceViewId: any;
-  mode: any;
-  roiX0: any;
-  roiX1: any;
-  roiY0: any;
-  roiY1: any;
-  targetBackground: any;
-  useROI: any;
-}
-declare class Binarize extends ProcessInstance {
-  isGlobal: any;
-  thresholdB: any;
-  thresholdG: any;
-  thresholdRK: any;
-}
 declare class Blink extends ProcessInstance {}
-declare class ChannelCombination extends ProcessInstance {
-  CIELab: any;
-  CIELch: any;
-  CIEXYZ: any;
-  HSI: any;
-  HSV: any;
-  RGB: any;
-  channels: any;
-  colorSpace: any;
-}
-declare class ChannelExtraction extends ProcessInstance {
-  CIELab: any;
-  CIELch: any;
-  CIEXYZ: any;
-  HSI: any;
-  HSV: any;
-  RGB: any;
-  SameAsSource: any;
-  channels: any;
-  colorSpace: any;
-  f32: any;
-  f64: any;
-  i16: any;
-  i32: any;
-  i8: any;
-  sampleFormat: any;
-}
-declare class ChannelMatch extends ProcessInstance {
-  channels: any;
-}
-declare class CloneStamp extends ProcessInstance {
-  actions: any;
-  boundsColor: any;
-  cloner: any;
-  clonerColor: any;
-  height: any;
-  width: any;
-}
-declare class ColorCalibration extends ProcessInstance {
-  backgroundHigh: any;
-  backgroundLow: any;
-  backgroundROIX0: any;
-  backgroundROIX1: any;
-  backgroundROIY0: any;
-  backgroundROIY1: any;
-  backgroundReferenceViewId: any;
-  backgroundUseROI: any;
-  manualBlueFactor: any;
-  manualGreenFactor: any;
-  manualRedFactor: any;
-  manualWhiteBalance: any;
-  noiseLayers: any;
-  outputBackgroundReferenceMask: any;
-  outputWhiteReferenceMask: any;
-  structureDetection: any;
-  structureLayers: any;
-  whiteHigh: any;
-  whiteLow: any;
-  whiteROIX0: any;
-  whiteROIX1: any;
-  whiteROIY0: any;
-  whiteROIY1: any;
-  whiteReferenceViewId: any;
-  whiteUseROI: any;
-}
 declare class ColorManagementSetup extends ProcessInstance {
   AbsoluteColorimetric: any;
   AskUser: any;
@@ -411,14 +130,6 @@ declare class ColorManagementSetup extends ProcessInstance {
   updateMonitorProfile: any;
   useLowResolutionCLUTs: any;
   useProofingBPC: any;
-}
-declare class ColorSaturation extends ProcessInstance {
-  AkimaSubsplines: any;
-  CubicSpline: any;
-  HS: any;
-  HSt: any;
-  Linear: any;
-  hueShift: any;
 }
 declare class CometAlignment extends ProcessInstance {
   Auto: any;
@@ -453,22 +164,6 @@ declare class CometAlignment extends ProcessInstance {
   subtractMode: any;
   targetFrames: any;
 }
-declare class ConvertToGrayscale extends ProcessInstance {}
-declare class ConvertToRGBColor extends ProcessInstance {}
-declare class Convolution extends ProcessInstance {
-  Gaussian: any;
-  Image: any;
-  Library: any;
-  Parametric: any;
-  aspectRatio: any;
-  filterSource: any;
-  mode: any;
-  rescaleHighPass: any;
-  rotationAngle: any;
-  shape: any;
-  sigma: any;
-  viewId: any;
-}
 declare class CosmeticCorrection extends ProcessInstance {
   amount: any;
   cfa: any;
@@ -492,62 +187,6 @@ declare class CosmeticCorrection extends ProcessInstance {
   useAutoDetect: any;
   useDefectList: any;
   useMasterDark: any;
-}
-declare class CreateAlphaChannels extends ProcessInstance {
-  closeSource: any;
-  count: any;
-  fromImage: any;
-  invertSource: any;
-  replace: any;
-  sourceId: any;
-  transparency: any;
-}
-declare class Crop extends ProcessInstance {
-  AbsoluteCentimeters: any;
-  AbsoluteInches: any;
-  AbsolutePixels: any;
-  RelativeMargins: any;
-  alpha: any;
-  blue: any;
-  bottomMargin: any;
-  forceResolution: any;
-  green: any;
-  leftMargin: any;
-  metric: any;
-  mode: any;
-  noGUIMessages: any;
-  red: any;
-  rightMargin: any;
-  topMargin: any;
-  xResolution: any;
-  yResolution: any;
-}
-declare class CurvesTransformation extends ProcessInstance {
-  A: any;
-  AkimaSubsplines: any;
-  At: any;
-  B: any;
-  Bt: any;
-  CubicSpline: any;
-  G: any;
-  Gt: any;
-  H: any;
-  Ht: any;
-  K: any;
-  Kt: any;
-  L: any;
-  Linear: any;
-  Lt: any;
-  R: any;
-  Rt: any;
-  S: any;
-  St: any;
-  a: any;
-  at: any;
-  b: any;
-  bt: any;
-  c: any;
-  ct: any;
 }
 declare class Debayer extends ProcessInstance {
   Auto: any;
@@ -603,50 +242,6 @@ declare class Debayer extends ProcessInstance {
   targetItems: any;
   useFileThreads: any;
 }
-declare class Deconvolution extends ProcessInstance {
-  B3Spline5x5: any;
-  External: any;
-  Gaussian: any;
-  LinearInterpolation3x3: any;
-  MotionBlur: any;
-  Parametric: any;
-  Poisson: any;
-  RichardsonLucy: any;
-  SmallScale3x3: any;
-  VanCittert: any;
-  algorithm: any;
-  convergence: any;
-  deringing: any;
-  deringingBright: any;
-  deringingDark: any;
-  deringingSupport: any;
-  deringingSupportAmount: any;
-  deringingSupportViewId: any;
-  iterations: any;
-  noiseModel: any;
-  numberOfIterations: any;
-  numberOfWaveletLayers: any;
-  psfAspectRatio: any;
-  psfFFTSizeLimit: any;
-  psfGaussianAspectRatio: any;
-  psfGaussianRotationAngle: any;
-  psfGaussianShape: any;
-  psfGaussianSigma: any;
-  psfMode: any;
-  psfMotionLength: any;
-  psfMotionRotationAngle: any;
-  psfRotationAngle: any;
-  psfShape: any;
-  psfSigma: any;
-  psfViewId: any;
-  rangeHigh: any;
-  rangeLow: any;
-  scalingFunction: any;
-  toLuminance: any;
-  useLuminance: any;
-  useRegularization: any;
-  waveletLayers: any;
-}
 declare class DefectMap extends ProcessInstance {
   Circular: any;
   Gaussian: any;
@@ -661,18 +256,6 @@ declare class DefectMap extends ProcessInstance {
   mapId: any;
   operation: any;
   structure: any;
-}
-declare class DigitalDevelopment extends ProcessInstance {
-  Blue: any;
-  Green: any;
-  Luminance: any;
-  Red: any;
-  a: any;
-  b: any;
-  m0: any;
-  m1: any;
-  m2: any;
-  sigma: any;
 }
 declare class Divide extends ProcessInstance {
   Custom: any;
@@ -780,82 +363,6 @@ declare class DynamicAlignment extends ProcessInstance {
   targetSearchRadius: any;
   threshold: any;
 }
-declare class DynamicBackgroundExtraction extends ProcessInstance {
-  Divide: any;
-  None: any;
-  SameAsTarget: any;
-  Subtract: any;
-  axisColor: any;
-  badSampleColor: any;
-  badSampleFillColor: any;
-  correctedImageId: any;
-  correctedImageSampleFormat: any;
-  data: any;
-  defaultSampleRadius: any;
-  derivativeOrder: any;
-  discardModel: any;
-  downsample: any;
-  f32: any;
-  f64: any;
-  i16: any;
-  i32: any;
-  i8: any;
-  ignoreWeights: any;
-  imageHeight: any;
-  imageWidth: any;
-  minSampleFraction: any;
-  minWeight: any;
-  modelHeight: any;
-  modelId: any;
-  modelSampleFormat: any;
-  modelWidth: any;
-  normalize: any;
-  numberOfChannels: any;
-  replaceTarget: any;
-  sampleColor: any;
-  samples: any;
-  samplesPerRow: any;
-  selectedSampleColor: any;
-  selectedSampleFillColor: any;
-  shadowsRelaxation: any;
-  smoothing: any;
-  symmetryCenterX: any;
-  symmetryCenterY: any;
-  targetCorrection: any;
-  tolerance: any;
-}
-declare class DynamicCrop extends ProcessInstance {
-  Auto: any;
-  BicubicBSpline: any;
-  BicubicSpline: any;
-  Bilinear: any;
-  CatmullRomSplineFilter: any;
-  CubicBSplineFilter: any;
-  Lanczos3: any;
-  Lanczos4: any;
-  MitchellNetravaliFilter: any;
-  NearestNeighbor: any;
-  alpha: any;
-  angle: any;
-  blue: any;
-  centerX: any;
-  centerY: any;
-  clampingThreshold: any;
-  forceResolution: any;
-  green: any;
-  height: any;
-  interpolation: any;
-  metric: any;
-  noGUIMessages: any;
-  optimizeFast: any;
-  red: any;
-  scaleX: any;
-  scaleY: any;
-  smoothness: any;
-  width: any;
-  xResolution: any;
-  yResolution: any;
-}
 declare class DynamicPSF extends ProcessInstance {
   Function_Gaussian: any;
   Function_Lorentzian: any;
@@ -919,15 +426,6 @@ declare class DynamicPSF extends ProcessInstance {
   variableShapePSF: any;
   views: any;
 }
-declare class ExponentialTransformation extends ProcessInstance {
-  PIP: any;
-  SMI: any;
-  functionType: any;
-  luminanceMask: any;
-  order: any;
-  sigma: any;
-  useLightnessMask: any;
-}
 declare class ExtractAlphaChannels extends ProcessInstance {
   ActiveAlphaChannel: any;
   AllAlphaChannels: any;
@@ -936,18 +434,6 @@ declare class ExtractAlphaChannels extends ProcessInstance {
   channels: any;
   delete: any;
   extract: any;
-}
-declare class FITSHeader extends ProcessInstance {
-  keywords: any;
-}
-declare class FastRotation extends ProcessInstance {
-  HorizontalMirror: any;
-  Rotate180: any;
-  Rotate90CCW: any;
-  Rotate90CW: any;
-  VerticalMirror: any;
-  mode: any;
-  noGUIMessages: any;
 }
 declare class FluxCalibration extends ProcessInstance {
   CustomKeyword: any;
@@ -984,23 +470,6 @@ declare class FluxCalibration extends ProcessInstance {
 declare class FourierTransform extends ProcessInstance {
   centered: any;
   radialCoordinates: any;
-}
-declare class GREYCstoration extends ProcessInstance {
-  Bilinear: any;
-  Nearest: any;
-  RungeKutta: any;
-  amplitude: any;
-  angularIntegrationStep: any;
-  anisotropy: any;
-  contourPreservation: any;
-  coupledChannels: any;
-  fastApproximation: any;
-  geometryRegularity: any;
-  interpolation: any;
-  noiseScale: any;
-  numberOfIterations: any;
-  precision: any;
-  spatialIntegrationStep: any;
 }
 declare class GaiaDR2 extends ProcessInstance {
   SortBy_Dec: any;
@@ -1086,44 +555,6 @@ declare class HDRComposition extends ProcessInstance {
   replaceLargeScales: any;
   useFittingRegion: any;
 }
-declare class HDRMultiscaleTransform extends ProcessInstance {
-  Automatic: any;
-  Manual: any;
-  NoMidtonesBalance: any;
-  deringing: any;
-  invertedIterations: any;
-  largeScaleDeringing: any;
-  luminanceMask: any;
-  medianTransform: any;
-  midtonesBalance: any;
-  midtonesBalanceMode: any;
-  numberOfIterations: any;
-  numberOfLayers: any;
-  outputDeringingMaps: any;
-  overdrive: any;
-  preserveHue: any;
-  scalingFunctionColFilter: any;
-  scalingFunctionData: any;
-  scalingFunctionName: any;
-  scalingFunctionRowFilter: any;
-  smallScaleDeringing: any;
-  toLightness: any;
-  toLuminanceOnly: any;
-}
-declare class HistogramTransformation extends ProcessInstance {
-  H: any;
-}
-declare class ICCProfileTransformation extends ProcessInstance {
-  AbsoluteColorimetric: any;
-  Perceptual: any;
-  RelativeColorimetric: any;
-  Saturation: any;
-  renderingIntent: any;
-  targetProfile: any;
-  toDefaultProfile: any;
-  useBlackPointCompensation: any;
-  useFloatingPointTransformation: any;
-}
 declare class ImageCalibration extends ProcessInstance {
   Abort: any;
   AskUser: any;
@@ -1192,9 +623,7 @@ declare class ImageCalibration extends ProcessInstance {
   separateCFAFlatScalingFactors: any;
   targetFrames: any;
 }
-declare class ImageIdentifier extends ProcessInstance {
-  id: any;
-}
+
 declare class ImageIntegration extends ProcessInstance {
   AdaptiveNormalization: any;
   AdaptiveRejectionNormalization: any;
@@ -1445,20 +874,6 @@ declare class IndigoMount extends ProcessInstance {
   targetDec: any;
   targetRA: any;
 }
-declare class IntegerResample extends ProcessInstance {
-  Average: any;
-  Maximum: any;
-  Median: any;
-  Minimum: any;
-  downsamplingMode: any;
-  forceResolution: any;
-  metric: any;
-  noGUIMessages: any;
-  subsampleMode: any;
-  xResolution: any;
-  yResolution: any;
-  zoomFactor: any;
-}
 declare class InverseFourierTransform extends ProcessInstance {
   DontCare: any;
   Rescale: any;
@@ -1467,7 +882,6 @@ declare class InverseFourierTransform extends ProcessInstance {
   idOfSecondComponent: any;
   onOutOfRangeResult: any;
 }
-declare class Invert extends ProcessInstance {}
 declare class LRGBCombination extends ProcessInstance {
   channels: any;
   clipHighlights: any;
@@ -1477,39 +891,11 @@ declare class LRGBCombination extends ProcessInstance {
   mc: any;
   noiseReduction: any;
 }
-declare class LarsonSekanina extends ProcessInstance {
-  Bicubic: any;
-  BicubicBSpline: any;
-  BicubicSpline: any;
-  Bilinear: any;
-  amount: any;
-  angleIncrement: any;
-  centerX: any;
-  centerY: any;
-  deringing: any;
-  disableExtension: any;
-  highPass: any;
-  interpolation: any;
-  radiusIncrement: any;
-  rangeHigh: any;
-  rangeLow: any;
-  threshold: any;
-  useLuminance: any;
-}
+
 declare class LinearFit extends ProcessInstance {
   referenceViewId: any;
   rejectHigh: any;
   rejectLow: any;
-}
-declare class LocalHistogramEqualization extends ProcessInstance {
-  Bit10: any;
-  Bit12: any;
-  Bit8: any;
-  amount: any;
-  circularKernel: any;
-  histogramBins: any;
-  radius: any;
-  slopeLimit: any;
 }
 declare class LocalNormalization extends ProcessInstance {
   GenerateNormalizedImages_Always: any;
@@ -1558,22 +944,6 @@ declare class LocalNormalization extends ProcessInstance {
   targetRejectionThreshold: any;
   useFileThreads: any;
 }
-declare class MaskedStretch extends ProcessInstance {
-  MaskType_Intensity: any;
-  MaskType_Value: any;
-  backgroundHigh: any;
-  backgroundLow: any;
-  backgroundReferenceViewId: any;
-  clippingFraction: any;
-  maskType: any;
-  numberOfIterations: any;
-  roiX0: any;
-  roiX1: any;
-  roiY0: any;
-  roiY1: any;
-  targetBackground: any;
-  useROI: any;
-}
 declare class MergeCFA extends ProcessInstance {
   outputViewId: any;
   sourceCFAImage0: any;
@@ -1581,92 +951,7 @@ declare class MergeCFA extends ProcessInstance {
   sourceCFAImage2: any;
   sourceCFAImage3: any;
 }
-declare class MorphologicalTransformation extends ProcessInstance {
-  Closing: any;
-  Dilation: any;
-  Erosion: any;
-  Median: any;
-  Midpoint: any;
-  Opening: any;
-  Selection: any;
-  amount: any;
-  highThreshold: any;
-  interlacingDistance: any;
-  lowThreshold: any;
-  numberOfIterations: any;
-  operator: any;
-  selectionPoint: any;
-  structureName: any;
-  structureSize: any;
-  structureWayTable: any;
-}
-declare class MultiscaleLinearTransform extends ProcessInstance {
-  AllPixelChanges: any;
-  DecreasingPixels: any;
-  Disabled: any;
-  Hyperbolic: any;
-  IncreasingPixels: any;
-  Ln: any;
-  Log10: any;
-  MultiscaleLinearTransform: any;
-  NoFunction: any;
-  StarletTransform: any;
-  curveBreakPoint: any;
-  deringing: any;
-  deringingBright: any;
-  deringingDark: any;
-  highRange: any;
-  largeScaleFunction: any;
-  layers: any;
-  linear: any;
-  linearMask: any;
-  linearMaskAmpFactor: any;
-  linearMaskInverted: any;
-  linearMaskPreview: any;
-  linearMaskSmoothness: any;
-  lowRange: any;
-  noiseThreshold: any;
-  noiseThresholding: any;
-  noiseThresholdingAmount: any;
-  outputDeringingMaps: any;
-  previewLayer: any;
-  previewMode: any;
-  scaleDelta: any;
-  scalingFunctionColFilter: any;
-  scalingFunctionData: any;
-  scalingFunctionName: any;
-  scalingFunctionNoiseSigma: any;
-  scalingFunctionRowFilter: any;
-  softThresholding: any;
-  toChrominance: any;
-  toLuminance: any;
-  transform: any;
-  useMultiresolutionSupport: any;
-}
-declare class MultiscaleMedianTransform extends ProcessInstance {
-  AllPixelChanges: any;
-  DecreasingPixels: any;
-  Disabled: any;
-  IncreasingPixels: any;
-  MedianWaveletTransform: any;
-  MultiscaleMedianTransform: any;
-  highRange: any;
-  layers: any;
-  linear: any;
-  linearMask: any;
-  linearMaskAmpFactor: any;
-  linearMaskInverted: any;
-  linearMaskPreview: any;
-  linearMaskSmoothness: any;
-  lowRange: any;
-  medianWaveletThreshold: any;
-  previewLayer: any;
-  previewMode: any;
-  scaleDelta: any;
-  toChrominance: any;
-  toLuminance: any;
-  transform: any;
-}
+
 declare class NewImage extends ProcessInstance {
   Grayscale: any;
   RGB: any;
@@ -1687,19 +972,6 @@ declare class NewImage extends ProcessInstance {
   width: any;
 }
 declare class NoOperation extends ProcessInstance {}
-declare class NoiseGenerator extends ProcessInstance {
-  Impulsional: any;
-  None: any;
-  Normal: any;
-  Poisson: any;
-  PreserveMean: any;
-  PreserveMedian: any;
-  Uniform: any;
-  amount: any;
-  distribution: any;
-  impulsionalNoiseProbability: any;
-  preserveBrightness: any;
-}
 declare class PhotometricColorCalibration extends ProcessInstance {
   AlignmentDevice_PolygonMatching: any;
   AlignmentDevice_TriangleSimilarity: any;
@@ -1766,43 +1038,7 @@ declare class PhotometricColorCalibration extends ProcessInstance {
   zeroPointJB_JV: any;
   zeroPointSr_JV: any;
 }
-declare class PixelMath extends ProcessInstance {
-  Gray: any;
-  RGB: any;
-  SameAsTarget: any;
-  createNewImage: any;
-  expression: any;
-  expression0: any;
-  expression1: any;
-  expression2: any;
-  expression3: any;
-  f32: any;
-  f64: any;
-  generateOutput: any;
-  i16: any;
-  i32: any;
-  i8: any;
-  newImageAlpha: any;
-  newImageColorSpace: any;
-  newImageHeight: any;
-  newImageId: any;
-  newImageSampleFormat: any;
-  newImageWidth: any;
-  optimization: any;
-  outputData: any;
-  rescale: any;
-  rescaleLower: any;
-  rescaleUpper: any;
-  showNewImage: any;
-  singleThreaded: any;
-  symbols: any;
-  truncate: any;
-  truncateLower: any;
-  truncateUpper: any;
-  use64BitWorkingImage: any;
-  useSingleExpression: any;
-  variables: any;
-}
+
 declare class Preferences extends ProcessInstance {
   Application_asteroidEphemeridesFile: any;
   Application_autoUIScaling: any;
@@ -1968,12 +1204,7 @@ declare class ProcessContainer extends ProcessInstance {
   maskInverted: any;
   setMask: any;
 }
-declare class RGBWorkingSpace extends ProcessInstance {
-  applyGlobalRGBWS: any;
-  channels: any;
-  gamma: any;
-  sRGBGamma: any;
-}
+
 declare class RangeSelection extends ProcessInstance {
   fuzziness: any;
   highRange: any;
@@ -2015,123 +1246,6 @@ declare class ReadoutOptions extends ProcessInstance {
   showMask: any;
   showPreview: any;
 }
-declare class Resample extends ProcessInstance {
-  AbsoluteCentimeters: any;
-  AbsoluteInches: any;
-  AbsolutePixels: any;
-  Auto: any;
-  BicubicBSpline: any;
-  BicubicSpline: any;
-  Bilinear: any;
-  CatmullRomSplineFilter: any;
-  CubicBSplineFilter: any;
-  ForceArea: any;
-  ForceHeight: any;
-  ForceWidth: any;
-  ForceWidthAndHeight: any;
-  Lanczos3: any;
-  Lanczos4: any;
-  MitchellNetravaliFilter: any;
-  NearestNeighbor: any;
-  RelativeDimensions: any;
-  absoluteMode: any;
-  clampingThreshold: any;
-  forceResolution: any;
-  interpolation: any;
-  metric: any;
-  mode: any;
-  noGUIMessages: any;
-  smoothness: any;
-  xResolution: any;
-  xSize: any;
-  yResolution: any;
-  ySize: any;
-}
-declare class Rescale extends ProcessInstance {
-  CIEL: any;
-  CIEY: any;
-  RGBK: any;
-  RGBK_Individual: any;
-  mode: any;
-}
-declare class RestorationFilter extends ProcessInstance {
-  ConstrainedLeastSquares: any;
-  External: any;
-  Gaussian: any;
-  K: any;
-  MotionBlur: any;
-  Parametric: any;
-  Wiener: any;
-  algorithm: any;
-  amount: any;
-  deringing: any;
-  deringingBright: any;
-  deringingDark: any;
-  gamma: any;
-  linear: any;
-  outputDeringingMaps: any;
-  psfAspectRatio: any;
-  psfGaussianAspectRatio: any;
-  psfGaussianRotationAngle: any;
-  psfGaussianShape: any;
-  psfGaussianSigma: any;
-  psfMode: any;
-  psfMotionLength: any;
-  psfMotionRotationAngle: any;
-  psfRotationAngle: any;
-  psfShape: any;
-  psfSigma: any;
-  psfViewId: any;
-  rangeHigh: any;
-  rangeLow: any;
-  toLuminance: any;
-  useLuminance: any;
-}
-declare class Rotation extends ProcessInstance {
-  Auto: any;
-  BicubicBSpline: any;
-  BicubicSpline: any;
-  Bilinear: any;
-  CatmullRomSplineFilter: any;
-  CubicBSplineFilter: any;
-  Lanczos3: any;
-  Lanczos4: any;
-  MitchellNetravaliFilter: any;
-  NearestNeighbor: any;
-  alpha: any;
-  angle: any;
-  blue: any;
-  clampingThreshold: any;
-  green: any;
-  interpolation: any;
-  noGUIMessages: any;
-  optimizeFast: any;
-  red: any;
-  smoothness: any;
-}
-declare class SCNR extends ProcessInstance {
-  AdditiveMask: any;
-  AverageNeutral: any;
-  Blue: any;
-  Green: any;
-  MaximumMask: any;
-  MaximumNeutral: any;
-  MinimumNeutral: any;
-  Red: any;
-  amount: any;
-  colorToRemove: any;
-  preserveLightness: any;
-  preserveLuminance: any;
-  protectionMethod: any;
-}
-declare class SampleFormatConversion extends ProcessInstance {
-  To16Bit: any;
-  To32Bit: any;
-  To8Bit: any;
-  ToDouble: any;
-  ToFloat: any;
-  format: any;
-}
 declare class Sandbox extends ProcessInstance {
   FirstItem: any;
   SecondItem: any;
@@ -2152,27 +1266,6 @@ declare class Script extends ProcessInstance {
   filePath: any;
   md5sum: any;
   parameters: any;
-}
-declare class SimplexNoise extends ProcessInstance {
-  Add: any;
-  And: any;
-  Copy: any;
-  Dif: any;
-  Div: any;
-  Mul: any;
-  Nand: any;
-  Nor: any;
-  Or: any;
-  Pow: any;
-  Screen: any;
-  Sub: any;
-  Xnor: any;
-  Xor: any;
-  amount: any;
-  offsetX: any;
-  offsetY: any;
-  operator: any;
-  scale: any;
 }
 declare class SplitCFA extends ProcessInstance {
   outputDir: any;
@@ -2340,15 +1433,7 @@ declare class StarMask extends ProcessInstance {
   truncation: any;
   waveletLayers: any;
 }
-declare class StarNet extends ProcessInstance {
-  Stride_128: any;
-  Stride_16: any;
-  Stride_32: any;
-  Stride_64: any;
-  Stride_8: any;
-  mask: any;
-  stride: any;
-}
+
 declare class Statistics extends ProcessInstance {}
 declare class SubframeSelector extends ProcessInstance {
   Abort: any;
@@ -2440,40 +1525,4 @@ declare class Superbias extends ProcessInstance {
   superbiasViewId: any;
   superbiasViewId1: any;
   trimmingFactor: any;
-}
-declare class TGVDenoise extends ProcessInstance {
-  convergenceEnabledC: any;
-  convergenceEnabledL: any;
-  convergenceLimitC: any;
-  convergenceLimitL: any;
-  edgeProtectionC: any;
-  edgeProtectionL: any;
-  filterEnabledC: any;
-  filterEnabledL: any;
-  maxIterationsC: any;
-  maxIterationsL: any;
-  rgbkMode: any;
-  smoothnessC: any;
-  smoothnessL: any;
-  strengthC: any;
-  strengthL: any;
-  supportEnabled: any;
-  supportHighlightsClip: any;
-  supportMidtonesBalance: any;
-  supportPreview: any;
-  supportRemovedWaveletLayers: any;
-  supportShadowsClip: any;
-  supportViewId: any;
-}
-declare class UnsharpMask extends ProcessInstance {
-  amount: any;
-  deringing: any;
-  deringingBright: any;
-  deringingDark: any;
-  linear: any;
-  outputDeringingMaps: any;
-  rangeHigh: any;
-  rangeLow: any;
-  sigma: any;
-  useLuminance: any;
 }
