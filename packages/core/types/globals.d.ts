@@ -1689,7 +1689,7 @@ declare class View {
 declare const console: any;
 declare let jsStrictMode: boolean;
 declare const format: any;
-declare function gc(arg: any);
+declare function gc(arg?: any);
 declare function processEvents();
 
 interface Math {

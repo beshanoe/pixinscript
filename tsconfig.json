@@ -12,6 +12,9 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "lib": ["esnext"],
-    "types": ["@pixinsight/core/types/globals"]
+    "types": [
+      "@pixinsight/core/types/globals",
+      "@pixinsight/core/types/processes"
+    ]
   }
 }

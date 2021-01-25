@@ -1,9 +1,10 @@
 /// <reference types="@pixinsight/core/types/controls" />
 /// <reference types="@pixinsight/core/types/globals" />
-
 import "core-js/modules/es.map";
 import "core-js/modules/es.object.entries";
+import React from "react";
 import Reconciler from "react-reconciler";
+import { DialogContext } from "./DialogContext";
 
 declare const global: any;
 type Extended<T> = T & {
@@ -59,8 +60,11 @@ const PixInsightReconciler = Reconciler({
     debug("prepareForCommit");
     return null;
   },
-  resetAfterCommit() {
+  resetAfterCommit(containerInfo: any) {
     debug("resetAfterCommit");
+    setTimeout(() => {
+      containerInfo?.dialog?.adjustToContents();
+    }, 0);
   },
   //@ts-ignore
   clearContainer() {
@@ -130,6 +134,9 @@ const PixInsightReconciler = Reconciler({
   },
   appendInitialChild(parent: Instance, child: Instance) {
     debug(`appendInitialChild ${parent.__id} ${child.__id}`);
+    if (child instanceof Dialog) {
+      return;
+    }
     const args = [child, child.stretchFactor];
     if (!(child instanceof Sizer)) {
       args.push(child.alignment);
@@ -140,6 +147,9 @@ const PixInsightReconciler = Reconciler({
   },
   appendChild(parent: Instance, child: Instance) {
     debug(`appendChild ${parent.__id} ${child.__id}`);
+    if (child instanceof Dialog) {
+      return;
+    }
     const args = [child, child.stretchFactor];
     if (!(child instanceof Sizer)) {
       args.push(child.alignment);
@@ -150,6 +160,9 @@ const PixInsightReconciler = Reconciler({
   },
   appendChildToContainer(parent: Instance, child: Instance) {
     debug(`appendChildToContainer ${parent.__id} ${child.__id}`);
+    if (child instanceof Dialog) {
+      return;
+    }
     const args = [child, child.stretchFactor];
     if (!(child instanceof Sizer)) {
       args.push(child.alignment);
@@ -163,6 +176,10 @@ const PixInsightReconciler = Reconciler({
     return false;
   },
   insertBefore(parent: Instance, child: Instance, beforeChild: Instance) {
+    debug(`insertBefore ${parent.__id} ${child.__id}`);
+    if (child instanceof Dialog) {
+      return;
+    }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
     const args = [sizer.indexOf(beforeChild), child, child.stretchFactor];
     if (!(child instanceof Sizer)) {
@@ -173,6 +190,9 @@ const PixInsightReconciler = Reconciler({
   },
   removeChild(parent: Extended<Control>, child: Extended<Control>) {
     debug(`removeChild ${parent.__id} ${child.__id}`);
+    if (child instanceof Dialog) {
+      return;
+    }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
     sizer.remove(child);
     child.parent = garbage;
@@ -182,6 +202,9 @@ const PixInsightReconciler = Reconciler({
     child: Extended<Control>
   ) {
     debug(`removeChildFromContainer ${parent.__id} ${child.__id}`);
+    if (child instanceof Dialog) {
+      return;
+    }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
     sizer.remove(child);
     child.parent = garbage;
@@ -250,10 +273,14 @@ export function render(
 ) {
   var dialog = new Dialog();
   Object.entries(options.dialog ?? {}).forEach(([key, value]) => {
-    (<any>dialog)[key] = value;
+    (dialog as any)[key] = value;
   });
 
   var sizer = new Sizer(true);
+  // @ts-ignore
+  sizer.__id = "RootDialogSizer";
+  // @ts-ignore
+  sizer.dialog = dialog;
   dialog.sizer = sizer;
 
   global.setTimeout = function (cb: () => void, ms: number) {
@@ -268,7 +295,10 @@ export function render(
 
   debugMode = options.debug ?? false;
 
-  directRender(element, dialog.sizer);
+  directRender(
+    <DialogContext.Provider value={dialog}>{element}</DialogContext.Provider>,
+    dialog.sizer
+  );
 
   dialog.execute();
 }

@@ -1,45 +1,69 @@
 import { UIControl, UIVerticalSizer } from "@pixinsight/ui";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 
-export function ImagePreview({ image }: { image?: Image }) {
+export function ImagePreview({
+  image,
+  children,
+}: { image?: Image } & React.ComponentProps<typeof UIControl>) {
   const controlRef = useRef<Control>(null);
-  const croppedImage = useMemo(() => {
-    if (!image) {
-      return;
-    }
-
-    const imageClone = new Image(image);
-    imageClone.cropTo(100, 100, 200, 200);
-
-    return imageClone;
-  }, [image]);
+  const [zoom, setZoom] = useState(1);
 
   useEffect(() => {
-    if (!controlRef.current || !croppedImage) {
+    if (!controlRef.current || !image) {
       return;
     }
     const control = controlRef.current;
-    const ratio = croppedImage?.width / croppedImage?.height;
-    control.setFixedSize(croppedImage?.width, croppedImage?.height); // TODO: understand if size can be passed as a prop or should be called imperatively
-    control.update()
-  }, [croppedImage]);
+    const ratio = image?.width / image?.height;
+    control.setFixedSize(200, 200 / ratio); // TODO: understand if size can be passed as a prop or should be called imperatively
+    control.update();
+  }, [image]);
 
   function onPaint() {
-    if (!controlRef.current || !croppedImage) {
+    if (!controlRef.current || !image) {
       return;
     }
     const control = controlRef.current;
-    var G = new Graphics(control);
-    G.drawScaledBitmap(control.boundsRect, croppedImage.render());
-    // G.pen = new Pen(0xff00ff00); //Green
-    // G.drawRect(this.imageRect());
+    const G = new Graphics(control);
+    if (zoom === 1) {
+      image.resetRectSelection();
+    } else {
+      const offset = zoom * 3;
+      image.selectedRect = new Rect(
+        offset,
+        offset,
+        image.width - offset,
+        image.height - offset
+      );
+    }
+    G.drawScaledBitmap(control.boundsRect, image.render());
+    image.render();
+    G.pen = new Pen(0xff00ff00); //Green
+    G.drawRect(10, 10, 50, 50);
     G.end();
+
+    gc();
+  }
+
+  function onMouseWheel(
+    x: number,
+    y: number,
+    delta: number,
+    buttonState: number,
+    modifiers: any
+  ) {
+    if (Math.abs(delta) > 0) {
+      const operand = delta / Math.abs(delta);
+      setZoom(zoom + operand > 1 ? zoom + operand : 1);
+      controlRef?.current?.repaint();
+      console.log([x, y, delta, buttonState, modifiers].join(" "));
+    }
   }
 
   return (
     <UIVerticalSizer>
-      Image {image?.width} {image?.height}
-      <UIControl ref={controlRef} onPaint={onPaint} />
+      <UIControl ref={controlRef} onPaint={onPaint} onMouseWheel={onMouseWheel}>
+        {children}
+      </UIControl>
     </UIVerticalSizer>
   );
 }

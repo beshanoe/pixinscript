@@ -62,7 +62,7 @@ export const UIComboBox = React.forwardRef<
   SizerChildProps<ComboBox> & { items: { text: string; icon?: string }[] }
 >(({ items, ...props }, ref) => {
   const innerRef = React.useRef<ComboBox>(null);
-  const refToUse = useCombinedRefs(ref, innerRef);
+  const combinedRef = useCombinedRefs(ref, innerRef);
 
   React.useEffect(() => {
     innerRef.current?.clear();
@@ -70,14 +70,39 @@ export const UIComboBox = React.forwardRef<
       innerRef.current?.addItem(item.text);
     }
   }, [items]);
-  return <picontrol ref={refToUse} type="ComboBox" {...props} />;
+  return <picontrol ref={combinedRef} type="ComboBox" {...props} />;
 });
 
-export const UIDialog = React.forwardRef<Dialog, SizerChildProps<Dialog>>(
-  (props, ref) => {
-    return <picontrol ref={ref} type="Dialog" {...props} />;
+export const UIDialog = React.forwardRef<
+  Dialog,
+  SizerChildProps<Dialog> & {
+    isOpen?: boolean;
+    children: React.ReactNode;
+    windowTitle: string;
   }
-);
+>(({ isOpen, ...props }, ref) => {
+  const innerRef = React.useRef<Dialog & { __isOpen?: boolean }>(null);
+  const combinedRef = useCombinedRefs(ref, innerRef);
+
+  React.useEffect(() => {
+    const dialog = innerRef.current;
+    if (!dialog) {
+      return;
+    }
+    if (isOpen && !dialog.__isOpen) {
+      dialog.__isOpen = true;
+      console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEE");
+      dialog.execute();
+    }
+    if (!isOpen && dialog.__isOpen) {
+      console.log("NNNNNNNNNNNNNNNNNNNNNNNNN");
+      dialog.__isOpen = false;
+      dialog.done(0);
+    }
+  }, [isOpen]);
+
+  return <picontrol ref={combinedRef} type="Dialog" {...props} />;
+});
 
 export const UIEdit = React.forwardRef<Edit, SizerChildProps<Edit>>(
   (props, ref) => {
@@ -191,19 +216,19 @@ export const UIViewList = React.forwardRef<
   SizerChildProps<ViewList> & { mode?: `all` | `main` | `preview` }
 >(({ mode, ...props }, ref) => {
   const innerRef = React.useRef<ViewList>(null);
-  const refToUse = useCombinedRefs(ref, innerRef);
+  const combinedRef = useCombinedRefs(ref, innerRef);
 
   React.useEffect(() => {
     if (mode === "main") {
-      refToUse.current?.getMainViews();
+      combinedRef.current?.getMainViews();
     } else if (mode === "preview") {
-      refToUse.current?.getPreviews();
+      combinedRef.current?.getPreviews();
     } else {
-      refToUse.current?.getAll();
+      combinedRef.current?.getAll();
     }
   }, [mode]);
 
-  return <picontrol type="ViewList" ref={refToUse} {...props} />;
+  return <picontrol type="ViewList" ref={combinedRef} {...props} />;
 });
 
 export const UIWebView = React.forwardRef<WebView, SizerChildProps<WebView>>(
