@@ -27,7 +27,7 @@ const sizerPropsSet = new Set([
 jsStrictMode = false;
 console.clear();
 
-console.log = console.writeln;
+console.log = (...args: any[]) => console.writeln(args.join(' '));
 console.warn = console.warning;
 console.error = console.critical;
 
@@ -63,7 +63,7 @@ const PixInsightReconciler = Reconciler({
   resetAfterCommit(containerInfo: any) {
     debug("resetAfterCommit");
     setTimeout(() => {
-      containerInfo?.dialog?.adjustToContents();
+      containerInfo?.dialog?.adjustToContents(); // TODO: make it optional
     }, 0);
   },
   //@ts-ignore

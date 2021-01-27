@@ -21,8 +21,8 @@ declare class Bitmap {
   replaceColor: any;
   rotated: any;
   save: any;
-  scaled: any;
-  scaledTo: any;
+  scaled(...args: any[]): Bitmap;
+  scaledTo(...args: any[]): Bitmap;
   setAlpha: any;
   setPixel: any;
   setTransparency: any;
@@ -746,7 +746,7 @@ declare class Image {
   rangeClipLow: any;
   rangeClippingEnabled: any;
   readRawFile: any;
-  render: any;
+  render(): Bitmap;
   resample: any;
   rescale: any;
   resetChannelSelection: any;
