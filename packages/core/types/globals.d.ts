@@ -1082,6 +1082,7 @@ declare class Matrix {
   twoSidedMAD: any;
   variance: any;
 
+  static linearFilter: any;
   static gaussianFilterBySize: any;
   static fromImage: any;
 }
@@ -1307,7 +1308,7 @@ declare class Rect {
   area: any;
   assign: any;
   bottom: any;
-  center: any;
+  center: Point;
   clipCode: any;
   deflateBy: any;
   deflatedBy: any;

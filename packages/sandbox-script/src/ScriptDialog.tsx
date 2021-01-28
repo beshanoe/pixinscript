@@ -3,10 +3,9 @@ import {
   TextAlign_Center,
   TextAlign_VertCenter,
 } from "@pixinsight/core";
-import { useDialog } from "@pixinsight/react";
 import {
   UIComboBox,
-  UIDialog,
+  UIControl,
   UIEdit,
   UIGroupBox,
   UIHorizontalSizer,
@@ -18,9 +17,15 @@ import {
   UIVerticalSizer,
   UIViewList,
 } from "@pixinsight/ui";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { version } from "../package.json";
 import { ImagePreview } from "./ImagePreview";
+import { ImagePreviewSelect } from "./ImagePreviewSelect";
+import { binarize } from "./process/binarize";
+import { convolute } from "./process/convolute";
+import { dilation } from "./process/dilation";
+import { assignThroughMask, substract } from "./process/pixelMath";
+import { structures } from "./process/structures";
 
 export const SCRIPT_NAME = "Star De-emphasizer";
 const SCRIPT_DESCRIPTION = `<b> ${SCRIPT_NAME}  v${version}</b> &mdash; This script uses the method suggested by Adam Block to de-emphasize stars.`;
@@ -29,146 +34,188 @@ export function ScriptDialog() {
   const [starlessView, setStarlessView] = useState<View | null>(null);
   const [targetView, setTargetView] = useState<View | null>(null);
   const [resultImage, setResultImage] = useState<Image>();
+  const [rect, setRect] = useState<Rect>(new Rect());
+
+  const [previewImage, setPreviewImage] = useState<Image>();
+  const [previewStarlessImage, setPreviewStarlessImage] = useState<Image>();
+
+  const [previewLumImage, setPreviewLumImage] = useState<Image>();
+  const [previewStructImage, setPreviewStructImage] = useState<Image>();
+  const [previewBinImage, setPreviewBinImage] = useState<Image>();
+  const [previewDilatedImage, setPreviewDilatedImage] = useState<Image>();
+  const [previewConvolutedImage, setPreviewConvolutedImage] = useState<Image>();
+  const [previewHolesImage, setPreviewHolesImage] = useState<Image>();
+  const [previewFinalImage, setPreviewFinalImage] = useState<Image>();
+
+  const [showOriginal, setShowOriginal] = useState(false);
+
+  const targetImage = useMemo(() => targetView?.image, [targetView]);
+  const starlessImage = useMemo(() => starlessView?.image, [starlessView]);
+
+  useEffect(() => {
+    if (targetImage) {
+      const previewImage = new Image();
+      previewImage.assign(targetImage);
+      previewImage.cropTo(rect);
+      setPreviewImage(previewImage);
+    }
+
+    if (starlessImage) {
+      const previewStarlessImage = new Image();
+      previewStarlessImage.assign(starlessImage);
+      previewStarlessImage.cropTo(rect);
+      setPreviewStarlessImage(previewStarlessImage);
+    }
+
+    setPreviewFinalImage(undefined);
+  }, [rect, targetImage, starlessImage]);
 
   function onProcessClick() {
-    const image = new Image();
-    targetView?.image.getLuminance(image);
+    if (!previewImage || !previewStarlessImage) {
+      return;
+    }
 
-    /*
-     * Start time: 2021-01-24T21:11:27.254Z UTC
-     * Execution time: 60.141 ms
-     */
-    var P = new MultiscaleLinearTransform();
-    P.layers = [
-      // enabled, biasEnabled, bias, noiseReductionEnabled, noiseReductionThreshold, noiseReductionAmount, noiseReductionIterations
-      [true, true, 0.0, false, 3.0, 1.0, 1],
-      [true, true, 0.0, false, 3.0, 1.0, 1],
-      [true, true, 0.0, false, 3.0, 1.0, 1],
-      [false, true, 0.0, false, 3.0, 1.0, 1],
-      [false, true, 0.0, false, 3.0, 1.0, 1],
-    ];
-    P.transform = MultiscaleLinearTransform.prototype.StarletTransform;
-    P.scaleDelta = 0;
-    P.scalingFunctionData = [0.25, 0.5, 0.25, 0.5, 1, 0.5, 0.25, 0.5, 0.25];
-    P.scalingFunctionRowFilter = [0.5, 1, 0.5];
-    P.scalingFunctionColFilter = [0.5, 1, 0.5];
-    P.scalingFunctionNoiseSigma = [
-      0.8003,
-      0.2729,
-      0.1198,
-      0.0578,
-      0.0287,
-      0.0143,
-      0.0072,
-      0.0036,
-      0.0019,
-      0.001,
-    ];
-    P.scalingFunctionName = "Linear Interpolation (3)";
-    P.linearMask = false;
-    P.linearMaskAmpFactor = 100;
-    P.linearMaskSmoothness = 1.0;
-    P.linearMaskInverted = true;
-    P.linearMaskPreview = false;
-    P.largeScaleFunction = MultiscaleLinearTransform.prototype.NoFunction;
-    P.curveBreakPoint = 0.75;
-    P.noiseThresholding = false;
-    P.noiseThresholdingAmount = 1.0;
-    P.noiseThreshold = 3.0;
-    P.softThresholding = true;
-    P.useMultiresolutionSupport = false;
-    P.deringing = false;
-    P.deringingDark = 0.1;
-    P.deringingBright = 0.0;
-    P.outputDeringingMaps = false;
-    P.lowRange = 0.0;
-    P.highRange = 0.0;
-    P.previewMode = MultiscaleLinearTransform.prototype.Disabled;
-    P.previewLayer = 0;
-    P.toLuminance = true;
-    P.toChrominance = true;
-    P.linear = false;
+    try {
+      const lumImage = new Image();
+      previewImage.getLuminance(lumImage);
+      const structImage = structures(lumImage);
+      const binImage = binarize(structImage);
+      const dilatedImage = dilation(binImage);
+      const convolutedImage = convolute(dilatedImage);
+      const holesImage = substract(convolutedImage, lumImage);
+      const finalImage = assignThroughMask(
+        previewImage,
+        previewStarlessImage,
+        holesImage
+      );
 
-    P.executeOn(image);
-    setResultImage(image);
+      setPreviewLumImage(lumImage);
+      setPreviewStructImage(structImage);
+      setPreviewBinImage(binImage);
+      setPreviewDilatedImage(dilatedImage);
+      setPreviewConvolutedImage(convolutedImage);
+      setPreviewHolesImage(holesImage);
+      setPreviewFinalImage(finalImage);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
-    <UIVerticalSizer margin={5} spacing={5}>
-      <UILabel
-        text={SCRIPT_DESCRIPTION}
-        frameStyle={FrameStyle_Box}
-        wordWrapping={true}
-        useRichText={true}
-        stretchFactor={0}
-      />
+    <UIVerticalSizer>
+      <UIHorizontalSizer stretchFactor={50}>
+        <UIControl minWidth={300}>
+          <UIVerticalSizer margin={5} spacing={5}>
+            <UILabel
+              text={SCRIPT_DESCRIPTION}
+              frameStyle={FrameStyle_Box}
+              minHeight={50}
+              wordWrapping={true}
+              useRichText={true}
+              stretchFactor={0}
+            />
 
-      <UIHorizontalSizer>
-        <UILabel
-          text="Starless view: "
-          textAlignment={TextAlign_VertCenter}
-          minWidth={80}
-        />
-        <UIViewList
-          onViewSelected={(view: View) => setStarlessView(view)}
-          stretchFactor={1}
-        />
+            <UIHorizontalSizer>
+              <UILabel
+                text="Target view: "
+                textAlignment={TextAlign_VertCenter}
+                minWidth={80}
+              />
+              <UIViewList
+                onViewSelected={(view: View) => {
+                  setTargetView(view.isNull ? null : view);
+                }}
+                stretchFactor={1}
+              />
+            </UIHorizontalSizer>
+
+            <UIHorizontalSizer>
+              <UILabel
+                text="Starless view: "
+                textAlignment={TextAlign_VertCenter}
+                minWidth={80}
+              />
+              <UIViewList
+                onViewSelected={(view: View) =>
+                  setStarlessView(view.isNull ? null : view)
+                }
+                enabled={Boolean(targetView && !targetView.isNull)}
+                stretchFactor={1}
+              />
+            </UIHorizontalSizer>
+
+            <UIGroupBox title="Structures" spacing={5} margin={5}>
+              <UIHorizontalSizer>
+                <UILabel text="Min size: " textAlignment={TextAlign_Center} />
+                <UISpinBox maxValue={10} />
+                <UIStretch />
+              </UIHorizontalSizer>
+              <UIHorizontalSizer>
+                <UILabel text="Max size: " textAlignment={TextAlign_Center} />
+                <UISpinBox />
+                <UIStretch />
+              </UIHorizontalSizer>
+            </UIGroupBox>
+
+            <UIGroupBox title="Binarization" spacing={5} margin={5}>
+              <UIHorizontalSizer spacing={5}>
+                <UILabel text="Threshold: " textAlignment={TextAlign_Center} />
+                <UIEdit maxWidth={50} />
+                <UISlider stretchFactor={1} />
+              </UIHorizontalSizer>
+            </UIGroupBox>
+
+            <UIGroupBox title="Dilation" spacing={5} margin={5}>
+              <UIHorizontalSizer spacing={5}>
+                <UILabel text="Size: " textAlignment={TextAlign_Center} />
+                <UIComboBox
+                  items={[{ text: "3" }, { text: "5" }, { text: "7" }]}
+                />
+                <UIStretch />
+              </UIHorizontalSizer>
+            </UIGroupBox>
+
+            <UIGroupBox title="Convolution" spacing={5} margin={5}>
+              <UIHorizontalSizer spacing={5}>
+                <UILabel text="StdDev: " textAlignment={TextAlign_Center} />
+                <UIEdit maxWidth={50} />
+                <UISlider stretchFactor={1} />
+              </UIHorizontalSizer>
+            </UIGroupBox>
+
+            <UIPushButton text="Process Preview" onClick={onProcessClick} />
+
+            <UIStretch />
+          </UIVerticalSizer>
+        </UIControl>
+
+        <UIVerticalSizer stretchFactor={1} margin={5} spacing={5}>
+          <ImagePreviewSelect
+            image={targetImage}
+            onRect={(rect) => setRect(rect)}
+          />
+        </UIVerticalSizer>
+
+        <UIVerticalSizer margin={5} spacing={5}>
+          <ImagePreview image={previewImage} />
+          <ImagePreview
+            image={showOriginal ? previewImage : previewFinalImage}
+            onMousePress={() => setShowOriginal(true)}
+            onMouseRelease={() => setShowOriginal(false)}
+          />
+        </UIVerticalSizer>
       </UIHorizontalSizer>
 
-      <UIHorizontalSizer>
-        <UILabel
-          text="Target view: "
-          textAlignment={TextAlign_VertCenter}
-          minWidth={80}
-        />
-        <UIViewList
-          onViewSelected={(view: View) => setTargetView(view)}
-          stretchFactor={1}
-        />
-      </UIHorizontalSizer>
-
-      <ImagePreview image={targetView?.image} />
-      <UIPushButton text="Process" onClick={onProcessClick} />
-      <ImagePreview image={resultImage} />
-
-      <UIGroupBox title="Structures" spacing={5} margin={5}>
-        <UIHorizontalSizer>
-          <UILabel text="Min size: " textAlignment={TextAlign_Center} />
-          <UISpinBox />
-          <UIStretch />
+      <UIControl minHeight={100}>
+        <UIHorizontalSizer margin={5} spacing={5}>
+          <ImagePreview image={previewLumImage} />
+          <ImagePreview image={previewStructImage} />
+          <ImagePreview image={previewBinImage} />
+          <ImagePreview image={previewDilatedImage} />
+          <ImagePreview image={previewConvolutedImage} />
+          <ImagePreview image={previewHolesImage} />
         </UIHorizontalSizer>
-        <UIHorizontalSizer>
-          <UILabel text="Max size: " textAlignment={TextAlign_Center} />
-          <UISpinBox />
-          <UIStretch />
-        </UIHorizontalSizer>
-      </UIGroupBox>
-
-      <UIGroupBox title="Binarization" spacing={5} margin={5}>
-        <UIHorizontalSizer spacing={5}>
-          <UILabel text="Threshold: " textAlignment={TextAlign_Center} />
-          <UIEdit maxWidth={50} />
-          <UISlider stretchFactor={1} />
-        </UIHorizontalSizer>
-      </UIGroupBox>
-
-      <UIGroupBox title="Dilation" spacing={5} margin={5}>
-        <UIHorizontalSizer spacing={5}>
-          <UILabel text="Size: " textAlignment={TextAlign_Center} />
-          <UIComboBox items={[{ text: "3" }, { text: "5" }, { text: "7" }]} />
-          <UIStretch />
-        </UIHorizontalSizer>
-      </UIGroupBox>
-
-      <UIGroupBox title="Convolution" spacing={5} margin={5}>
-        <UIHorizontalSizer spacing={5}>
-          <UILabel text="StdDev: " textAlignment={TextAlign_Center} />
-          <UIEdit maxWidth={50} />
-          <UISlider stretchFactor={1} />
-        </UIHorizontalSizer>
-      </UIGroupBox>
-
-      <UIStretch />
+      </UIControl>
     </UIVerticalSizer>
   );
 }

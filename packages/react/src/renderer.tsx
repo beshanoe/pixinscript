@@ -27,7 +27,7 @@ const sizerPropsSet = new Set([
 jsStrictMode = false;
 console.clear();
 
-console.log = (...args: any[]) => console.writeln(args.join(' '));
+console.log = (...args: any[]) => console.writeln(args.join(" "));
 console.warn = console.warning;
 console.error = console.critical;
 
@@ -63,7 +63,9 @@ const PixInsightReconciler = Reconciler({
   resetAfterCommit(containerInfo: any) {
     debug("resetAfterCommit");
     setTimeout(() => {
-      containerInfo?.dialog?.adjustToContents(); // TODO: make it optional
+      if (!containerInfo?.dialog?.userResizable) {
+        containerInfo?.dialog?.adjustToContents();
+      }
     }, 0);
   },
   //@ts-ignore
@@ -268,6 +270,7 @@ export function render(
   element: React.ReactElement,
   options: {
     debug?: boolean;
+    resizable?: boolean;
     dialog?: Partial<Dialog>;
   } = {}
 ) {
@@ -283,6 +286,10 @@ export function render(
   sizer.dialog = dialog;
   dialog.sizer = sizer;
 
+  if (!dialog.userResizable) {
+    dialog.setFixedSize();
+  }
+
   global.setTimeout = function (cb: () => void, ms: number) {
     var timer = new Timer();
     timer.interval = ms / 1000;
@@ -295,6 +302,7 @@ export function render(
 
   debugMode = options.debug ?? false;
 
+  // TODO add ErrorBoundaries
   directRender(
     <DialogContext.Provider value={dialog}>{element}</DialogContext.Provider>,
     dialog.sizer
