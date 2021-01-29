@@ -1,12 +1,17 @@
-import { Align_Center, FrameStyle_Box } from "@pixinsight/core";
+import {
+  Align_Center,
+  FrameStyle_Box,
+  TextAlign_Center,
+} from "@pixinsight/core";
 import { UIControl, UIFrame, UILabel, UIVerticalSizer } from "@pixinsight/ui";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 
 export function ImagePreview({
   image,
+  title = "Preview",
   children,
   ...props
-}: { image?: Image } & React.ComponentProps<typeof UIFrame>) {
+}: { image?: Image; title?: string } & React.ComponentProps<typeof UIFrame>) {
   const controlRef = useRef<Control>(null);
   const [size, setSize] = useState<{ w: number; h: number }>({ w: 0, h: 0 });
 
@@ -15,7 +20,19 @@ export function ImagePreview({
     const minSize = Math.min(size.w, size.h);
     const [sw, sh] =
       ratio > 1 ? [minSize, minSize / ratio] : [ratio * minSize, minSize];
-    const bmp = image?.render().scaledTo(sw, sh, 0);
+
+    const [ew, eh] = [
+      image?.width / sw > 1
+        ? Math.round(image?.width / sw)
+        : 1 / Math.round(sw / image?.width),
+      image?.height / sh > 1
+        ? Math.round(image?.height / sh)
+        : 1 / Math.round(sh / image?.height),
+    ];
+
+    const bmp = image
+      ?.render()
+      .scaledTo(image?.width / ew, image?.width / ew, 0);
     return [bmp, size.w / 2 - bmp?.width / 2, size.h / 2 - bmp?.height / 2];
   }, [image, size]);
 
@@ -37,21 +54,22 @@ export function ImagePreview({
   }
 
   return (
-    <UIFrame
-      frameStyle={FrameStyle_Box}
-      minWidth={200}
-      minHeight={200}
-      {...props}
-    >
-      <UIVerticalSizer>
+    <UIVerticalSizer>
+      <UILabel textAlignment={TextAlign_Center} text={title} />
+      <UIFrame
+        frameStyle={FrameStyle_Box}
+        minWidth={200}
+        minHeight={200}
+        {...props}
+      >
         {image ? (
           <UIControl ref={controlRef} onPaint={onPaint} onResize={onResize}>
             {children}
           </UIControl>
-        ) : (
-          <UILabel alignment={Align_Center} text="Preview" />
-        )}
-      </UIVerticalSizer>
-    </UIFrame>
+        ) : null
+        // <UILabel alignment={Align_Center} text={title} />
+        }
+      </UIFrame>
+    </UIVerticalSizer>
   );
 }

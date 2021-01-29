@@ -91,11 +91,9 @@ export const UIDialog = React.forwardRef<
     }
     if (isOpen && !dialog.__isOpen) {
       dialog.__isOpen = true;
-      console.log("EEEEEEEEEEEEEEEEEEEEEEEEEEE");
       dialog.execute();
     }
     if (!isOpen && dialog.__isOpen) {
-      console.log("NNNNNNNNNNNNNNNNNNNNNNNNN");
       dialog.__isOpen = false;
       dialog.done(0);
     }

@@ -926,7 +926,7 @@ declare class ImageWindow {
   isWindow: any;
   isoSpeed: any;
   keywords: any;
-  mainView: any;
+  mainView: View;
   mask: any;
   maskEnabled: any;
   maskInverted: any;

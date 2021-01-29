@@ -1,16 +1,25 @@
-export function structures(image: Image) {
+export function structures(
+  image: Image,
+  { minLayer, maxLayer }: { minLayer: number; maxLayer: number }
+) {
   const imageCopy = new Image();
   imageCopy.assign(image);
 
+  let layers = [];
+  for (let i = 1; i <= maxLayer + 1; i++) {
+    layers.push([
+      i >= minLayer && i <= maxLayer,
+      true,
+      0.0,
+      false,
+      3.0,
+      1.0,
+      1,
+    ] as any);
+  }
+
   var P = new MultiscaleLinearTransform();
-  P.layers = [
-    // enabled, biasEnabled, bias, noiseReductionEnabled, noiseReductionThreshold, noiseReductionAmount, noiseReductionIterations
-    [true, true, 0.0, false, 3.0, 1.0, 1],
-    [true, true, 0.0, false, 3.0, 1.0, 1],
-    [true, true, 0.0, false, 3.0, 1.0, 1],
-    [false, true, 0.0, false, 3.0, 1.0, 1],
-    [false, true, 0.0, false, 3.0, 1.0, 1],
-  ];
+  P.layers = layers;
   P.transform = MultiscaleLinearTransform.prototype.StarletTransform;
   P.scaleDelta = 0;
   P.scalingFunctionData = [0.25, 0.5, 0.25, 0.5, 1, 0.5, 0.25, 0.5, 0.25];

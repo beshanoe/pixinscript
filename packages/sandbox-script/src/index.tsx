@@ -5,5 +5,8 @@ import { ScriptDialog, SCRIPT_NAME } from "./ScriptDialog";
 
 render(<ScriptDialog />, {
   debug: false,
-  dialog: { windowTitle: `${SCRIPT_NAME} Script`, minWidth: 400 },
+  dialog: {
+    windowTitle: `${SCRIPT_NAME} Script`,
+    userResizable: false,
+  },
 });

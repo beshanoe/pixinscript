@@ -286,10 +286,6 @@ export function render(
   sizer.dialog = dialog;
   dialog.sizer = sizer;
 
-  if (!dialog.userResizable) {
-    dialog.setFixedSize();
-  }
-
   global.setTimeout = function (cb: () => void, ms: number) {
     var timer = new Timer();
     timer.interval = ms / 1000;
@@ -307,6 +303,10 @@ export function render(
     <DialogContext.Provider value={dialog}>{element}</DialogContext.Provider>,
     dialog.sizer
   );
+
+  if (!dialog.userResizable) {
+    dialog.setFixedSize();
+  }
 
   dialog.execute();
 }
