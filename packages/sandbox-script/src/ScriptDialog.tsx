@@ -5,6 +5,7 @@ import {
   TextAlign_VertCenter,
   UndoFlag_NoSwapFile,
 } from "@pixinsight/core";
+import { useDialog } from "@pixinsight/react";
 import {
   UIComboBox,
   UIControl,
@@ -16,6 +17,7 @@ import {
   UISlider,
   UISpinBox,
   UIStretch,
+  UIToolButton,
   UIVerticalSizer,
   UIViewList,
 } from "@pixinsight/ui";
@@ -33,10 +35,30 @@ import { structures } from "./process/structures";
 export const SCRIPT_NAME = "Star De-emphasizer";
 const SCRIPT_DESCRIPTION = `<b> ${SCRIPT_NAME}  v${version}</b> &mdash; This script uses the method suggested by Adam Block to de-emphasize stars.<br><br>Copyright (c) 2021 Maxim Valenko @AstroSwell`;
 
-export function ScriptDialog() {
+export const defaultParameters = {
+  structuresMinLayer: 1,
+  structuresMaxLayer: 3,
+  binarizeThreshold: 0.2,
+  dilationSize: 5,
+  convolutionSize: 9,
+};
+
+type Parameters = typeof defaultParameters;
+
+export function ScriptDialog({
+  parameters: storedParameters,
+  onParameterChange,
+}: {
+  parameters?: Partial<Parameters>;
+  onParameterChange?: <K extends keyof Parameters>(
+    name: K,
+    value: Parameters[K]
+  ) => void;
+}) {
+  const dialog = useDialog();
+
   const [starlessView, setStarlessView] = useState<View | null>(null);
   const [targetView, setTargetView] = useState<View | null>(null);
-  const [resultImage, setResultImage] = useState<Image>();
   const [rect, setRect] = useState<Rect>(new Rect());
 
   const [previewImage, setPreviewImage] = useState<Image>();
@@ -51,18 +73,9 @@ export function ScriptDialog() {
   const [previewFinalImage, setPreviewFinalImage] = useState<Image>();
   const [showOriginal, setShowOriginal] = useState(false);
 
-  const [structuresSettings, setStructuresSettings] = useState({
-    minLayer: 1,
-    maxLayer: 3,
-  });
-  const [binarizeSettings, setBinarizeSettings] = useState({
-    threshold: 0.2,
-  });
-  const [dilationSettings, setDilationSettings] = useState({
-    size: 5,
-  });
-  const [convolutionSettings, setConvolutionSettings] = useState({
-    size: 9,
+  const [parameters, setParameters] = useState({
+    ...defaultParameters,
+    ...storedParameters,
   });
 
   const targetImage = useMemo(() => targetView?.image, [targetView]);
@@ -86,15 +99,59 @@ export function ScriptDialog() {
     setPreviewFinalImage(undefined);
   }, [rect, targetImage, starlessImage]);
 
-  function updateStructuresSettings(
-    settings: Partial<typeof structuresSettings>
-  ) {
-    if (settings.minLayer) {
-      if (settings.minLayer > structuresSettings.maxLayer) {
-        settings.maxLayer = settings.minLayer;
+  function updateStructuresSettings(updatedParameters: Partial<Parameters>) {
+    if (updatedParameters.structuresMinLayer) {
+      if (
+        updatedParameters.structuresMinLayer > parameters.structuresMaxLayer
+      ) {
+        updatedParameters.structuresMaxLayer =
+          updatedParameters.structuresMinLayer;
       }
     }
-    setStructuresSettings({ ...structuresSettings, ...settings });
+    const newParameters = { ...parameters, ...updatedParameters };
+    setParameters(newParameters);
+    onParameterChange?.("structuresMinLayer", newParameters.structuresMinLayer);
+    onParameterChange?.("structuresMaxLayer", newParameters.structuresMaxLayer);
+  }
+
+  function process(image: Image, starlessImage: Image) {
+    const lumImage = new Image();
+
+    console.log("Get Luminance...");
+    image.getLuminance(lumImage);
+
+    console.log("MultiscaleLinearTransform...");
+    const structuresImage = structures(lumImage, {
+      minLayer: parameters.structuresMinLayer,
+      maxLayer: parameters.structuresMaxLayer,
+    });
+
+    console.log("Binarize...");
+    const binarizedImage = binarize(structuresImage, {
+      threshold: parameters.binarizeThreshold,
+    });
+
+    console.log("MorphologicalTransformation Dilation...");
+    const dilatedImage = dilation(binarizedImage, parameters.dilationSize);
+
+    console.log("Convolution...");
+    const convolutedImage = convolute(dilatedImage, parameters.convolutionSize);
+
+    console.log("Calculate holes mask...");
+    const holesImage = substract(convolutedImage, lumImage);
+
+    console.log("Render result image...");
+    const finalImage = assignThroughMask(image, starlessImage, holesImage);
+
+    return {
+      lumImage,
+      structuresImage,
+      binarizedImage,
+      dilatedImage,
+      convolutedImage,
+      holesImage,
+      finalImage,
+    };
   }
 
   function onProcessPreviewClick() {
@@ -102,30 +159,20 @@ export function ScriptDialog() {
       return;
     }
 
-    try {
-      const lumImage = new Image();
-      console.log("Get Luminance...");
-      previewImage.getLuminance(lumImage);
-      console.log("MultiscaleLinearTransform...");
-      const structImage = structures(lumImage, structuresSettings);
-      console.log("Binarize...");
-      const binImage = binarize(structImage, binarizeSettings);
-      console.log("MorphologicalTransformation Delation...");
-      const dilatedImage = dilation(binImage, dilationSettings.size);
-      console.log("Convolution...");
-      const convolutedImage = convolute(dilatedImage, convolutionSettings.size);
-      console.log("Calculate holes mask...");
-      const holesImage = substract(convolutedImage, lumImage);
-      console.log("Render result image...");
-      const finalImage = assignThroughMask(
-        previewImage,
-        previewStarlessImage,
-        holesImage
-      );
+    const {
+      lumImage,
+      structuresImage,
+      binarizedImage,
+      dilatedImage,
+      convolutedImage,
+      holesImage,
+      finalImage,
+    } = process(previewImage, previewStarlessImage);
 
+    try {
       setPreviewLumImage(lumImage);
-      setPreviewStructImage(structImage);
-      setPreviewBinImage(binImage);
+      setPreviewStructImage(structuresImage);
+      setPreviewBinImage(binarizedImage);
       setPreviewDilatedImage(dilatedImage);
       setPreviewConvolutedImage(convolutedImage);
       setPreviewHolesImage(holesImage);
@@ -141,32 +188,28 @@ export function ScriptDialog() {
     }
 
     try {
-      const lumImage = new Image();
-      console.log("Get Luminance...");
-      targetImage.getLuminance(lumImage);
-      console.log("MultiscaleLinearTransform...");
-      const structImage = structures(lumImage, structuresSettings);
-      console.log("Binarize...");
-      const binImage = binarize(structImage, binarizeSettings);
-      console.log("MorphologicalTransformation Delation...");
-      const dilatedImage = dilation(binImage, dilationSettings.size);
-      console.log("Convolution...");
-      const convolutedImage = convolute(dilatedImage, convolutionSettings.size);
-      console.log("Calculate holes mask...");
-      const holesImage = substract(convolutedImage, lumImage);
-      console.log("Render result image...");
-      const finalImage = assignThroughMask(
-        targetImage,
-        starlessImage,
-        holesImage
-      );
+      const { finalImage } = process(targetImage, starlessImage);
 
       targetView?.beginProcess();
       targetView?.image.apply(finalImage);
       targetView?.endProcess();
+
+      const msg = new MessageBox(
+        "Stars are successfully de-empasized",
+        "Success"
+      );
+      msg.execute();
     } catch (error) {
       console.error(error);
     }
+  }
+
+  function onResetClick() {
+    setParameters(defaultParameters);
+  }
+
+  function onNewInstancePress() {
+    dialog.newInstance();
   }
 
   return (
@@ -223,10 +266,10 @@ export function ScriptDialog() {
                   minWidth={70}
                   minValue={1}
                   maxValue={10}
-                  value={structuresSettings.minLayer}
-                  onValueUpdated={(minLayer: number) =>
+                  value={parameters.structuresMinLayer}
+                  onValueUpdated={(structuresMinLayer) =>
                     updateStructuresSettings({
-                      minLayer,
+                      structuresMinLayer,
                     })
                   }
                 />
@@ -241,11 +284,11 @@ export function ScriptDialog() {
                 <UISpinBox
                   minWidth={70}
                   maxValue={10}
-                  value={structuresSettings.maxLayer}
-                  minValue={structuresSettings.minLayer}
-                  onValueUpdated={(maxLayer: number) =>
+                  value={parameters.structuresMaxLayer}
+                  minValue={parameters.structuresMinLayer}
+                  onValueUpdated={(structuresMaxLayer) =>
                     updateStructuresSettings({
-                      maxLayer,
+                      structuresMaxLayer,
                     })
                   }
                 />
@@ -257,9 +300,10 @@ export function ScriptDialog() {
               <UIHorizontalSizer spacing={5}>
                 <UILabel text="Threshold: " textAlignment={TextAlign_Center} />
                 <NumericControl
-                  value={binarizeSettings.threshold}
-                  onValueUpdated={(threshold: number) => {
-                    setBinarizeSettings({ threshold });
+                  value={parameters.binarizeThreshold}
+                  onValueUpdated={(binarizeThreshold) => {
+                    setParameters({ ...parameters, binarizeThreshold });
+                    onParameterChange?.("binarizeThreshold", binarizeThreshold);
                   }}
                   minValue={0}
                   maxValue={1}
@@ -276,9 +320,10 @@ export function ScriptDialog() {
                   minValue={3}
                   maxValue={11}
                   stepSize={2}
-                  value={dilationSettings.size}
-                  onValueUpdated={(size: number) => {
-                    setDilationSettings({ size });
+                  value={parameters.dilationSize}
+                  onValueUpdated={(dilationSize) => {
+                    setParameters({ ...parameters, dilationSize });
+                    onParameterChange?.("dilationSize", dilationSize);
                   }}
                 />
                 <UIStretch />
@@ -292,9 +337,10 @@ export function ScriptDialog() {
                   minValue={3}
                   maxValue={61}
                   stepSize={2}
-                  value={convolutionSettings.size}
-                  onValueUpdated={(size: number) => {
-                    setConvolutionSettings({ size });
+                  value={parameters.convolutionSize}
+                  onValueUpdated={(convolutionSize) => {
+                    setParameters({ ...parameters, convolutionSize });
+                    onParameterChange?.("convolutionSize", convolutionSize);
                   }}
                 />
                 <UIStretch />
@@ -342,7 +388,16 @@ export function ScriptDialog() {
       </UIControl>
 
       <UIHorizontalSizer spacing={5} margin={5}>
+        <UIToolButton
+          icon=":/process-interface/new-instance.png"
+          onMousePress={onNewInstancePress}
+        />
         <UIStretch />
+        <UIPushButton
+          onClick={onResetClick}
+          icon=":/icons/reload.png"
+          text="Reset"
+        />
         <UIPushButton
           onClick={onApplyClick}
           icon=":/icons/ok.png"

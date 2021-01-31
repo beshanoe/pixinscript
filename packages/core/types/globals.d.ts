@@ -1149,6 +1149,27 @@ declare class OpenFileDialog {
   loadImageFilters: any;
   multipleSelections: any;
 }
+
+// @ts-ignore
+// Parameters type collides with an internal TS type defined in lib.es5.d.ts
+// Please use parameterStorage instead
+declare class Parameters {
+  static readonly isGlobalTarget: boolean;
+  static readonly isViewTarget: boolean;
+  static readonly targetView: View;
+
+  static clear(): void;
+  static get(id: string): string;
+  static getBoolean(id: string): string;
+  static getInteger(id: string): string;
+  static getReal(id: string): string;
+  static getString(id: string): string;
+  static getUInt(id: string): string;
+  static has(id: string): boolean;
+  static remove(id: string): void;
+  static set(id: string, value: any): void;
+}
+
 declare class PDF {
   constructor(...args: any[]);
   bottomMargin: any;

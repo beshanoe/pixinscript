@@ -282,7 +282,7 @@ declare class Slider extends Control {
   minValue: any;
   normalizedValue: any;
   onRangeUpdated: any;
-  onValueUpdated: any;
+  onValueUpdated: (value: number) => any;
   pageSize: any;
   setRange: any;
   stepSize: any;
@@ -300,7 +300,7 @@ declare class SpinBox extends Control {
   minimumValueText: any;
   normalizedValue: any;
   onRangeUpdated: any;
-  onValueUpdated: any;
+  onValueUpdated: (value: number) => any;
   prefix: any;
   setRange: any;
   stepSize: any;
@@ -451,37 +451,34 @@ declare class WebView extends Control {
   zoomFactor: any;
 }
 
-
 declare class Sizer {
-    constructor(...args: any[]);
-    add: any;
-    addScaledSpacing: any;
-    addSpacing: any;
-    addStretch: any;
-    addUnscaledSpacing: any;
-    displayPixelRatio: any;
-    has: any;
-    indexOf: any;
-    insert: any;
-    insertScaledSpacing: any;
-    insertSpacing: any;
-    insertStretch: any;
-    insertUnscaledSpacing: any;
-    isHorizontal: any;
-    isVertical: any;
-    logicalPixelsToPhysical: any;
-    margin: any;
-    numberOfItems: any;
-    parentControl: Control;
-    physicalPixelsToLogical: any;
-    remove: any;
-    scaledMargin: any;
-    scaledSpacing: any;
-    setAlignment: any;
-    setStretchFactor: any;
-    spacing: any;
-    unscaledMargin: any;
-    unscaledSpacing: any;
-  }
-
-
+  constructor(...args: any[]);
+  add: any;
+  addScaledSpacing: any;
+  addSpacing: any;
+  addStretch: any;
+  addUnscaledSpacing: any;
+  displayPixelRatio: any;
+  has: any;
+  indexOf: any;
+  insert: any;
+  insertScaledSpacing: any;
+  insertSpacing: any;
+  insertStretch: any;
+  insertUnscaledSpacing: any;
+  isHorizontal: any;
+  isVertical: any;
+  logicalPixelsToPhysical: any;
+  margin: any;
+  numberOfItems: any;
+  parentControl: Control;
+  physicalPixelsToLogical: any;
+  remove: any;
+  scaledMargin: any;
+  scaledSpacing: any;
+  setAlignment: any;
+  setStretchFactor: any;
+  spacing: any;
+  unscaledMargin: any;
+  unscaledSpacing: any;
+}
