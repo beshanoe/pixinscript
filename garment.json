@@ -25,7 +25,10 @@
             "input": "{{projectDir}}/es/**/*.d.ts",
             "output": "{{projectDir}}/lib"
           }
-        ]
+        ],
+        "publish": {
+          "runner": "publish"
+        }
       }
     }
   },
