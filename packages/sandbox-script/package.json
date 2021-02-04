@@ -1,7 +1,7 @@
 {
   "name": "sandbox-script",
   "private": "true",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -18,9 +18,9 @@
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "babel-loader": "^8.2.2",
-    "@pixinsight/ui": "^0.0.1",
-    "@pixinsight/core": "^0.0.1",
-    "@pixinsight/react": "^0.0.1",
+    "@pixinsight/ui": "^0.0.2",
+    "@pixinsight/core": "^0.0.2",
+    "@pixinsight/react": "^0.0.2",
     "react": "^17.0.1",
     "ts-loader": "^8.0.14",
     "webpack": "^5.16.0",
