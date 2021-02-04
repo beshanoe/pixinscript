@@ -24,8 +24,9 @@ const sizerPropsSet = new Set([
   "unscaledSpacing",
 ] as const);
 
+type SizerProps = typeof sizerPropsSet extends Set<infer T> ? T : never;
+
 jsStrictMode = false;
-console.clear();
 
 console.log = (...args: any[]) => console.writeln(args.join(" "));
 console.warn = console.warning;
@@ -44,6 +45,56 @@ const debug = (...args: any[]) => {
 };
 
 const garbage = new Control();
+const childrenBySizerMap = new Map<Sizer, (Control | Sizer)[]>();
+
+function addChild(
+  parent: Sizer,
+  ...[child, ...args]: Parameters<typeof Sizer.prototype.add>
+) {
+  if (!childrenBySizerMap.has(parent)) {
+    childrenBySizerMap.set(parent, []);
+  }
+  const children = childrenBySizerMap.get(parent)!;
+  children.push(child);
+  parent.add(child, ...args);
+}
+
+function insertChild(
+  parent: Sizer,
+  ...[index, child, ...args]: Parameters<typeof Sizer.prototype.insert>
+) {
+  if (!childrenBySizerMap.has(parent)) {
+    childrenBySizerMap.set(parent, []);
+  }
+  const children = childrenBySizerMap.get(parent)!;
+  children.splice(index, 0, child);
+  parent.insert(index, child, ...args);
+}
+
+function removeChild(
+  parent: Sizer,
+  ...[childToRemove]: Parameters<typeof Sizer.prototype.remove>
+) {
+  if (!childrenBySizerMap.has(parent)) {
+    childrenBySizerMap.set(parent, []);
+  }
+  const children = childrenBySizerMap.get(parent)!;
+
+  if (childToRemove instanceof Sizer && childrenBySizerMap.has(childToRemove)) {
+    childrenBySizerMap
+      .get(childToRemove)
+      ?.forEach((subchild) => removeChild(childToRemove, subchild));
+    childrenBySizerMap.delete(childToRemove);
+  }
+
+  childrenBySizerMap.set(
+    parent,
+    children.filter((child) => child !== childToRemove)
+  );
+  if (childToRemove instanceof Control) {
+    childToRemove.parent = garbage;
+  }
+}
 
 const PixInsightReconciler = Reconciler({
   supportsMutation: true,
@@ -88,6 +139,7 @@ const PixInsightReconciler = Reconciler({
       constructorProps,
       stretchFactor = 0,
       alignment = 0,
+      children,
       ...props
     }: {
       type: string;
@@ -95,6 +147,7 @@ const PixInsightReconciler = Reconciler({
       constructorProps?: any[];
       stretchFactor?: number;
       alignment?: number;
+      children: any;
     }
   ) {
     debug("createInstance", controlType, props);
@@ -113,7 +166,7 @@ const PixInsightReconciler = Reconciler({
 
     for (const key of Object.keys(instanceProps)) {
       if (sizerPropsSet.has(key as any) && instance instanceof Control) {
-        instance.sizer[key as keyof Sizer] = instanceProps[key];
+        instance.sizer[key as SizerProps] = instanceProps[key];
       } else {
         instance[key] = instanceProps[key];
       }
@@ -134,70 +187,90 @@ const PixInsightReconciler = Reconciler({
 
     return label;
   },
+
   appendInitialChild(parent: Instance, child: Instance) {
     debug(`appendInitialChild ${parent.__id} ${child.__id}`);
     if (child instanceof Dialog) {
       return;
     }
-    const args = [child, child.stretchFactor];
+    const args: Parameters<typeof Sizer.prototype.add> = [
+      child,
+      child.stretchFactor,
+    ];
     if (!(child instanceof Sizer)) {
       args.push(child.alignment);
     }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
     child.parentSizer = sizer;
-    sizer.add(...args);
+
+    addChild(sizer, ...args);
   },
   appendChild(parent: Instance, child: Instance) {
     debug(`appendChild ${parent.__id} ${child.__id}`);
     if (child instanceof Dialog) {
       return;
     }
-    const args = [child, child.stretchFactor];
+    const args: Parameters<typeof Sizer.prototype.add> = [
+      child,
+      child.stretchFactor,
+    ];
     if (!(child instanceof Sizer)) {
       args.push(child.alignment);
     }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
     child.parentSizer = sizer;
-    sizer.add(...args);
+
+    addChild(sizer, ...args);
   },
   appendChildToContainer(parent: Instance, child: Instance) {
     debug(`appendChildToContainer ${parent.__id} ${child.__id}`);
     if (child instanceof Dialog) {
       return;
     }
-    const args = [child, child.stretchFactor];
+    const args: Parameters<typeof Sizer.prototype.add> = [
+      child,
+      child.stretchFactor,
+    ];
     if (!(child instanceof Sizer)) {
       args.push(child.alignment);
     }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
     child.parentSizer = sizer;
-    sizer.add(...args);
+
+    addChild(sizer, ...args);
   },
+
   finalizeInitialChildren(domElement, type, props) {
     debug("finalizeInitialChildren");
     return false;
   },
+
   insertBefore(parent: Instance, child: Instance, beforeChild: Instance) {
     debug(`insertBefore ${parent.__id} ${child.__id}`);
     if (child instanceof Dialog) {
       return;
     }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
-    const args = [sizer.indexOf(beforeChild), child, child.stretchFactor];
+    const args: Parameters<typeof Sizer.prototype.insert> = [
+      sizer.indexOf(beforeChild),
+      child,
+      child.stretchFactor,
+    ];
     if (!(child instanceof Sizer)) {
       args.push(child.alignment);
     }
     child.parentSizer = sizer;
-    sizer.insert(...args);
+    insertChild(sizer, ...args);
   },
+
   removeChild(parent: Extended<Control>, child: Extended<Control>) {
     debug(`removeChild ${parent.__id} ${child.__id}`);
     if (child instanceof Dialog) {
       return;
     }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
-    sizer.remove(child);
-    child.parent = garbage;
+
+    removeChild(sizer, child);
   },
   removeChildFromContainer(
     parent: Extended<Control>,
@@ -208,8 +281,7 @@ const PixInsightReconciler = Reconciler({
       return;
     }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
-    sizer.remove(child);
-    child.parent = garbage;
+    removeChild(sizer, child);
   },
   prepareUpdate(control: Extended<Control>, type, oldProps, newProps) {
     debug(`prepareUpdate ${control.__id} ${type}`);
@@ -220,17 +292,29 @@ const PixInsightReconciler = Reconciler({
     updatePayload: any,
     type: string,
     oldProps: any,
-    newProps: any
+    allNewProps: any
   ) {
+    const {
+      type: controlType,
+      ctor,
+      constructorProps,
+      children,
+      ...newProps
+    } = allNewProps;
+
     debug(`commitUpdate ${control.__id} ${type}`);
     Object.keys(newProps).forEach((propName) => {
       const propValue = newProps[propName];
 
       if (sizerPropsSet.has(propName as any)) {
         const sizer = control instanceof Sizer ? control : control.sizer;
-        sizer[propName as keyof Sizer] = propValue;
+        if (sizer[propName as SizerProps] !== propValue) {
+          sizer[propName as SizerProps] = propValue;
+        };
       } else {
-        (control as any)[propName] = propValue;
+        if ((control as any)[propName] !== propValue) {
+          (control as any)[propName] = propValue;
+        }
       }
     });
     if (newProps.stretchFactor !== oldProps.stretchFactor) {
@@ -286,11 +370,11 @@ export function render(
   sizer.dialog = dialog;
   dialog.sizer = sizer;
 
-  global.setTimeout = function (cb: () => void, ms: number) {
+  global.setTimeout = function(cb: () => void, ms: number) {
     var timer = new Timer();
     timer.interval = ms / 1000;
     timer.periodic = false;
-    timer.onTimeout = function () {
+    timer.onTimeout = function() {
       cb();
     };
     timer.start();

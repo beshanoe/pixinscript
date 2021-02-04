@@ -211,10 +211,10 @@ declare class Frame extends Control {
   lineWidth: any;
 }
 declare class GroupBox extends Control {
-  checked: any;
-  onCheck: any;
-  title: any;
-  titleCheckBox: any;
+  checked: boolean;
+  onCheck: (checked: boolean) => void;
+  title: string;
+  titleCheckBox: boolean;
 }
 declare class Label extends Frame {
   clear: any;
@@ -453,32 +453,37 @@ declare class WebView extends Control {
 
 declare class Sizer {
   constructor(...args: any[]);
-  add: any;
+  add(child: Sizer | Control, stretchFactor?: number, alignment?: number): void;
   addScaledSpacing: any;
   addSpacing: any;
   addStretch: any;
   addUnscaledSpacing: any;
   displayPixelRatio: any;
-  has: any;
-  indexOf: any;
-  insert: any;
+  has(child: Sizer | Control): boolean;
+  indexOf(child: Sizer | Control): number;
+  insert(
+    index: number,
+    child: Sizer | Control,
+    stretchFactor?: number,
+    alignment?: number
+  ): void;
   insertScaledSpacing: any;
   insertSpacing: any;
   insertStretch: any;
   insertUnscaledSpacing: any;
-  isHorizontal: any;
-  isVertical: any;
+  isHorizontal: boolean;
+  isVertical: boolean;
   logicalPixelsToPhysical: any;
-  margin: any;
-  numberOfItems: any;
+  margin: number;
+  numberOfItems: number;
   parentControl: Control;
   physicalPixelsToLogical: any;
-  remove: any;
+  remove(child: Sizer | Control): void;
   scaledMargin: any;
   scaledSpacing: any;
   setAlignment: any;
   setStretchFactor: any;
-  spacing: any;
+  spacing: number;
   unscaledMargin: any;
   unscaledSpacing: any;
 }
