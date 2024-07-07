@@ -34,6 +34,7 @@ export const makeConfig = ({
       },
       {
         test: /\.m?jsx?$/,
+        exclude: /@babel(?:\/|\\{1,2})runtime|core-js/,
         use: {
           loader: "babel-loader",
           options: {

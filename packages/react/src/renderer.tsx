@@ -2,10 +2,12 @@
 /// <reference types="@pixinsight/core/types/globals" />
 import "core-js/modules/es.map";
 import "core-js/modules/es.object.entries";
+import "core-js/modules/es.object.assign";
+import "core-js/modules/es.symbol";
 import React from "react";
 import Reconciler from "react-reconciler";
+import { DefaultEventPriority } from "react-reconciler/constants";
 import { DialogContext } from "./DialogContext";
-
 
 declare const global: any;
 type Extended<T> = T & {
@@ -97,9 +99,61 @@ function removeChild(
   }
 }
 
-const PixInsightReconciler = Reconciler({
+const PixInsightReconciler = Reconciler<
+  unknown,
+  unknown,
+  unknown,
+  Instance,
+  unknown,
+  unknown,
+  unknown,
+  unknown,
+  unknown,
+  unknown,
+  unknown,
+  number,
+  number
+>({
+  noTimeout: -1,
   supportsMutation: true,
-  now: Date.now,
+  supportsHydration: false,
+  supportsPersistence: false,
+  isPrimaryRenderer: true,
+  preparePortalMount: () => {
+    debug("preparePortalMount");
+  },
+  scheduleTimeout: (fn, delay: number) => {
+    debug("scheduleTimeout");
+    return setTimeout(fn, delay);
+  },
+  cancelTimeout: (id) => {
+    debug("cancelTimeout");
+    clearTimeout(id);
+  },
+  getCurrentEventPriority: () => {
+    debug("getCurrentEventPriority");
+    return DefaultEventPriority;
+  },
+  getInstanceFromNode: () => {
+    debug("getInstanceFromNode");
+    return null;
+  },
+  beforeActiveInstanceBlur: () => {
+    debug("beforeActiveInstanceBlur");
+  },
+  afterActiveInstanceBlur: () => {
+    debug("afterActiveInstanceBlur");
+  },
+  prepareScopeUpdate: () => {
+    debug("prepareScopeUpdate");
+  },
+  getInstanceFromScope: () => {
+    debug("getInstanceFromScope");
+    return null;
+  },
+  detachDeletedInstance: () => {
+    debug("detachDeletedInstance");
+  },
   getRootHostContext() {
     debug("getRootHostContext");
     return rootHostContext;
@@ -311,7 +365,7 @@ const PixInsightReconciler = Reconciler({
         const sizer = control instanceof Sizer ? control : control.sizer;
         if (sizer[propName as SizerProps] !== propValue) {
           sizer[propName as SizerProps] = propValue;
-        };
+        }
       } else {
         if ((control as any)[propName] !== propValue) {
           (control as any)[propName] = propValue;
@@ -339,8 +393,13 @@ export function directRender(
   if (!container._rootContainer) {
     container._rootContainer = PixInsightReconciler.createContainer(
       container,
+      0,
+      null,
       false,
-      false
+      false,
+      "",
+      (error) => {},
+      null
     );
   }
   return PixInsightReconciler.updateContainer(
@@ -371,14 +430,30 @@ export function render(
   sizer.dialog = dialog;
   dialog.sizer = sizer;
 
-  global.setTimeout = function(cb: () => void, ms: number) {
-    var timer = new Timer();
+  const getNextTimerId = (
+    (id = 0) =>
+    () =>
+      id++
+  )();
+  const timers: Record<number, Timer> = {};
+
+  global.setTimeout = function (cb: () => void, ms: number) {
+    let timer = new Timer();
     timer.interval = ms / 1000;
     timer.periodic = false;
-    timer.onTimeout = function() {
+    timer.onTimeout = function () {
       cb();
     };
     timer.start();
+
+    let timerId = getNextTimerId();
+    timers[timerId] = timer;
+    return timerId;
+  };
+
+  global.clearTimeout = function (timerId: number) {
+    timers[timerId]?.stop();
+    delete timers[timerId];
   };
 
   debugMode = options.debug ?? false;
