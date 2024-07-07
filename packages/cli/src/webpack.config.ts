@@ -3,10 +3,22 @@
 import * as path from "path";
 import * as webpack from "webpack";
 import { PixinsightWebpackPlugin } from "@pixinsight/webpack-plugin";
+import * as ZipWebpackPlugin from "zip-webpack-plugin";
 
 const workingDir = process.cwd();
 
-export const config: webpack.Configuration = {
+export const makeConfig = ({
+  featureId,
+  featureInfo,
+  zip,
+}: {
+  featureId: string;
+  featureInfo: string;
+  zip?: {
+    filename: string;
+    path: string;
+  };
+}): webpack.Configuration => ({
   entry: path.resolve(workingDir, "src/index"),
   mode: "production",
   devtool: false,
@@ -49,5 +61,15 @@ export const config: webpack.Configuration = {
     filename: "script.js",
     path: path.resolve(workingDir, "dist"),
   },
-  plugins: [new PixinsightWebpackPlugin()],
-};
+  plugins: [
+    new PixinsightWebpackPlugin({
+      featureId,
+      featureInfo,
+    }),
+    zip &&
+      new ZipWebpackPlugin({
+        filename: zip.filename,
+        path: zip.path,
+      }),
+  ].filter(Boolean),
+});

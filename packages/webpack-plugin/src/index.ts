@@ -3,19 +3,9 @@ import { ConcatSource } from "webpack-sources";
 import fs from "fs";
 
 export class PixinsightWebpackPlugin {
-  constructor() {}
+  constructor(private options: { featureId: string; featureInfo: string }) {}
 
   apply(compiler: webpack.Compiler) {
-    const packageJson = JSON.parse(
-      fs.readFileSync("./package.json", { encoding: "utf-8" })
-    );
-
-    if (!packageJson.pixinsight) {
-      throw new Error("pixinsight field not found in package.json");
-    }
-
-    const { name, pixinsight: { script } = { script } } = packageJson;
-
     compiler.hooks.thisCompilation.tap(
       "FileListPlugin",
       (compilation: webpack.Compilation) => {
@@ -30,8 +20,8 @@ export class PixinsightWebpackPlugin {
               const bundleSource = asset.source();
 
               const newSource = [
-                `#feature-id ${script["feature-id"] || name}`,
-                `#feature-info ${script["feature-info"] || name}`,
+                `#feature-id ${this.options.featureId}`,
+                `#feature-info ${this.options.featureInfo}`,
                 bundleSource,
               ].join("\n");
 

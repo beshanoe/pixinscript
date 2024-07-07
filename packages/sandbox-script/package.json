@@ -6,18 +6,19 @@
   "license": "MIT",
   "scripts": {
     "build": "pixinsight build",
-    "dev": "NODE_ENV=development webpack --watch"
+    "dev": "pixinsight dev"
   },
   "pixinsight": {
     "script": {
-      "feature-id": "",
-      "feature-info": ""
+      "featureId": "Sandbox script",
+      "featureInfo": "A sandbox script for testing"
     }
   },
   "dependencies": {
     "@pixinsight/cli": "^0.0.2",
     "@pixinsight/ui": "^0.0.2",
     "@pixinsight/core": "^0.0.2",
+    "@pixinsight/react": "^0.0.2",
     "react": "^17.0.1"
   },
   "devDependencies": {}
