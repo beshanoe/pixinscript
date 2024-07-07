@@ -1,10 +1,13 @@
 //@ts-check
 
-const path = require("path");
-const { PixinsightWebpackPlugin } = require('@pixinsight/webpack-plugin')
+import * as path from "path";
+import * as webpack from "webpack";
+import { PixinsightWebpackPlugin } from "@pixinsight/webpack-plugin";
 
-module.exports = {
-  entry: "./src/index.tsx",
+const workingDir = process.cwd();
+
+export const config: webpack.Configuration = {
+  entry: path.resolve(workingDir, "src/index"),
   mode: "production",
   devtool: false,
   optimization: {
@@ -44,9 +47,7 @@ module.exports = {
   },
   output: {
     filename: "script.js",
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(workingDir, "dist"),
   },
-  plugins: [
-    new PixinsightWebpackPlugin()
-  ],
+  plugins: [new PixinsightWebpackPlugin()],
 };

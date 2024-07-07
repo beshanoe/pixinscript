@@ -1,4 +1,3 @@
-import { parameterStorage } from "@pixinsight/core";
 import { render } from "@pixinsight/react";
 import * as React from "react";
 import { ScriptDialog, SCRIPT_NAME, defaultParameters } from "./ScriptDialog";
@@ -6,10 +5,10 @@ import { ScriptDialog, SCRIPT_NAME, defaultParameters } from "./ScriptDialog";
 const parameters: Record<string, any> = {};
 
 Object.entries(defaultParameters).forEach(([key, value]) => {
-  if (!parameterStorage.has(key)) {
-    parameterStorage.set(key, value);
+  if (!Parameters.has(key)) {
+    Parameters.set(key, value);
   }
-  const stored = parameterStorage.get(key);
+  const stored = Parameters.get(key);
   let parsed: number | string | boolean = stored;
   if (typeof value === "number") {
     parsed = parseFloat(stored);
@@ -23,7 +22,7 @@ render(
   <ScriptDialog
     parameters={parameters}
     onParameterChange={(name, value) => {
-      parameterStorage.set(name, value.toString());
+      Parameters.set(name, value.toString());
     }}
   />,
   {

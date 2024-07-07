@@ -1,9 +1,10 @@
 {
   "extends": "@pixinsight/typescript-config/base.json",
   "compilerOptions": {
+    "module": "CommonJS",
     "outDir": "dist",
-    "strict": false,
-    "strictNullChecks": false
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]

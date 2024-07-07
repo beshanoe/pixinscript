@@ -2,8 +2,6 @@
   "extends": "@pixinsight/typescript-config/base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "strict": false,
-    "strictNullChecks": false
   },
   "include": ["src"],
   "exclude": ["node_modules"]

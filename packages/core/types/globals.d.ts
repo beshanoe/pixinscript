@@ -1150,9 +1150,8 @@ declare class OpenFileDialog {
   multipleSelections: any;
 }
 
-// @ts-ignore
 // Parameters type collides with an internal TS type defined in lib.es5.d.ts
-// Please use parameterStorage instead
+// That's why it was forked
 declare class Parameters {
   static readonly isGlobalTarget: boolean;
   static readonly isViewTarget: boolean;
@@ -1711,8 +1710,8 @@ declare class View {
 declare const console: any;
 declare let jsStrictMode: boolean;
 declare const format: any;
-declare function gc(arg?: any);
-declare function processEvents();
+declare function gc(arg?: any): any;
+declare function processEvents(): any;
 
 interface Math {
   EPSILON: number;

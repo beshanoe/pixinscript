@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es5",
+    "jsx": "react",
+    "noEmitOnError": true,
+    "sourceMap": false,
+    "declaration": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "noLib": true,
+    "types": [
+      "@pixinsight/core/types/lib.es5mod",
+      "typescript/lib/lib.es2015.core",
+      "typescript/lib/lib.es2015.collection",
+      "typescript/lib/lib.es2015.iterable",
+      "typescript/lib/lib.es2017.object",
+      "typescript/lib/lib.es2015.promise",
+      "typescript/lib/lib.es2015.proxy",
+      "typescript/lib/lib.es2015.reflect",
+      "typescript/lib/lib.es2015.symbol",
+      "typescript/lib/lib.es2015.symbol.wellknown",
+      "@pixinsight/core/types/globals",
+      "@pixinsight/core/types/processes",
+      "@pixinsight/core/types/typed-processes",
+      "@pixinsight/core/types/controls"
+    ]
+  }
+}

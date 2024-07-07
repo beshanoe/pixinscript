@@ -1,7 +1,13 @@
 {
   "name": "@pixinsight/core",
   "version": "0.0.2",
-  "main": "lib/index.js",
-  "module": "es/index.js",
-  "license": "MIT"
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@pixinsight/typescript-config": "*"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
 }

@@ -1,9 +1,12 @@
 {
   "name": "@pixinsight/react",
   "version": "0.0.2",
-  "main": "lib/index.js",
-  "module": "es/index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
   "dependencies": {
     "@pixinsight/core": "^0.0.2",
     "core-js": "3",

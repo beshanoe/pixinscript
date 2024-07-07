@@ -1,7 +1,6 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "@pixinsight/typescript-config/base.json",
   "compilerOptions": {
-    "module": "ESNext",
     "moduleResolution": "node",
     "declaration": false
   }

@@ -1,0 +1,21 @@
+{
+  "name": "@pixinsight/webpack-plugin",
+  "version": "0.0.2",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "license": "MIT",
+  "peerDependencies": {
+    "webpack": "^5.16.0"
+  },
+  "dependencies": {
+    "webpack-sources": "^2.2.0"
+  },
+  "devDependencies": {
+    "@pixinsight/typescript-config": "*",
+    "@types/webpack": "^4.41.26",
+    "@types/webpack-sources": "^2.1.0"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}

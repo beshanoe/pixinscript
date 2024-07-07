@@ -6,6 +6,7 @@ import React from "react";
 import Reconciler from "react-reconciler";
 import { DialogContext } from "./DialogContext";
 
+
 declare const global: any;
 type Extended<T> = T & {
   __id: string;
@@ -49,7 +50,7 @@ const childrenBySizerMap = new Map<Sizer, (Control | Sizer)[]>();
 
 function addChild(
   parent: Sizer,
-  ...[child, ...args]: Parameters<typeof Sizer.prototype.add>
+  ...[child, ...args]: Arguments<typeof Sizer.prototype.add>
 ) {
   if (!childrenBySizerMap.has(parent)) {
     childrenBySizerMap.set(parent, []);
@@ -61,7 +62,7 @@ function addChild(
 
 function insertChild(
   parent: Sizer,
-  ...[index, child, ...args]: Parameters<typeof Sizer.prototype.insert>
+  ...[index, child, ...args]: Arguments<typeof Sizer.prototype.insert>
 ) {
   if (!childrenBySizerMap.has(parent)) {
     childrenBySizerMap.set(parent, []);
@@ -73,7 +74,7 @@ function insertChild(
 
 function removeChild(
   parent: Sizer,
-  ...[childToRemove]: Parameters<typeof Sizer.prototype.remove>
+  ...[childToRemove]: Arguments<typeof Sizer.prototype.remove>
 ) {
   if (!childrenBySizerMap.has(parent)) {
     childrenBySizerMap.set(parent, []);
@@ -193,7 +194,7 @@ const PixInsightReconciler = Reconciler({
     if (child instanceof Dialog) {
       return;
     }
-    const args: Parameters<typeof Sizer.prototype.add> = [
+    const args: Arguments<typeof Sizer.prototype.add> = [
       child,
       child.stretchFactor,
     ];
@@ -210,7 +211,7 @@ const PixInsightReconciler = Reconciler({
     if (child instanceof Dialog) {
       return;
     }
-    const args: Parameters<typeof Sizer.prototype.add> = [
+    const args: Arguments<typeof Sizer.prototype.add> = [
       child,
       child.stretchFactor,
     ];
@@ -227,7 +228,7 @@ const PixInsightReconciler = Reconciler({
     if (child instanceof Dialog) {
       return;
     }
-    const args: Parameters<typeof Sizer.prototype.add> = [
+    const args: Arguments<typeof Sizer.prototype.add> = [
       child,
       child.stretchFactor,
     ];
@@ -251,7 +252,7 @@ const PixInsightReconciler = Reconciler({
       return;
     }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
-    const args: Parameters<typeof Sizer.prototype.insert> = [
+    const args: Arguments<typeof Sizer.prototype.insert> = [
       sizer.indexOf(beforeChild),
       child,
       child.stretchFactor,
