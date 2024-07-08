@@ -1,5 +1,11 @@
 # @pixinscript/webpack-plugin
 
+## 0.1.0
+
+### Minor Changes
+
+- 466111f: Renamed to pixinscript to avoid confusion
+
 ## 0.0.3
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 {
   "name": "sandbox-script",
   "private": "true",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -15,10 +15,10 @@
     }
   },
   "dependencies": {
-    "@pixinscript/cli": "^0.0.3",
-    "@pixinscript/ui": "^0.0.3",
-    "@pixinscript/core": "^0.0.3",
-    "@pixinscript/react": "^0.0.3",
+    "@pixinscript/cli": "^0.1.0",
+    "@pixinscript/ui": "^0.1.0",
+    "@pixinscript/core": "^0.1.0",
+    "@pixinscript/react": "^0.1.0",
     "react": "^18.3.1"
   },
   "devDependencies": {
