@@ -1,5 +1,13 @@
 # @pixinscript/cli
 
+## 0.1.2
+
+### Patch Changes
+
+- Fix webpack version
+- Updated dependencies
+  - @pixinscript/webpack-plugin@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes
