@@ -739,7 +739,7 @@ declare class IntegerResample extends ProcessInstance {
   Median: any;
   Minimum: any;
 
-  zoomFactor: -2;
+  zoomFactor: number;
   downsamplingMode: PrototypeProperty;
   xResolution: number;
   yResolution: number;

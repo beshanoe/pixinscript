@@ -1,9 +1,3 @@
-/// <reference types="@pixinsight/core/types/controls" />
-/// <reference types="@pixinsight/core/types/globals" />
-import "core-js/modules/es.map";
-import "core-js/modules/es.object.entries";
-import "core-js/modules/es.object.assign";
-import "core-js/modules/es.symbol";
 import React from "react";
 import Reconciler from "react-reconciler";
 import { DefaultEventPriority } from "react-reconciler/constants";
@@ -30,10 +24,6 @@ const sizerPropsSet = new Set([
 type SizerProps = typeof sizerPropsSet extends Set<infer T> ? T : never;
 
 jsStrictMode = false;
-
-console.log = (...args: any[]) => console.writeln(args.join(" "));
-console.warn = console.warning;
-console.error = console.critical;
 
 const rootHostContext = {};
 const childHostContext = {};
@@ -429,32 +419,6 @@ export function render(
   // @ts-ignore
   sizer.dialog = dialog;
   dialog.sizer = sizer;
-
-  const getNextTimerId = (
-    (id = 0) =>
-    () =>
-      id++
-  )();
-  const timers: Record<number, Timer> = {};
-
-  global.setTimeout = function (cb: () => void, ms: number) {
-    let timer = new Timer();
-    timer.interval = ms / 1000;
-    timer.periodic = false;
-    timer.onTimeout = function () {
-      cb();
-    };
-    timer.start();
-
-    let timerId = getNextTimerId();
-    timers[timerId] = timer;
-    return timerId;
-  };
-
-  global.clearTimeout = function (timerId: number) {
-    timers[timerId]?.stop();
-    delete timers[timerId];
-  };
 
   debugMode = options.debug ?? false;
 

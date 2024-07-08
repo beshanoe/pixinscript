@@ -150,6 +150,29 @@ declare class ConicalGradientBrush {
   angle: any;
   center: any;
 }
+
+declare class Console {
+  static abort(): void;
+  static beginLog(): void;
+  static clear(): void;
+  static critical(message: string): void;
+  static criticalln(message: string): void;
+  static endLog(): void;
+  static flush(): void;
+  static hide(): void;
+  static logText(message: string): void;
+  static note(message: string): void;
+  static noteln(message: string): void;
+  static readChar(): string;
+  static readString(): string;
+  static resetStatus(): void;
+  static show(): void;
+  static warning(message: string): void;
+  static warningln(message: string): void;
+  static write(message: string): void;
+  static writeln(message: string): void;
+}
+
 declare class CoreApplication {
   constructor(...args: any[]);
 }
@@ -877,6 +900,8 @@ declare class ImageStatistics {
   varianceEnabled: any;
 }
 declare class ImageWindow {
+  static activeWindow: ImageWindow;
+
   constructor(...args: any[]);
   aperture: any;
   applyColorTransformation: any;
@@ -1159,11 +1184,11 @@ declare class Parameters {
 
   static clear(): void;
   static get(id: string): string;
-  static getBoolean(id: string): string;
-  static getInteger(id: string): string;
-  static getReal(id: string): string;
+  static getBoolean(id: string): boolean;
+  static getInteger(id: string): number;
+  static getReal(id: string): number;
   static getString(id: string): string;
-  static getUInt(id: string): string;
+  static getUInt(id: string): number;
   static has(id: string): boolean;
   static remove(id: string): void;
   static set(id: string, value: any): void;
@@ -1712,6 +1737,8 @@ declare let jsStrictMode: boolean;
 declare const format: any;
 declare function gc(arg?: any): any;
 declare function processEvents(): any;
+declare function setTimeout(cb: () => void, timeMs: number): number;
+declare function clearTimeout(timerId: number): void;
 
 interface Math {
   EPSILON: number;

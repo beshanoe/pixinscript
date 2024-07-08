@@ -1,4 +1,5 @@
 declare class Control {
+  __base__: any;
   constructor(...args: any[]);
   activateWindow: any;
   adjustToContents: any;
@@ -132,8 +133,8 @@ declare class Control {
   windowTitle: any;
 }
 declare class CheckBox extends Control {
-  checked: any;
-  onCheck: any;
+  checked: boolean;
+  onCheck: (checked: boolean) => void;
   onClick: any;
   onPress: any;
   onRelease: any;
@@ -163,7 +164,7 @@ declare class ComboBox extends Control {
   numberOfItems: any;
   onEditTextUpdated: any;
   onItemHighlighted: any;
-  onItemSelected: any;
+  onItemSelected: (index: number) => void;
   popupToolTip: any;
   removeItem: any;
   setItemIcon: any;
@@ -258,9 +259,9 @@ declare class ScrollBox extends Control {
   maxVerticalScrollPosition: any;
   minHorizontalScrollPosition: any;
   minVerticalScrollPosition: any;
-  onHorizontalScrollPosUpdated: any;
+  onHorizontalScrollPosUpdated: (pos: number) => void;
   onHorizontalScrollRangeUpdated: any;
-  onVerticalScrollPosUpdated: any;
+  onVerticalScrollPosUpdated: (pos: number) => void;
   onVerticalScrollRangeUpdated: any;
   pageHeight: any;
   pageWidth: any;
@@ -424,7 +425,7 @@ declare class ViewList extends Control {
   includesMainViews: any;
   includesPreviews: any;
   onCurrentViewUpdated: any;
-  onViewSelected: any;
+  onViewSelected: (view: View) => void;
   reload: any;
   remove: any;
 }
@@ -452,6 +453,7 @@ declare class WebView extends Control {
 }
 
 declare class Sizer {
+  __base__: any;
   constructor(...args: any[]);
   add(child: Sizer | Control, stretchFactor?: number, alignment?: number): void;
   addScaledSpacing: any;

@@ -53,20 +53,24 @@
 /*
  * Horizontal slider class
  */
-export function HorizontalSlider(parent) {
-  this.__base__ = Slider;
-  this.__base__(parent, false);
+export class HorizontalSlider extends Slider {
+  constructor(parent?) {
+    super();
+    this.__base__ = Slider;
+    this.__base__(parent, false);
+  }
 }
-HorizontalSlider.prototype = new Slider();
 
 /*
  * Vertical slider class
  */
-export function VerticalSlider(parent) {
-  this.__base__ = Slider;
-  this.__base__(parent, true);
+export class VerticalSlider extends Slider {
+  constructor(parent?) {
+    super();
+    this.__base__ = Slider;
+    this.__base__(parent, false);
+  }
 }
-VerticalSlider.prototype = new Slider();
 
 /*
  * Slider tick styles

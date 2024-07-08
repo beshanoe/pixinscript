@@ -19,7 +19,8 @@ export const makeConfig = ({
     path: string;
   };
 }): webpack.Configuration => ({
-  entry: path.resolve(workingDir, "src/index"),
+  entry: ["@pixinsight/core/polyfill", path.resolve(workingDir, "src/index")],
+
   mode: "production",
   devtool: false,
   optimization: {
@@ -49,6 +50,7 @@ export const makeConfig = ({
                   corejs: "3",
                 },
               ],
+              "@babel/preset-react",
             ],
           },
         },
@@ -56,7 +58,7 @@ export const makeConfig = ({
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".tsx", ".ts", ".js", ".jsx"],
   },
   output: {
     filename: "script.js",

@@ -1,56 +1,7 @@
-import { FocusStyle_Click } from './FocusStyle';
-//     ____       __ _____  ____
-//    / __ \     / // ___/ / __ \
-//   / /_/ /__  / / \__ \ / /_/ /
-//  / ____// /_/ / ___/ // _, _/   PixInsight JavaScript Runtime
-// /_/     \____/ /____//_/ |_|    PJSR Version 1.0
-// ----------------------------------------------------------------------------
-// pjsr/NumericControl.jsh - Released 2020-12-12T20:55:24Z
-// ----------------------------------------------------------------------------
-// This file is part of the PixInsight JavaScript Runtime (PJSR).
-// PJSR is an ECMA-262-5 compliant framework for development of scripts on the
-// PixInsight platform.
-//
-// Copyright (c) 2003-2020 Pleiades Astrophoto S.L. All Rights Reserved.
-//
-// Redistribution and use in both source and binary forms, with or without
-// modification, is permitted provided that the following conditions are met:
-//
-// 1. All redistributions of source code must retain the above copyright
-//    notice, this list of conditions and the following disclaimer.
-//
-// 2. All redistributions in binary form must reproduce the above copyright
-//    notice, this list of conditions and the following disclaimer in the
-//    documentation and/or other materials provided with the distribution.
-//
-// 3. Neither the names "PixInsight" and "Pleiades Astrophoto", nor the names
-//    of their contributors, may be used to endorse or promote products derived
-//    from this software without specific prior written permission. For written
-//    permission, please contact info@pixinsight.com.
-//
-// 4. All products derived from this software, in any form whatsoever, must
-//    reproduce the following acknowledgment in the end-user documentation
-//    and/or other materials provided with the product:
-//
 //    "This product is based on software from the PixInsight project, developed
 //    by Pleiades Astrophoto and its contributors (https://pixinsight.com/)."
-//
-//    Alternatively, if that is where third-party acknowledgments normally
-//    appear, this acknowledgment must be reproduced in the product itself.
-//
-// THIS SOFTWARE IS PROVIDED BY PLEIADES ASTROPHOTO AND ITS CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
-// TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
-// PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL PLEIADES ASTROPHOTO OR ITS
-// CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-// EXEMPLARY OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, BUSINESS
-// INTERRUPTION; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; AND LOSS OF USE,
-// DATA OR PROFITS) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-// CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-// ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-// POSSIBILITY OF SUCH DAMAGE.
 // ----------------------------------------------------------------------------
-
+import { FocusStyle_Click } from "./FocusStyle";
 import { HorizontalSizer } from "./Sizer";
 import { HorizontalSlider, TickStyle_NoTicks } from "./Slider";
 import { StdButton_Ok } from "./StdButton";
@@ -64,69 +15,87 @@ import { TextAlign_Right, TextAlign_VertCenter } from "./TextAlign";
  *
  * A label/edit compound control to edit numeric parameters.
  */
-export function NumericEdit(parent?) {
-  this.__base__ = Control;
-  if (parent) this.__base__(parent);
-  else this.__base__();
+export class NumericEdit extends Control {
+  value: number;
+  lowerBound: number;
+  upperBound: number;
+  real: boolean;
+  precision: number;
+  fixed: boolean;
+  scientific: boolean;
+  sciTriggerExp: number;
+  autoEditWidth: boolean;
+  onValueUpdated: ((value: number) => void) | null;
+  label: Label;
+  edit: Edit;
+  sizer: HorizontalSizer;
+  childToFocus: Edit;
+  backgroundColor: number;
 
-  this.value = 0.0;
-  this.lowerBound = 0.0;
-  this.upperBound = 1.0;
-  this.real = true;
-  this.precision = 6;
-  this.fixed = false;
-  this.scientific = false;
-  this.sciTriggerExp = -1;
-  this.autoEditWidth = true;
-  this.onValueUpdated = null;
+  constructor(parent?: Control) {
+    super();
 
-  this.label = new Label(this);
-  this.label.textAlignment = TextAlign_Right | TextAlign_VertCenter;
-  this.label.onMousePress = function () {
-    if (!this.parent.edit.readOnly) {
-      this.parent.evaluate();
-      this.parent.edit.hasFocus = true;
-      this.parent.edit.selectAll();
-    }
-  };
+    this.__base__ = Control;
+    if (parent) this.__base__(parent);
+    else this.__base__();
 
-  this.edit = new Edit(this);
-  this.edit.onEditCompleted = function () {
-    this.parent.evaluate();
-  };
-  this.edit.onGetFocus = function () {
-    //if ( !this.readOnly )
-    //   this.selectAll();
-  };
-  this.edit.onLoseFocus = function () {
-    if (!this.readOnly) this.parent.evaluate();
-  };
+    this.value = 0.0;
+    this.lowerBound = 0.0;
+    this.upperBound = 1.0;
+    this.real = true;
+    this.precision = 6;
+    this.fixed = false;
+    this.scientific = false;
+    this.sciTriggerExp = -1;
+    this.autoEditWidth = true;
+    this.onValueUpdated = null;
 
-  this.sizer = new HorizontalSizer();
-  this.sizer.spacing = 4;
-  this.sizer.add(this.label);
-  this.sizer.add(this.edit);
+    this.label = new Label();
+    this.label.textAlignment = TextAlign_Right | TextAlign_VertCenter;
+    this.label.onMousePress = () => {
+      if (!this.edit.readOnly) {
+        this.evaluate();
+        this.edit.hasFocus = true;
+        this.edit.selectAll();
+      }
+    };
 
-  this.adjustToContents();
-  this.setFixedHeight();
-  this.childToFocus = this.edit;
+    this.edit = new Edit();
+    this.edit.onEditCompleted = () => this.evaluate();
+    this.edit.onGetFocus = () => {
+      //if ( !this.readOnly )
+      //   this.selectAll();
+    };
+    this.edit.onLoseFocus = () => {
+      if (!this.edit.readOnly) this.evaluate();
+    };
 
-  this.backgroundColor = 0; // transparent
+    this.sizer = new HorizontalSizer();
+    this.sizer.spacing = 4;
+    this.sizer.add(this.label);
+    this.sizer.add(this.edit);
 
-  this.setValue = function (value) {
+    this.adjustToContents();
+    this.setFixedHeight();
+    this.childToFocus = this.edit;
+
+    this.backgroundColor = 0; // transparent
+  }
+
+  setValue(value: number) {
     this.value = Math.range(
       this.real ? value : Math.round(value),
       this.lowerBound,
       this.upperBound
     );
     this.updateControls();
-  };
+  }
 
-  this.updateControls = function () {
+  updateControls() {
     this.edit.text = this.valueAsString(this.value);
-  };
+  }
 
-  this.valueAsString = function (value) {
+  valueAsString(value: number): string {
     value = Math.range(value, this.lowerBound, this.upperBound);
 
     if (this.real) {
@@ -147,9 +116,9 @@ export function NumericEdit(parent?) {
     }
 
     return format("%.0f", value);
-  };
+  }
 
-  this.minEditWidth = function () {
+  minEditWidth(): number {
     let n = Math.trunc(
       Math.max(
         this.valueAsString(this.lowerBound).length,
@@ -160,54 +129,54 @@ export function NumericEdit(parent?) {
       this.edit.font.width("0".repeat(n + 1)) +
       this.logicalPixelsToPhysical(1 + 2 + 2 + 1)
     );
-  };
+  }
 
-  this.adjustEditWidth = function () {
+  adjustEditWidth() {
     this.edit.setFixedWidth(this.minEditWidth());
     this.adjustToContents();
-  };
+  }
 
-  this.setReal = function (real) {
+  setReal(real: boolean) {
     if (this.real != real) {
       this.real = real;
       if (!this.real) this.value = Math.round(this.value);
       if (this.autoEditWidth) this.adjustEditWidth();
       this.setValue(this.value);
     }
-  };
+  }
 
-  this.setRange = function (lr, ur) {
+  setRange(lr: number, ur: number) {
     this.lowerBound = Math.min(lr, ur);
     this.upperBound = Math.max(lr, ur);
     if (this.autoEditWidth) this.adjustEditWidth();
     this.setValue(this.value);
-  };
+  }
 
-  this.setPrecision = function (precision) {
+  setPrecision(precision: number) {
     this.precision = Math.range(precision, 0, 15);
     if (this.autoEditWidth) this.adjustEditWidth();
     this.updateControls();
-  };
+  }
 
-  this.enableFixedPrecision = function (enable) {
+  enableFixedPrecision(enable: boolean) {
     this.fixed = enable;
     if (this.autoEditWidth) this.adjustEditWidth();
     this.updateControls();
-  };
+  }
 
-  this.enableScientificNotation = function (enable) {
+  enableScientificNotation(enable: boolean) {
     this.scientific = enable;
     if (this.autoEditWidth) this.adjustEditWidth();
     this.updateControls();
-  };
+  }
 
-  this.setScientificNotationTriggerExponent = function (exp10) {
+  setScientificNotationTriggerExponent(exp10: number) {
     this.sciTriggerExp = exp10;
     if (this.autoEditWidth) this.adjustEditWidth();
     this.updateControls();
-  };
+  }
 
-  this.precisionForValue = function (precision, value) {
+  precisionForValue(precision: number, value: number): number {
     if (!this.fixed) {
       value = Math.abs(value);
       if (value >= 10)
@@ -217,22 +186,22 @@ export function NumericEdit(parent?) {
         );
     }
     return precision;
-  };
+  }
 
-  this.evaluate = function () {
-    if (this.edit.readOnly)
-      // ?!
-      return;
+  evaluate() {
+    if (this.edit.readOnly) return;
 
     try {
-      let newValue;
+      let newValue: number;
       if (this.real) {
         newValue = this.edit.text.toNumber();
         newValue = Math.roundTo(
           newValue,
           this.precisionForValue(this.precision, newValue)
         );
-      } else newValue = this.edit.text.toInt();
+      } else {
+        newValue = this.edit.text.toInt();
+      }
 
       if (this.lowerBound < this.upperBound)
         if (newValue < this.lowerBound || newValue > this.upperBound)
@@ -244,11 +213,11 @@ export function NumericEdit(parent?) {
               this.upperBound
             )
           );
+
       let changed = newValue != this.value;
       if (changed) this.value = newValue;
       this.updateControls();
-      if (changed) if (this.onValueUpdated) this.onValueUpdated(this.value);
-      return;
+      if (changed && this.onValueUpdated) this.onValueUpdated(this.value);
     } catch (x) {
       new MessageBox(
         x.message,
@@ -258,10 +227,8 @@ export function NumericEdit(parent?) {
       ).execute();
       this.updateControls();
     }
-  };
+  }
 }
-
-NumericEdit.prototype = new Control();
 
 // ----------------------------------------------------------------------------
 
@@ -270,39 +237,46 @@ NumericEdit.prototype = new Control();
  *
  * A label/edit/slider compound control to edit numeric parameters.
  */
-export function NumericControl(parent) {
-  this.__base_1__ = NumericEdit;
-  this.__base_1__(parent);
+export class NumericControl extends NumericEdit {
+  exponential: boolean;
+  slider: HorizontalSlider;
+  __base_1__: any;
 
-  this.exponential = false;
+  constructor(parent: Control) {
+    super();
+    this.__base_1__ = NumericEdit;
+    this.__base_1__(parent);
 
-  this.slider = new HorizontalSlider(this);
-  this.slider.setRange(0, 50);
-  this.slider.setScaledMinWidth(50 + 16);
-  this.slider.setFixedHeight(this.edit.height);
-  this.slider.pageSize = 5;
-  this.slider.tickInterval = 5;
-  this.slider.tickStyle = TickStyle_NoTicks;
-  this.slider.focusStyle = FocusStyle_Click;
-  this.slider.onGetFocus = function () {
-    if (!this.parent.edit.readOnly) {
-      this.parent.edit.hasFocus = true;
-      this.parent.edit.selectAll();
-    }
-  };
-  this.slider.onValueUpdated = function (sliderValue) {
-    let newValue = this.parent.sliderValueToControl(sliderValue);
-    if (newValue != this.parent.value) {
-      this.parent.value = newValue;
-      this.parent.edit.text = this.parent.valueAsString(newValue);
-      if (this.parent.onValueUpdated) this.parent.onValueUpdated(newValue);
-    }
-  };
+    this.exponential = false;
 
-  this.sizer.add(this.slider, 100);
-  this.adjustToContents();
+    this.slider = new HorizontalSlider(this);
+    this.slider.setRange(0, 50);
+    this.slider.setScaledMinWidth(50 + 16);
+    this.slider.setFixedHeight(this.edit.height);
+    this.slider.pageSize = 5;
+    this.slider.tickInterval = 5;
+    this.slider.tickStyle = TickStyle_NoTicks;
+    this.slider.focusStyle = FocusStyle_Click;
+    this.slider.onGetFocus = () => {
+      if (!this.edit.readOnly) {
+        this.edit.hasFocus = true;
+        this.edit.selectAll();
+      }
+    };
+    this.slider.onValueUpdated = (sliderValue: number) => {
+      let newValue = this.sliderValueToControl(sliderValue);
+      if (newValue != this.value) {
+        this.value = newValue;
+        this.edit.text = this.valueAsString(newValue);
+        if (this.onValueUpdated) this.onValueUpdated(newValue);
+      }
+    };
 
-  this.sliderValueToControl = function (sliderValue) {
+    this.sizer.add(this.slider, 100);
+    this.adjustToContents();
+  }
+
+  sliderValueToControl(sliderValue: number): number {
     let sliderMinValue = this.slider.minValue;
     let sliderMaxValue = this.slider.maxValue;
     let sliderDelta = sliderMaxValue - sliderMinValue;
@@ -323,9 +297,9 @@ export function NumericControl(parent) {
       this.lowerBound,
       this.upperBound
     );
-  };
+  }
 
-  this.controlValueToSlider = function (value) {
+  controlValueToSlider(value: number): number {
     let sliderMinValue = this.slider.minValue;
     let sliderMaxValue = this.slider.maxValue;
     let sliderDelta = sliderMaxValue - sliderMinValue;
@@ -341,19 +315,11 @@ export function NumericControl(parent) {
       sliderMinValue,
       sliderMaxValue
     );
-  };
+  }
 
   // Override NumericEdit.updateControls
-  this.updateEditControls = this.updateControls;
-  this.updateControls = function () {
-    this.updateEditControls();
+  updateControls() {
+    super.updateControls();
     this.slider.value = this.controlValueToSlider(this.value);
-  };
+  }
 }
-
-NumericControl.prototype = new NumericEdit();
-
-// ----------------------------------------------------------------------------
-
-// ----------------------------------------------------------------------------
-// EOF pjsr/NumericControl.jsh - Released 2020-12-12T20:55:24Z

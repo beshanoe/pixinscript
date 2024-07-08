@@ -1,0 +1,7 @@
+{
+  "extends": "@pixinsight/typescript-config/base.json",
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "declaration": false
+  }
+}

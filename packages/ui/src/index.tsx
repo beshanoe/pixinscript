@@ -1,9 +1,6 @@
 /// <reference types="@pixinsight/core/types/controls" />
 
-import {
-  NumericControl as NumericControlConstructor,
-  NumericEdit as NumericEditConstructor,
-} from "@pixinsight/core";
+import { NumericControl, NumericEdit } from "@pixinsight/core";
 import * as React from "react";
 
 type SizerChildProps<Base> = Partial<Base> & {
@@ -27,8 +24,8 @@ declare global {
   }
 }
 
-function useCombinedRefs<T>(...refs: React.ForwardedRef<T>[]) {
-  const targetRef = React.useRef<T>();
+export function useCombinedRefs<T>(...refs: React.ForwardedRef<T>[]) {
+  const targetRef = React.useRef<T>(null);
 
   React.useEffect(() => {
     refs.forEach((ref) => {
@@ -126,30 +123,67 @@ export const UILabel = React.forwardRef<Label, SizerChildProps<Label>>(
   }
 );
 
-export const UINumericEdit = React.forwardRef<Label, SizerChildProps<Label>>(
-  (props, ref) => {
-    return (
-      <picontrol
-        ref={ref}
-        type="NumericEdit"
-        ctor={NumericEditConstructor}
-        {...props}
-      />
-    );
-  }
-);
+export const UINumericEdit = React.forwardRef<
+  NumericEdit,
+  SizerChildProps<NumericEdit>
+>((props, ref) => {
+  return (
+    <picontrol ref={ref} type="NumericEdit" ctor={NumericEdit} {...props} />
+  );
+});
 
-export const UINumericControl = React.forwardRef<Label, SizerChildProps<Label>>(
-  (props, ref) => {
-    return (
-      <picontrol
-        type="NumericControl"
-        ctor={NumericControlConstructor}
-        {...props}
-      />
-    );
-  }
-);
+export const UINumericControl = React.forwardRef<
+  NumericControl,
+  SizerChildProps<
+    Omit<NumericControl, "label"> & {
+      sliderRange?: [number, number];
+      label?: {
+        text?: string;
+        width?: number;
+      };
+    }
+  >
+>((props, outerRef) => {
+  const { label, ...rest } = props;
+
+  const innerRef = React.useRef<NumericControl>(null);
+  const ref = useCombinedRefs(outerRef, innerRef);
+
+  React.useEffect(() => {
+    if (ref.current && label) {
+      for (const [key, value] of Object.entries(label)) {
+        ref.current.label[key as keyof Label] = value;
+      }
+    }
+  }, [JSON.stringify(label)]);
+
+  React.useEffect(() => {
+    if (props.sliderRange) {
+      ref.current?.slider.setRange(props.sliderRange[0], props.sliderRange[1]);
+    }
+  }, [props.sliderRange]);
+
+  React.useEffect(() => {
+    if (props.precision !== undefined) {
+      ref.current?.setPrecision(props.precision);
+    }
+  }, [props.precision]);
+
+  React.useEffect(() => {
+    if (props.value !== undefined) {
+      ref.current?.setValue(props.value);
+    }
+  }, [props.value]);
+
+  return (
+    <picontrol
+      ref={ref}
+      type="NumericControl"
+      ctor={NumericControl}
+      {...rest}
+    />
+  );
+});
 
 export const UIPushButton = React.forwardRef<
   PushButton,
