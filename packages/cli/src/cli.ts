@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { Command } from "commander";
 import { build, dev } from "./index";
 
-const explorer = cosmiconfig("pixinsight");
+const explorer = cosmiconfig("pixinscript");
 const program = new Command();
 
 const configSchema = yup.object().shape({

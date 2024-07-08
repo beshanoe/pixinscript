@@ -8,7 +8,7 @@
     "build": "pixinsight build",
     "dev": "pixinsight dev"
   },
-  "pixinsight": {
+  "pixinscript": {
     "script": {
       "featureId": "Sandbox script",
       "featureInfo": "A sandbox script for testing"

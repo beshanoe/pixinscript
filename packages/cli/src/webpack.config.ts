@@ -2,7 +2,7 @@
 
 import * as path from "path";
 import * as webpack from "webpack";
-import { PixinsightWebpackPlugin } from "@pixinscript/webpack-plugin";
+import { PixinscriptWebpackPlugin } from "@pixinscript/webpack-plugin";
 import * as ZipWebpackPlugin from "zip-webpack-plugin";
 
 const workingDir = process.cwd();
@@ -65,7 +65,7 @@ export const makeConfig = ({
     path: path.resolve(workingDir, "dist"),
   },
   plugins: [
-    new PixinsightWebpackPlugin({
+    new PixinscriptWebpackPlugin({
       featureId,
       featureInfo,
     }),

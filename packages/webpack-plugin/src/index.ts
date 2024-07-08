@@ -1,7 +1,7 @@
 import * as webpack from "webpack";
 import { ConcatSource } from "webpack-sources";
 
-export class PixinsightWebpackPlugin {
+export class PixinscriptWebpackPlugin {
   constructor(private options: { featureId: string; featureInfo: string }) {}
 
   apply(compiler: webpack.Compiler) {
