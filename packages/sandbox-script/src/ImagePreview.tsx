@@ -2,8 +2,8 @@ import {
   Align_Center,
   FrameStyle_Box,
   TextAlign_Center,
-} from "@pixinsight/core";
-import { UIControl, UIFrame, UILabel, UIVerticalSizer } from "@pixinsight/ui";
+} from "@pixinscript/core";
+import { UIControl, UIFrame, UILabel, UIVerticalSizer } from "@pixinscript/ui";
 import React, { useMemo, useRef, useState } from "react";
 
 export function ImagePreview({

@@ -1,4 +1,4 @@
-# @pixinsight/cli
+# @pixinscript/cli
 
 ## 0.0.3
 
@@ -6,6 +6,6 @@
 
 - Moved to turborepo, better organized packages, added cli tool
 - Updated dependencies
-  - @pixinsight/core@0.0.3
-  - @pixinsight/ui@0.0.3
-  - @pixinsight/webpack-plugin@0.0.3
+  - @pixinscript/core@0.0.3
+  - @pixinscript/ui@0.0.3
+  - @pixinscript/webpack-plugin@0.0.3

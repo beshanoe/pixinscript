@@ -1,4 +1,4 @@
-import { UIEdit, UIHorizontalSizer, UISlider } from "@pixinsight/ui";
+import { UIEdit, UIHorizontalSizer, UISlider } from "@pixinscript/ui";
 import React, { ComponentProps, useEffect, useMemo, useState } from "react";
 
 export function NumericControl(props: ComponentProps<typeof UISlider>) {

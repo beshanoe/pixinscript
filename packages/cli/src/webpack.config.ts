@@ -2,7 +2,7 @@
 
 import * as path from "path";
 import * as webpack from "webpack";
-import { PixinsightWebpackPlugin } from "@pixinsight/webpack-plugin";
+import { PixinsightWebpackPlugin } from "@pixinscript/webpack-plugin";
 import * as ZipWebpackPlugin from "zip-webpack-plugin";
 
 const workingDir = process.cwd();
@@ -19,7 +19,7 @@ export const makeConfig = ({
     path: string;
   };
 }): webpack.Configuration => ({
-  entry: ["@pixinsight/core/polyfill", path.resolve(workingDir, "src/index")],
+  entry: ["@pixinscript/core/polyfill", path.resolve(workingDir, "src/index")],
 
   mode: "production",
   devtool: false,

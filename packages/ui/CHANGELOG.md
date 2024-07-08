@@ -1,4 +1,4 @@
-# @pixinsight/ui
+# @pixinscript/ui
 
 ## 0.0.3
 
@@ -6,14 +6,14 @@
 
 - Moved to turborepo, better organized packages, added cli tool
 - Updated dependencies
-  - @pixinsight/core@0.0.3
+  - @pixinscript/core@0.0.3
 
 ## 0.0.2
 
 ### Patch Changes
 
 - Updated dependencies [c064641]
-  - @pixinsight/core@0.0.2
+  - @pixinscript/core@0.0.2
 
 ## 0.0.1
 
@@ -21,4 +21,4 @@
 
 - First published version
 - Updated dependencies [undefined]
-  - @pixinsight/core@0.0.1
+  - @pixinscript/core@0.0.1

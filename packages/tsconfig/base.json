@@ -13,7 +13,11 @@
     "resolveJsonModule": true,
     "noLib": true,
     "types": [
-      "@pixinsight/core/types/lib.es5mod",
+      "@pixinscript/core/types/lib.es5mod",
+      "@pixinscript/core/types/globals",
+      "@pixinscript/core/types/processes",
+      "@pixinscript/core/types/typed-processes",
+      "@pixinscript/core/types/controls",
       "typescript/lib/lib.es2015.core",
       "typescript/lib/lib.es2015.collection",
       "typescript/lib/lib.es2015.iterable",
@@ -23,10 +27,6 @@
       "typescript/lib/lib.es2015.reflect",
       "typescript/lib/lib.es2015.symbol",
       "typescript/lib/lib.es2015.symbol.wellknown",
-      "@pixinsight/core/types/globals",
-      "@pixinsight/core/types/processes",
-      "@pixinsight/core/types/typed-processes",
-      "@pixinsight/core/types/controls"
     ]
   }
 }

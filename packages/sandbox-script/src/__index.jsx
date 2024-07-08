@@ -1,5 +1,4 @@
-import "@pixinsight/core/polyfill";
-import { render } from "@pixinsight/react";
+import { render } from "@pixinscript/react";
 import * as React from "react";
 import { ScriptDialog, SCRIPT_NAME, defaultParameters } from "./ScriptDialog";
 import { StarStretchDialogComponent } from "./StarStretchDialogComponent";

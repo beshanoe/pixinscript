@@ -28,8 +28,8 @@ import {
   StdCursor_OpenHand,
   TextAlign_Left,
   StdCursor_ClosedHand,
-} from "@pixinsight/core";
-import { render, useDialog } from "@pixinsight/react";
+} from "@pixinscript/core";
+import { render, useDialog } from "@pixinscript/react";
 import {
   UICheckBox,
   UIComboBox,
@@ -45,7 +45,7 @@ import {
   UIVerticalSizer,
   UIViewList,
   useCombinedRefs,
-} from "@pixinsight/ui";
+} from "@pixinscript/ui";
 
 const VERSION = "v2.3";
 

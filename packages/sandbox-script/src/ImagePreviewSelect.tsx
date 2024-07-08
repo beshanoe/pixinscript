@@ -1,11 +1,11 @@
-import { Align_Center, FrameStyle_Box } from "@pixinsight/core";
+import { Align_Center, FrameStyle_Box } from "@pixinscript/core";
 import {
   UIControl,
   UIFrame,
   UILabel,
   UIPushButton,
   UIVerticalSizer,
-} from "@pixinsight/ui";
+} from "@pixinscript/ui";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 export function ImagePreviewSelect({

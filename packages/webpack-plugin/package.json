@@ -1,5 +1,5 @@
 {
-  "name": "@pixinsight/webpack-plugin",
+  "name": "@pixinscript/webpack-plugin",
   "version": "0.0.3",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -11,7 +11,7 @@
     "webpack-sources": "^2.2.0"
   },
   "devDependencies": {
-    "@pixinsight/typescript-config": "*",
+    "@pixinscript/typescript-config": "*",
     "@types/webpack": "^4.41.26",
     "@types/webpack-sources": "^2.1.0"
   },

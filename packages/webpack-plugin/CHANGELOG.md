@@ -1,4 +1,4 @@
-# @pixinsight/webpack-plugin
+# @pixinscript/webpack-plugin
 
 ## 0.0.3
 

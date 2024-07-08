@@ -4,8 +4,8 @@ import {
   TextAlign_Center,
   TextAlign_VertCenter,
   UndoFlag_NoSwapFile,
-} from "@pixinsight/core";
-import { useDialog } from "@pixinsight/react";
+} from "@pixinscript/core";
+import { useDialog } from "@pixinscript/react";
 import {
   UIComboBox,
   UIControl,
@@ -20,7 +20,7 @@ import {
   UIToolButton,
   UIVerticalSizer,
   UIViewList,
-} from "@pixinsight/ui";
+} from "@pixinscript/ui";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { version } from "../package.json";
 import { ImagePreview } from "./ImagePreview";

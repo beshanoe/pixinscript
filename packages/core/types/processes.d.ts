@@ -1,5 +1,3 @@
-/// <reference types="./typed-processes" />
-
 declare class ProcessInstance {
   constructor();
   assign: any;

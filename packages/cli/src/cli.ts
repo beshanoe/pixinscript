@@ -37,7 +37,7 @@ async function main() {
   const config = await loadConfig();
 
   program
-    .name("pixinsight-cli")
+    .name("pixinscript-cli")
     .description("Pixinsight Script Builder")
     .version(require("../package.json").version);
 

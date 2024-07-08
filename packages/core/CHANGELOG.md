@@ -1,4 +1,4 @@
-# @pixinsight/core
+# @pixinscript/core
 
 ## 0.0.3
 

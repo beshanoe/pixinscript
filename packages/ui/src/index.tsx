@@ -1,6 +1,4 @@
-/// <reference types="@pixinsight/core/types/controls" />
-
-import { NumericControl, NumericEdit } from "@pixinsight/core";
+import { NumericControl, NumericEdit } from "@pixinscript/core";
 import * as React from "react";
 
 type SizerChildProps<Base> = Partial<Base> & {
