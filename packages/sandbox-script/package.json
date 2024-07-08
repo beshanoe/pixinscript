@@ -1,7 +1,7 @@
 {
   "name": "sandbox-script",
   "private": "true",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -15,10 +15,10 @@
     }
   },
   "dependencies": {
-    "@pixinsight/cli": "^0.0.2",
-    "@pixinsight/ui": "^0.0.2",
-    "@pixinsight/core": "^0.0.2",
-    "@pixinsight/react": "^0.0.2",
+    "@pixinsight/cli": "^0.0.3",
+    "@pixinsight/ui": "^0.0.3",
+    "@pixinsight/core": "^0.0.3",
+    "@pixinsight/react": "^0.0.3",
     "react": "^18.3.1"
   },
   "devDependencies": {}

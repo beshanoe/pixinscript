@@ -1,6 +1,6 @@
 {
   "name": "@pixinsight/cli",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/index.js",
   "license": "MIT",
   "bin": {
@@ -13,9 +13,9 @@
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
-    "@pixinsight/core": "^0.0.2",
-    "@pixinsight/ui": "^0.0.2",
-    "@pixinsight/webpack-plugin": "^0.0.2",
+    "@pixinsight/core": "^0.0.3",
+    "@pixinsight/ui": "^0.0.3",
+    "@pixinsight/webpack-plugin": "^0.0.3",
     "babel-loader": "^8.2.2",
     "commander": "^12.1.0",
     "cosmiconfig": "^9.0.0",
