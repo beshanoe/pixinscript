@@ -1,5 +1,16 @@
 # sandbox-script
 
+## 0.1.1
+
+### Patch Changes
+
+- Make tsconfig public and fix residual pixinsight names
+- Updated dependencies
+  - @pixinscript/cli@0.1.1
+  - @pixinscript/core@0.1.1
+  - @pixinscript/react@0.1.1
+  - @pixinscript/ui@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes

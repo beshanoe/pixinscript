@@ -1,6 +1,6 @@
 {
   "name": "@pixinscript/ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "license": "MIT",
@@ -8,12 +8,12 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@pixinscript/core": "^0.1.0"
+    "@pixinscript/core": "^0.1.1"
   },
   "peerDependencies": {
     "react": "^18.3.1"
   },
   "devDependencies": {
-    "@pixinscript/typescript-config": "0.0.3"
+    "@pixinscript/typescript-config": "0.0.4"
   }
 }

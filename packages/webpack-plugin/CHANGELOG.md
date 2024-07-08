@@ -1,5 +1,11 @@
 # @pixinscript/webpack-plugin
 
+## 0.1.1
+
+### Patch Changes
+
+- Make tsconfig public and fix residual pixinsight names
+
 ## 0.1.0
 
 ### Minor Changes

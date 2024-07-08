@@ -1,5 +1,13 @@
 # @pixinscript/react
 
+## 0.1.1
+
+### Patch Changes
+
+- Make tsconfig public and fix residual pixinsight names
+- Updated dependencies
+  - @pixinscript/core@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes

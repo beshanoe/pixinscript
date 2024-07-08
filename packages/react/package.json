@@ -1,6 +1,6 @@
 {
   "name": "@pixinscript/react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "license": "MIT",
@@ -8,7 +8,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@pixinscript/core": "^0.1.0",
+    "@pixinscript/core": "^0.1.1",
     "core-js": "3",
     "react-reconciler": "^0.29.2"
   },
@@ -17,6 +17,6 @@
   },
   "devDependencies": {
     "@types/react-reconciler": "^0.28.8",
-    "@pixinscript/typescript-config": "0.0.3"
+    "@pixinscript/typescript-config": "0.0.4"
   }
 }
