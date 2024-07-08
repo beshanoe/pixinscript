@@ -27,7 +27,7 @@
     "zip-webpack-plugin": "^4.0.1"
   },
   "devDependencies": {
-    "@pixinscript/typescript-config": "*",
+    "@pixinscript/typescript-config": "0.0.3",
     "@types/node": "20.14.10",
     "@types/webpack": "^4.41.26",
     "@types/webpack-sources": "^2.1.0",

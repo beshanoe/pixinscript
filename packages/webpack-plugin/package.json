@@ -11,7 +11,7 @@
     "webpack-sources": "^2.2.0"
   },
   "devDependencies": {
-    "@pixinscript/typescript-config": "*",
+    "@pixinscript/typescript-config": "0.0.3",
     "@types/webpack": "^4.41.26",
     "@types/webpack-sources": "^2.1.0"
   },

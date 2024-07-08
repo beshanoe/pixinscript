@@ -12,5 +12,8 @@
   },
   "peerDependencies": {
     "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@pixinscript/typescript-config": "0.0.3"
   }
 }
