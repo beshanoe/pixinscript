@@ -5,15 +5,14 @@
   "module": "dist/index.js",
   "license": "MIT",
   "peerDependencies": {
-    "webpack": "^5.16.0"
+    "webpack": "^5.92.1"
   },
   "dependencies": {
-    "webpack-sources": "^2.2.0"
+    "webpack-sources": "^3.2.3"
   },
   "devDependencies": {
     "@pixinscript/typescript-config": "0.0.4",
-    "@types/webpack": "^4.41.26",
-    "@types/webpack-sources": "^2.1.0"
+    "@types/webpack-sources": "^3.2.3"
   },
   "scripts": {
     "build": "tsc"

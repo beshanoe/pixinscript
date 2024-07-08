@@ -1,4 +1,4 @@
-import * as webpack from "webpack";
+import webpack = require("webpack");
 import { ConcatSource } from "webpack-sources";
 
 export class PixinscriptWebpackPlugin {

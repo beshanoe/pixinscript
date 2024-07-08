@@ -1,7 +1,7 @@
 //@ts-check
 
 import * as path from "path";
-import * as webpack from "webpack";
+import webpack = require("webpack");
 import { PixinscriptWebpackPlugin } from "@pixinscript/webpack-plugin";
 import * as ZipWebpackPlugin from "zip-webpack-plugin";
 

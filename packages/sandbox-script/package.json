@@ -5,8 +5,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "pixinsight build",
-    "dev": "pixinsight dev"
+    "build": "pixinscript build",
+    "dev": "pixinscript dev"
   },
   "pixinscript": {
     "script": {
