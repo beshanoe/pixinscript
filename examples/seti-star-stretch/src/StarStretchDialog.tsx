@@ -30,7 +30,7 @@ export function StarStretchDialog() {
   const dialog = useDialog();
   const scrollControlRef = React.useRef<ScrollBox>(null);
 
-  const [targetView, setTargetView] = React.useState<View | null>(new View());
+  const [targetView, setTargetView] = React.useState<View | null>(null);
   const [previewImage, setPreviewImage] = React.useState<Image>();
   const [stretchAmount, setStretchAmount] = React.useState(
     StarStretchParameters.amount
@@ -45,28 +45,22 @@ export function StarStretchDialog() {
 
   React.useEffect(() => {
     // Find the active window
-    let activeWindow = ImageWindow.activeWindow;
-    if (!activeWindow.isNull) {
-      StarStretchParameters.targetView = activeWindow.mainView;
-    } else {
-      StarStretchParameters.targetView = null;
+    const activeWindow = ImageWindow.activeWindow;
+    const activeView = !activeWindow.isNull ? activeWindow.currentView : null;
+
+    if (activeView) {
+      StarStretchParameters.targetView = activeView;
+      setTargetView(activeView);
+      refreshPreview(activeView);
     }
-
-    setTargetView(StarStretchParameters.targetView);
-
-    refreshPreview();
-
-    dialog.onShow = () => {
-      refreshPreview();
-    };
   }, []);
 
-  function refreshPreview() {
-    if (!targetView) {
+  function refreshPreview(view = targetView) {
+    if (!view) {
       return;
     }
     const previewImage = getPreviewImage(
-      targetView,
+      view,
       zoomFactor,
       scrollControlRef.current?.width
     );
@@ -94,7 +88,7 @@ export function StarStretchDialog() {
           maxHeight={140}
         />
         <UIViewList
-          currentView={targetView}
+          {...(targetView && { currentView: targetView })}
           onViewSelected={(view) => {
             setTargetView(view);
             StarStretchParameters.targetView = view;
