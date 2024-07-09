@@ -1,8 +1,7 @@
 {
-  "name": "sandbox-script",
+  "name": "seti-star-stretch",
   "private": "true",
-  "version": "0.1.2",
-  "main": "index.js",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "build": "pixinscript build",
@@ -10,8 +9,8 @@
   },
   "pixinscript": {
     "script": {
-      "featureId": "Sandbox script",
-      "featureInfo": "A sandbox script for testing"
+      "featureId": "Example Seti Star Stretch",
+      "featureInfo": "This script stretches the image to enhance the star colors."
     }
   },
   "dependencies": {

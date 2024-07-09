@@ -1,0 +1,26 @@
+{
+  "name": "hello-world",
+  "private": "true",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "pixinscript build",
+    "dev": "pixinscript dev"
+  },
+  "pixinscript": {
+    "script": {
+      "featureId": "Example Hello World",
+      "featureInfo": "This script displays a hello world message."
+    }
+  },
+  "dependencies": {
+    "@pixinscript/cli": "^0.1.2",
+    "@pixinscript/ui": "^0.1.1",
+    "@pixinscript/core": "^0.1.1",
+    "@pixinscript/react": "^0.1.1",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@pixinscript/typescript-config": "0.0.4"
+  }
+}

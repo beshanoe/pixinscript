@@ -1,4 +1,4 @@
-export function substract(image: Image, secondImage: Image) {
+export function subtract(image: Image, secondImage: Image) {
   const imageCopy = new Image();
   imageCopy.assign(image);
 
@@ -14,6 +14,8 @@ export function substract(image: Image, secondImage: Image) {
 
     if (v2.isLessThan(v1)) {
       v1.sub(v2);
+    } else {
+      v1.mul(0);
     }
 
     imageCopy.setPixelValue(v1);
@@ -41,12 +43,16 @@ export function assignThroughMask(
   const v1 = new Vector();
   const v2 = new Vector();
   const vMask = new Vector();
-  const oldV1 = new Vector(3);
+  let oldV1: Vector | undefined;
 
   do {
     imageCopy.getPixelValue(v1);
     secondImage.getPixelValue(v2);
     mask.getPixelValue(vMask);
+
+    if (!oldV1) {
+      oldV1 = new Vector(v1.length);
+    }
 
     v2.mul(vMask);
 

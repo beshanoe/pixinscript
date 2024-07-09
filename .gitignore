@@ -1,5 +1,4 @@
 node_modules
 packages/*/dist
-packages/*/lib
-packages/*/es
+examples/*/dist
 .turbo

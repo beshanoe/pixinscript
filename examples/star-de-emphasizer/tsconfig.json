@@ -1,0 +1,6 @@
+{
+  "extends": "@pixinscript/typescript-config/base.json",
+  "compilerOptions": {
+    "declaration": false
+  }
+}

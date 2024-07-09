@@ -31,7 +31,7 @@ export function NumericControl(props: ComponentProps<typeof UISlider>) {
   const [value, setValue] = useState<number>(props.value ?? 0);
 
   useEffect(() => {
-    setText(props.value.toString());
+    setText(props.value?.toString() ?? '');
     setValue(props.value * factor);
   }, [props.value]);
 

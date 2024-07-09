@@ -13,7 +13,8 @@
     "typescript": "5.5.3"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ],
   "devDependencies": {
     "@babel/core": "^7.12.10",

@@ -1,0 +1,228 @@
+export enum MorphologicalOperator {
+  ErosionFilter = 0,
+  DilationFilter = 1,
+  MedianFilter = 2,
+  SeletctionFilter =3,
+  MidpointFilter = 4,
+  AlphaTrimmedMeanFilter = 5
+}
+
+export function morphology(operator: MorphologicalOperator,  image: Image, size: number) {
+  const imageCopy = new Image();
+  imageCopy.assign(image);
+
+  const sizeToMaskMap: Record<string, any> = {
+    "3": CIRCLE_3,
+    "5": CIRCLE_5,
+    "7": CIRCLE_7,
+    "9": CIRCLE_9,
+    "11": CIRCLE_11,
+	"13": CIRCLE_13,
+	"15": CIRCLE_15,
+	"17": CIRCLE_17,
+	"19": CIRCLE_19,
+	"21": CIRCLE_21,
+	"23": CIRCLE_23,
+	"25": CIRCLE_25,
+  };
+
+  try {
+    imageCopy.morphologicalTransformation(operator, [sizeToMaskMap[size]]);
+  } catch (error) {
+    console.log(error);
+  }
+  return imageCopy;
+}
+
+const CIRCLE_3 = [
+	true, true, true,
+	true, true, true,
+	true, true, true
+];
+const CIRCLE_5 = [
+    false, true, true, true, false,
+    true, true, true, true, true,
+    true, true, true, true, true,
+    true, true, true, true, true,
+    false, true, true, true, false,
+];
+const CIRCLE_7 = [
+    false, false, true, true, true, false, false,
+    false, true, true, true, true, true, false,
+    true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true,
+    false, true, true, true, true, true, false,
+    false, false, true, true, true, false, false,
+];
+const CIRCLE_9 = [
+    false, false, true, true, true, true, true, false, false,
+    false, true, true, true, true, true, true, true, false,
+    true, true, true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true, true, true,
+    false, true, true, true, true, true, true, true, false,
+    false, false, true, true, true, true, true, false, false,
+];
+const CIRCLE_11 = [
+    false, false, false, true, true, true, true, true, false, false, false,
+    false, false, true, true, true, true, true, true, true, false, false,
+    false, true, true, true, true, true, true, true, true, true, false,
+    true, true, true, true, true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true, true, true, true, true,
+    true, true, true, true, true, true, true, true, true, true, true,
+    false, true, true, true, true, true, true, true, true, true, false,
+    false, false, true, true, true, true, true, true, true, false, false,
+    false, false, false, true, true, true, true, true, false, false, false,
+];
+const CIRCLE_13 = [
+	false, false, false, false, true, true, true, true, true, false, false, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, false, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, false,
+	true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true,
+	false, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, false, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, false, false, true, true, true, true, true, false, false, false, false,
+];
+const CIRCLE_15 = [
+	false, false, false, false, false, true, true, true, true, true, false, false, false, false, false,
+	false, false, false, true, true, true, true, true, true, true, true, true, false, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, false, true, true, true, true, true, true, true, true, true, false, false, false,
+	false, false, false, false, false, true, true, true, true, true, false, false, false, false, false,
+];
+const CIRCLE_17 = [
+	false, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, false,
+	false, false, false, false, true, true, true, true, true, true, true, true, true, false, false, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, false, false, true, true, true, true, true, true, true, true, true, false, false, false, false,
+	false, false, false, false, false, false, true, true, true, true, true, false, false, false, false, false, false,
+];
+const CIRCLE_19 = [
+	false, false, false, false, false, false, true, true, true, true, true, true, true, false, false, false, false, false, false,
+	false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false,
+	false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false,
+	false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false,
+	false, false, false, false, false, false, true, true, true, true, true, true, true, false, false, false, false, false, false,
+];
+const CIRCLE_21 = [
+	false, false, false, false, false, false, false, true, true, true, true, true, true, true, false, false, false, false, false, false, false,
+	false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
+	false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false,
+	false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false,
+	false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false,
+	false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
+	false, false, false, false, false, false, false, true, true, true, true, true, true, true, false, false, false, false, false, false, false,
+];
+const CIRCLE_23 = [
+	false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false,
+	false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false,
+	false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false,
+	false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false,
+	false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false,
+	false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false,
+	false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false,
+];
+const CIRCLE_25 = [
+	false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false,
+	false, false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false,
+	false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
+	false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false,
+	false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false,
+	false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false,
+	false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false,
+	false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false,
+	false, false, false, false, false, false, false, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false, false, false,
+	false, false, false, false, false, false, false, false, false, true, true, true, true, true, true, true, false, false, false, false, false, false, false, false, false,
+];

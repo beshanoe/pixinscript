@@ -1,7 +1,6 @@
 {
   "extends": "@pixinscript/typescript-config/base.json",
   "compilerOptions": {
-    "moduleResolution": "node",
     "declaration": false
   }
 }
