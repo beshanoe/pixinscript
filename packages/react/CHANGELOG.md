@@ -1,5 +1,13 @@
 # @pixinscript/react
 
+## 0.1.2
+
+### Patch Changes
+
+- Introduce example projects
+- Updated dependencies
+  - @pixinscript/core@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

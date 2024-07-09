@@ -1,5 +1,11 @@
 # @pixinscript/webpack-plugin
 
+## 0.1.3
+
+### Patch Changes
+
+- Introduce example projects
+
 ## 0.1.2
 
 ### Patch Changes

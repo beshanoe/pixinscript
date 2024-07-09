@@ -1,5 +1,15 @@
 # @pixinscript/cli
 
+## 0.1.3
+
+### Patch Changes
+
+- Introduce example projects
+- Updated dependencies
+  - @pixinscript/core@0.1.2
+  - @pixinscript/ui@0.1.2
+  - @pixinscript/webpack-plugin@0.1.3
+
 ## 0.1.2
 
 ### Patch Changes

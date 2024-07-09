@@ -1,7 +1,7 @@
 {
   "name": "seti-star-stretch",
   "private": "true",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "scripts": {
     "build": "pixinscript build",
@@ -14,13 +14,13 @@
     }
   },
   "dependencies": {
-    "@pixinscript/cli": "^0.1.2",
-    "@pixinscript/ui": "^0.1.1",
-    "@pixinscript/core": "^0.1.1",
-    "@pixinscript/react": "^0.1.1",
+    "@pixinscript/cli": "^0.1.3",
+    "@pixinscript/ui": "^0.1.2",
+    "@pixinscript/core": "^0.1.2",
+    "@pixinscript/react": "^0.1.2",
     "react": "^18.3.1"
   },
   "devDependencies": {
-    "@pixinscript/typescript-config": "0.0.4"
+    "@pixinscript/typescript-config": "0.0.5"
   }
 }
