@@ -34,6 +34,6 @@ export const StarStretchParameters = {
       [0.0, satAmount * 0.4],
       [0.5, satAmount * 0.7],
       [1.0, satAmount * 0.4],
-    ];
+    ] as Array<[number, number]>;
   },
 };

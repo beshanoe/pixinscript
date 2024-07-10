@@ -54,6 +54,7 @@
  * Horizontal sizer class
  */
 export class HorizontalSizer extends Sizer {
+  __base__: any;
   constructor() {
     super();
     this.__base__ = Sizer;
@@ -65,6 +66,7 @@ export class HorizontalSizer extends Sizer {
  * Vertical sizer class
  */
 export class VerticalSizer extends Sizer {
+  __base__: any;
   constructor() {
     super();
     this.__base__ = Sizer;

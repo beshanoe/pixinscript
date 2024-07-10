@@ -1,0 +1,62 @@
+declare class RGBColorSystem {
+  readonly Y: number[];
+  readonly cieXNormalizationFactor: number;
+  readonly cieXYZToRGBMatrix: number[];
+  readonly cieZNormalizationFactor: number;
+  readonly cieaNormalizationFactor: number;
+  readonly cieaNormalizationOffset: number;
+  readonly ciebNormalizationFactor: number;
+  readonly ciebNormalizationOffset: number;
+  readonly ciecNormalizationFactor: number;
+  readonly gamma: number;
+  readonly rgbToCIEXYZMatrix: number[];
+  readonly srgbGamma: boolean;
+  readonly x: number[];
+  readonly y: number[];
+
+  constructor(gamma?: number, srgbGamma?: boolean, Y?: number[], x?: number[], y?: number[]);
+  constructor(rgbws: RGBColorSystem);
+
+  assign(rgbws: RGBColorSystem): void;
+  cieLabToCIELch(L: number, a: number, b: number): number[];
+  cieLabToCIELch(Lab: number[]): number[];
+  cieLabToCIEXYZ(L: number, a: number, b: number): number[];
+  cieLabToCIEXYZ(Lab: number[]): number[];
+  cieLabToRGB(L: number, a: number, b: number): number[];
+  cieLabToRGB(Lab: number[]): number[];
+  cieLchToCIELab(L: number, c: number, h: number): number[];
+  cieLchToCIELab(Lch: number[]): number[];
+  cieLchToRGB(L: number, c: number, h: number): number[];
+  cieLchToRGB(Lch: number[]): number[];
+  cieXYZToCIELab(x: number, y: number, z: number): number[];
+  cieXYZToCIELab(xyz: number[]): number[];
+  cieXYZToRGB(x: number, y: number, z: number): number[];
+  cieXYZToRGB(xyz: number[]): number[];
+  lightness(r: number, g: number, b: number): number;
+  lightness(rgb: number[]): number;
+  rgbToCIELab(r: number, g: number, b: number): number[];
+  rgbToCIELab(rgb: number[]): number[];
+  rgbToCIELch(r: number, g: number, b: number): number[];
+  rgbToCIELch(rgb: number[]): number[];
+  rgbToCIEXYZ(r: number, g: number, b: number): number[];
+  rgbToCIEXYZ(rgb: number[]): number[];
+
+  static hsiSaturation(r: number, g: number, b: number): number;
+  static hsiSaturation(rgb: number[]): number;
+  static hsiToRGB(h: number, s: number, i: number): number[];
+  static hsiToRGB(hsi: number[]): number[];
+  static hsvSaturation(r: number, g: number, b: number): number;
+  static hsvSaturation(rgb: number[]): number;
+  static hsvToRGB(h: number, s: number, v: number): number[];
+  static hsvToRGB(hsv: number[]): number[];
+  static hue(r: number, g: number, b: number): number;
+  static hue(rgb: number[]): number;
+  static intensity(r: number, g: number, b: number): number;
+  static intensity(rgb: number[]): number;
+  static rgbToHSI(r: number, g: number, b: number): number[];
+  static rgbToHSI(rgb: number[]): number[];
+  static rgbToHSV(r: number, g: number, b: number): number[];
+  static rgbToHSV(rgb: number[]): number[];
+  static value(r: number, g: number, b: number): number;
+  static value(rgb: number[]): number;
+}

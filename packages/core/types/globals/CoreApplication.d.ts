@@ -1,0 +1,48 @@
+declare class CoreApplication {
+    static readonly agentName: string;
+    static readonly appDirPath: string;
+    static readonly baseDirPath: string;
+    static readonly binDirPath: string;
+    static readonly caBundleFilePath: string;
+    static readonly colorDirPath: string;
+    static readonly configDirPath: string;
+    static readonly dirPath: string;
+    static readonly docDirPath: string;
+    static readonly etcDirPath: string;
+    static readonly filePath: string;
+    static readonly hasPendingMessages: boolean;
+    static readonly includeDirPath: string;
+    static readonly instance: number;
+    static readonly language: string;
+    static readonly libDirPath: string;
+    static readonly libraryDirPath: string;
+    static readonly numberOfPendingMessages: number;
+    static readonly pid: string;
+    static readonly platform: string;
+    static readonly programName: string;
+    static readonly rscDirPath: string;
+    static readonly srcDirPath: string;
+    static readonly startTime: Date;
+    static readonly versionBeta: number;
+    static readonly versionBuild: number;
+    static readonly versionCodename: string;
+    static readonly versionLE: boolean;
+    static readonly versionMajor: number;
+    static readonly versionMinor: number;
+    static readonly versionRelease: number;
+    static readonly versionRevision: number;
+
+    static activateInstance(instance: number): void;
+    static clearPendingMessages(): void;
+    static continueAutoSaveTasks(): void;
+    static firstInstanceAlive(): number;
+    static instancePID(instance: number): string;
+    static isInstanceAlive(instance: number): boolean;
+    static isInstanceRunning(instance: number): boolean;
+    static launchInstance(instance?: number): void;
+    static otherInstancesRunning(): boolean;
+    static pauseAutoSaveTasks(): void;
+    static processPendingMessages(msec?: number): void;
+    static sendMessage(instance: number, message: string, uniqueId?: string): boolean;
+    static terminateInstance(instance: number): void;
+}

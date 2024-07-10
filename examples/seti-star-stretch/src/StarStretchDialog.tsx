@@ -29,7 +29,7 @@ const ZoomFactors = [
 export function StarStretchDialog() {
   const dialog = useDialog();
   const scrollControlRef = React.useRef<ScrollBox>(null);
-
+  
   const [targetView, setTargetView] = React.useState<View | null>(null);
   const [previewImage, setPreviewImage] = React.useState<Image>();
   const [stretchAmount, setStretchAmount] = React.useState(

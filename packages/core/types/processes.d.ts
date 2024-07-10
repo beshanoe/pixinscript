@@ -1,31 +1,3 @@
-declare class ProcessInstance {
-  constructor();
-  assign: any;
-  canExecuteGlobal: any;
-  canExecuteOn: any;
-  canLaunchInterface: any;
-  canProcessGlobal: any;
-  canProcessImages: any;
-  canProcessViews: any;
-  description: any;
-  executeGlobal: any;
-  executeOn: any;
-  executionTime: any;
-  isAssignable: any;
-  isHistoryUpdater: any;
-  isMaskable: any;
-  launch: any;
-  launchInterface: any;
-  processCategory: any;
-  processId: any;
-  readIcon: any;
-  setDescription: any;
-  startJD: any;
-  toSource: any;
-  validate: any;
-  writeIcon: any;
-  writeInstanceAddr: any;
-}
 declare class AutomaticBackgroundExtractor extends ProcessInstance {
   Divide: any;
   None: any;

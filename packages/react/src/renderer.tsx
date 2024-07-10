@@ -76,7 +76,7 @@ function removeChild(
   if (childToRemove instanceof Sizer && childrenBySizerMap.has(childToRemove)) {
     childrenBySizerMap
       .get(childToRemove)
-      ?.forEach((subchild) => removeChild(childToRemove, subchild));
+      ?.forEach((subchild) => removeChild(childToRemove, subchild as Sizer));
     childrenBySizerMap.delete(childToRemove);
   }
 
@@ -239,7 +239,7 @@ const PixInsightReconciler = Reconciler<
       return;
     }
     const args: Arguments<typeof Sizer.prototype.add> = [
-      child,
+      child as Sizer,
       child.stretchFactor,
     ];
     if (!(child instanceof Sizer)) {
@@ -256,7 +256,7 @@ const PixInsightReconciler = Reconciler<
       return;
     }
     const args: Arguments<typeof Sizer.prototype.add> = [
-      child,
+      child as Sizer,
       child.stretchFactor,
     ];
     if (!(child instanceof Sizer)) {
@@ -273,7 +273,7 @@ const PixInsightReconciler = Reconciler<
       return;
     }
     const args: Arguments<typeof Sizer.prototype.add> = [
-      child,
+      child as Sizer,
       child.stretchFactor,
     ];
     if (!(child instanceof Sizer)) {
@@ -297,8 +297,8 @@ const PixInsightReconciler = Reconciler<
     }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
     const args: Arguments<typeof Sizer.prototype.insert> = [
-      sizer.indexOf(beforeChild),
-      child,
+      sizer.indexOf(beforeChild as Sizer),
+      child as Sizer,
       child.stretchFactor,
     ];
     if (!(child instanceof Sizer)) {
@@ -315,7 +315,7 @@ const PixInsightReconciler = Reconciler<
     }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
 
-    removeChild(sizer, child);
+    removeChild(sizer, child as unknown as Sizer);
   },
   removeChildFromContainer(
     parent: Extended<Control>,
@@ -326,7 +326,7 @@ const PixInsightReconciler = Reconciler<
       return;
     }
     const sizer = parent instanceof Sizer ? parent : parent.sizer;
-    removeChild(sizer, child);
+    removeChild(sizer, child as unknown as Sizer);
   },
   prepareUpdate(control: Extended<Control>, type, oldProps, newProps) {
     debug(`prepareUpdate ${control.__id} ${type}`);
@@ -363,10 +363,13 @@ const PixInsightReconciler = Reconciler<
       }
     });
     if (newProps.stretchFactor !== oldProps.stretchFactor) {
-      control.parentSizer?.setStretchFactor(control, newProps.stretchFactor);
+      control.parentSizer?.setStretchFactor(
+        control as Sizer,
+        newProps.stretchFactor
+      );
     }
     if (newProps.alignment !== oldProps.alignment) {
-      control.parentSizer?.setAlignment(control, newProps.alignment);
+      control.parentSizer?.setAlignment(control as Sizer, newProps.alignment);
     }
   },
   commitTextUpdate(textInstance: Extended<Label>, oldText, newText) {

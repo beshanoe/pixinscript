@@ -22,7 +22,7 @@ declare global {
   }
 }
 
-export function useCombinedRefs<T>(...refs: React.ForwardedRef<T>[]) {
+export function useCombinedRefs<T = any>(...refs: React.ForwardedRef<any>[]) {
   const targetRef = React.useRef<T>(null);
 
   React.useEffect(() => {
@@ -150,7 +150,7 @@ export const UINumericControl = React.forwardRef<
   React.useEffect(() => {
     if (ref.current && label) {
       for (const [key, value] of Object.entries(label)) {
-        ref.current.label[key as keyof Label] = value;
+        ref.current.label[key] = value;
       }
     }
   }, [JSON.stringify(label)]);

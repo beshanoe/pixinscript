@@ -1,10 +1,12 @@
 {
-  "extends": "@pixinscript/typescript-config/base.json",
+  // "extends": "@pixinscript/typescript-config/base.json",
   "compilerOptions": {
     "module": "CommonJS",
     "outDir": "dist",
     "skipLibCheck": true,
-    "skipDefaultLibCheck": true
+    "skipDefaultLibCheck": true,
+    "noLib": false,
+    "lib": ["esnext"]
   },
   "include": ["src"],
   "exclude": ["node_modules"]

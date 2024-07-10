@@ -25,7 +25,7 @@ import { structures } from "./process/structures";
 
 export const SCRIPT_NAME = "Star De-emphasizer";
 export const SCRIPT_VERSION = version;
-const SCRIPT_DESCRIPTION = `<b> ${SCRIPT_NAME}  v${version}</b> &mdash; This script uses the method suggested by Adam Block to de-emphasize stars.<br><br>Copyright (c) 2021 Maxim Valenko @AstroSwell`;
+const SCRIPT_DESCRIPTION = `<b> ${SCRIPT_NAME}  v${version}</b> &mdash; Thisasdasd script uses the method suggested by Adam Block to de-emphasize stars.<br><br>Copyright (c) 2021 Maxim Valenko @AstroSwell`;
 
 export const defaultParameters = {
   targetViewId: "",
@@ -98,15 +98,20 @@ export function ScriptDialog({
   const [previousStep, setPreviousStep] = useState<Step>("original");
 
   const [isControlsEnabled, setIsControlsEnabled] = useState(true);
-  const [isClosingEnabled, setIsClosingEnabled] = useState(parameters.closingEnabled);
+  const [isClosingEnabled, setIsClosingEnabled] = useState(
+    parameters.closingEnabled
+  );
 
   const targetImage = useMemo(() => targetView?.image, [targetView]);
   const starlessImage = useMemo(() => starlessView?.image, [starlessView]);
-  const structuresMapImage = useMemo(() => structuresView?.image, [structuresView]);
-  const currentImage = useMemo(() => previewImages[currentStep], [
-    currentStep,
-    previewImages,
-  ]);
+  const structuresMapImage = useMemo(
+    () => structuresView?.image,
+    [structuresView]
+  );
+  const currentImage = useMemo(
+    () => previewImages[currentStep],
+    [currentStep, previewImages]
+  );
 
   useEffect(() => {
     setTargetView((View as any).viewById(parameters.targetViewId)); // TODO remove any after updating typings
@@ -144,15 +149,15 @@ export function ScriptDialog({
         starless: previewStarlessImage,
         structures: previewImages.structures,
       });
-	  starless = previewStarlessImage;
+      starless = previewStarlessImage;
     } else {
       setPreviewImages({
         original,
         structures: previewImages.structures,
       });
     }
-	
-	if (structuresMapImage) {
+
+    if (structuresMapImage) {
       const previewStructuresImage = new Image();
       previewStructuresImage.assign(structuresMapImage);
       previewStructuresImage.cropTo(rect);
@@ -184,19 +189,24 @@ export function ScriptDialog({
     onParameterChange?.("structuresMaxLayer", newParameters.structuresMaxLayer);
   }
 
-  function process(image: Image, starlessImage: Image, structuresMapImage?: Image) {
+  function process(
+    image: Image,
+    starlessImage: Image,
+    structuresMapImage?: Image
+  ) {
     const lumImage = new Image();
 
     console.log("Get Luminance...");
     image.getLuminance(lumImage);
 
     console.log("MultiscaleLinearTransform...");
-    const structuresImage = structuresMapImage && structuresView && !structuresView.isNull
-		? structuresMapImage
-		: structures(lumImage, {
-		  minLayer: parameters.structuresMinLayer,
-		  maxLayer: parameters.structuresMaxLayer,
-    });
+    const structuresImage =
+      structuresMapImage && structuresView && !structuresView.isNull
+        ? structuresMapImage
+        : structures(lumImage, {
+            minLayer: parameters.structuresMinLayer,
+            maxLayer: parameters.structuresMaxLayer,
+          });
 
     console.log("Binarize...");
     const binarizedImage = binarize(structuresImage, {
@@ -267,7 +277,11 @@ export function ScriptDialog({
         convolutedImage,
         halosImage,
         finalImage,
-      } = process(previewImages.original, previewImages.starless, previewImages.structures);
+      } = process(
+        previewImages.original,
+        previewImages.starless,
+        previewImages.structures
+      );
 
       setPreviewImages({
         ...previewImages,
@@ -298,7 +312,11 @@ export function ScriptDialog({
     setIsControlsEnabled(false);
 
     try {
-      const { finalImage } = process(targetImage, starlessImage, structuresMapImage);
+      const { finalImage } = process(
+        targetImage,
+        starlessImage,
+        structuresMapImage
+      );
 
       targetView?.beginProcess();
       targetView?.image.apply(finalImage);
@@ -320,9 +338,12 @@ export function ScriptDialog({
     setParameters(defaultParameters);
   }
 
-  function updateParameter<K extends keyof Parameters>(name: K, value: Parameters[K]) {
-    setParameters({...parameters, [name]: value})
-    onParameterChange?.(name, value)
+  function updateParameter<K extends keyof Parameters>(
+    name: K,
+    value: Parameters[K]
+  ) {
+    setParameters({ ...parameters, [name]: value });
+    onParameterChange?.(name, value);
   }
 
   function onNewInstancePress() {
@@ -337,8 +358,12 @@ export function ScriptDialog({
     _mods: any,
     readoutData: ReadoutData
   ) {
+    console.log(button, readoutData)
     if (button === 1 && currentStep === "structures") {
-      updateParameter('binarizeThreshold', Math.floor(readoutData[3] * 100) / 100)
+      updateParameter(
+        "binarizeThreshold",
+        Math.floor(readoutData[3] * 100) / 100
+      );
     } else if (button === 2) {
       const newStep = stepMap[currentStep];
       setPreviousStep(currentStep);
@@ -353,10 +378,13 @@ export function ScriptDialog({
   }
 
   function saveAsView(image?: Image) {
+    if (!image) {
+      return;
+    }
     const iw = new ImageWindow(
-      image?.width,
-      image?.width,
-      image?.numberOfChannels
+      image.width,
+      image.width,
+      image.numberOfChannels
     );
     iw.mainView.beginProcess();
     iw.mainView.image.assign(image);
@@ -495,8 +523,8 @@ export function ScriptDialog({
             titleCheckBox={true}
             checked={isClosingEnabled}
             onCheck={(checked) => {
-              setIsClosingEnabled(checked)
-              updateParameter('closingEnabled', checked);
+              setIsClosingEnabled(checked);
+              updateParameter("closingEnabled", checked);
             }}
           >
             <UIHorizontalSizer spacing={5}>
@@ -529,10 +557,7 @@ export function ScriptDialog({
                 stepSize={2}
                 value={parameters.closingDilationSize}
                 onValueUpdated={(closingDilationSize) => {
-                  updateParameter(
-                    "closingDilationSize",
-                    closingDilationSize
-                  );
+                  updateParameter("closingDilationSize", closingDilationSize);
                 }}
               />
               <UIStretch />

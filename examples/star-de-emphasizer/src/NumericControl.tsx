@@ -13,10 +13,10 @@ export function NumericControl(props: ComponentProps<typeof UISlider>) {
     return [
       factor,
       {
-        minValue: props.minValue * factor,
-        maxValue: props.maxValue * factor,
-        stepSize: props.stepSize * factor,
-        tickInterval: props.tickInterval * factor,
+        minValue: (props.minValue ?? 0) * factor,
+        maxValue: (props.maxValue ?? 1) * factor,
+        stepSize: (props.stepSize ?? 1) * factor,
+        tickInterval: (props.tickInterval ?? 1) * factor,
       },
     ];
   }, [
@@ -31,8 +31,8 @@ export function NumericControl(props: ComponentProps<typeof UISlider>) {
   const [value, setValue] = useState<number>(props.value ?? 0);
 
   useEffect(() => {
-    setText(props.value?.toString() ?? '');
-    setValue(props.value * factor);
+    setText(props.value?.toString() ?? "");
+    setValue((props.value ?? 0) * factor);
   }, [props.value]);
 
   function validateText() {

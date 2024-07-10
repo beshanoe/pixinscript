@@ -31,6 +31,10 @@ export function ImagePreviewSelect({
     offsetX,
     offsetY,
   ] = useMemo(() => {
+    if (!image) {
+      return [];
+    }
+
     const ratio = image?.width / image?.height;
     const controlRatio = size.w / size.h;
     const [sw, sh] =
@@ -48,7 +52,7 @@ export function ImagePreviewSelect({
   }, [image, size]);
 
   useEffect(() => {
-    if (!image) {
+    if (!image || !defaultRectWidth || !defaultRectHeight) {
       return;
     }
     const newRect = new Rect(defaultRectWidth, defaultRectHeight);
@@ -61,7 +65,7 @@ export function ImagePreviewSelect({
   }, [image]);
 
   useEffect(() => {
-    if (!image) {
+    if (!image || !defaultRectWidth || !defaultRectHeight) {
       return;
     }
     const oldCenter = new Point(rect.center);
@@ -85,7 +89,14 @@ export function ImagePreviewSelect({
   }, [zoom, size, rect, image]);
 
   function onPaint() {
-    if (!controlRef.current || !bmp) {
+    if (
+      !controlRef.current ||
+      !bmp ||
+      offsetX === undefined ||
+      offsetY === undefined ||
+      scaleX === undefined ||
+      scaleY === undefined
+    ) {
       return;
     }
     const control = controlRef.current;
@@ -130,6 +141,9 @@ export function ImagePreviewSelect({
   }
 
   function constrainRect(rect: Rect) {
+    if (!image) {
+      return;
+    }
     const [w, h] = [rect.width, rect.height];
     if (rect.left < 0) {
       rect.left = 0;
@@ -148,6 +162,14 @@ export function ImagePreviewSelect({
   }
 
   function updateRectPosition(x: number, y: number) {
+    if (
+      offsetX === undefined ||
+      offsetY === undefined ||
+      scaleX === undefined ||
+      scaleY === undefined
+    ) {
+      return;
+    }
     const newRect = new Rect(rect);
     newRect.center = new Point((x - offsetX) / scaleX, (y - offsetY) / scaleY);
     constrainRect(newRect);

@@ -62,8 +62,6 @@ export const ICONMARGIN = 2;
  * ComboColor - A collection of CSS3 color/name items sorted by hue/value.
  */
 export function ComboColor(value, name?) {
-  Object();
-
   this.value = value;
   this.name = name;
 

@@ -243,8 +243,11 @@ export function StarDetector() {
       let i4 = i3 + size - 1;
       for (let j = 0; j < s2; ++j) {
         let dj = j + 0.5 - n2;
-        C[i1 - j] = C[i2 + j] = C[i3 + j] = C[i4 - j] =
-          di2 + dj * dj <= n22 ? 1 : 0;
+        C[i1 - j] =
+          C[i2 + j] =
+          C[i3 + j] =
+          C[i4 - j] =
+            di2 + dj * dj <= n22 ? 1 : 0;
       }
     }
     for (let i = 0; i < size; ++i) C[i * size + s2] = C[s2 * size + i] = 1;
@@ -545,7 +548,7 @@ export function StarDetector() {
                 let iy = Math.trunc(p.pos.y) | 0;
                 if (this.mask == undefined || this.mask.sample(ix, iy) != 0)
                   if (p.bkg == 0 || (p.norm - p.bkg) / p.bkg > this.sensitivity)
-                    if (wrk.sample(ix, iy) > 0.85 * p.peak) {
+                    if ((wrk.sample(ix, iy) as number) > 0.85 * p.peak) {
                       let m = Matrix.fromImage(wrk, r);
                       if (m.median() < this.peakResponse * p.peak)
                         S.push(new Star(p.pos, p.flux, p.size));

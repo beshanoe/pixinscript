@@ -1,0 +1,34 @@
+declare class Color {
+    static alpha(rgba: number): number;
+    static alphaF(rgba: number): Number;
+    static blue(rgba: number): number;
+    static blueF(rgba: number): Number;
+    static clearAlpha(rgba: number): number;
+    static clearBlue(rgba: number): number;
+    static clearGreen(rgba: number): number;
+    static clearRed(rgba: number): number;
+    static green(rgba: number): number;
+    static greenF(rgba: number): Number;
+    static hsiSaturation(rgba: number): Number;
+    static hsvSaturation(rgba: number): Number;
+    static hue(rgba: number): Number;
+    static isGray(rgba: number): Boolean;
+    static red(rgba: number): number;
+    static redF(rgba: number): Number;
+    static rgbColorToHexString(rgb: number): String;
+    static rgbaColor(r: number, g: number, b: number, a: number): number;
+    static rgbaColorF(r: Number, g: Number, b: Number, a: Number): number;
+    static rgbaColorToHexString(rgba: number): String;
+    static setAlpha(rgba: number, a: any): number;
+    static setBlue(rgba: number, b: any): number;
+    static setGreen(rgba: number, g: any): number;
+    static setRed(rgba: number, r: any): number;
+    static value(rgba: number): Number;
+    static readonly BLACK: number;
+    static readonly BLUE: number;
+    static readonly GRAY: number;
+    static readonly GREEN: number;
+    static readonly RED: number;
+    static readonly TRANSPARENT: number;
+    static readonly WHITE: number;
+}

@@ -16,6 +16,7 @@ import { TextAlign_Right, TextAlign_VertCenter } from "./TextAlign";
  * A label/edit compound control to edit numeric parameters.
  */
 export class NumericEdit extends Control {
+  __base__: any;
   value: number;
   lowerBound: number;
   upperBound: number;

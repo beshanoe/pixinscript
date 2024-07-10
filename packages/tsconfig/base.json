@@ -4,6 +4,7 @@
     "moduleResolution": "node",
     "target": "es5",
     "jsx": "react",
+    "allowJs": true,
     "noEmitOnError": true,
     "sourceMap": false,
     "declaration": true,
@@ -12,12 +13,12 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "noLib": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "types": [
-      "@pixinscript/core/types/lib.es5mod",
       "@pixinscript/core/types/globals",
       "@pixinscript/core/types/processes",
       "@pixinscript/core/types/typed-processes",
-      "@pixinscript/core/types/controls",
       "typescript/lib/lib.es2015.core",
       "typescript/lib/lib.es2015.collection",
       "typescript/lib/lib.es2015.iterable",
@@ -26,7 +27,7 @@
       "typescript/lib/lib.es2015.proxy",
       "typescript/lib/lib.es2015.reflect",
       "typescript/lib/lib.es2015.symbol",
-      "typescript/lib/lib.es2015.symbol.wellknown",
+      "typescript/lib/lib.es2015.symbol.wellknown"
     ]
   }
 }

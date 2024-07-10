@@ -54,6 +54,8 @@
  * Horizontal slider class
  */
 export class HorizontalSlider extends Slider {
+  __base__: any;
+
   constructor(parent?) {
     super();
     this.__base__ = Slider;
@@ -65,6 +67,8 @@ export class HorizontalSlider extends Slider {
  * Vertical slider class
  */
 export class VerticalSlider extends Slider {
+  __base__: any;
+  
   constructor(parent?) {
     super();
     this.__base__ = Slider;
