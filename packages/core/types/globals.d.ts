@@ -136,11 +136,6 @@ interface Console {
   warn(...args: any[]): void;
 }
 
-declare let jsStrictMode: boolean;
-declare const format: any;
-declare function gc(arg?: any): any;
-declare function processEvents(): any;
-
 declare function setTimeout<TArgs extends any[]>(
   callback: (...args: TArgs) => void,
   ms?: number,
