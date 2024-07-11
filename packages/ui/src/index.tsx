@@ -14,14 +14,6 @@ type SizerChildProps<Base> = Partial<Base> & {
   unscaledSpacing?: number;
 };
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      picontrol: { [key: string]: any; type: string };
-    }
-  }
-}
-
 export function useCombinedRefs<T = any>(...refs: React.ForwardedRef<any>[]) {
   const targetRef = React.useRef<T>(null);
 

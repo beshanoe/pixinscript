@@ -19,6 +19,7 @@
       "@pixinscript/core/types/globals",
       "@pixinscript/core/types/processes",
       "@pixinscript/core/types/typed-processes",
+      "@pixinscript/react/types",
       "typescript/lib/lib.es2015.core",
       "typescript/lib/lib.es2015.collection",
       "typescript/lib/lib.es2015.iterable",

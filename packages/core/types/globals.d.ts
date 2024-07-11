@@ -83,6 +83,7 @@
 /// <reference types="./globals/PointSurfaceSpline" />
 /// <reference types="./globals/Position" />
 /// <reference types="./globals/ProcessInstance" />
+/// <reference types="./globals/Promise" />
 /// <reference types="./globals/PushButton" />
 /// <reference types="./globals/QuadTreeNode" />
 /// <reference types="./globals/RANSACPointMatcher" />
@@ -139,5 +140,25 @@ declare let jsStrictMode: boolean;
 declare const format: any;
 declare function gc(arg?: any): any;
 declare function processEvents(): any;
-declare function setTimeout(cb: () => void, timeMs: number): number;
+
+declare function setTimeout<TArgs extends any[]>(
+  callback: (...args: TArgs) => void,
+  ms?: number,
+  ...args: TArgs
+): number;
+declare function setTimeout(
+  callback: (args: void) => void,
+  ms?: number
+): number;
 declare function clearTimeout(timerId: number): void;
+
+declare function setInterval<TArgs extends any[]>(
+  callback: (...args: TArgs) => void,
+  ms?: number,
+  ...args: TArgs
+): number;
+declare function setInterval(
+  callback: (args: void) => void,
+  ms?: number
+): number;
+declare function clearInterval(timerId: number): void;
