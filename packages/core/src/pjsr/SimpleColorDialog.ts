@@ -57,13 +57,29 @@ import { NumericControl } from "./NumericControl";
 
 // ----------------------------------------------------------------------------
 
+export interface SimpleColorDialog extends Dialog {
+  constructor(color?: number);
+
+  alphaEnabled: Boolean;
+  color: number;
+  grayscale: Boolean;
+}
+
+export interface SimpleColorDialogConstructor {
+  new (color?: number): SimpleColorDialog;
+  prototype: Dialog;
+}
+
 /*
  * SimpleColorDialog
  *
  * A modal dialog with three edit/slider compound controls and a color sample,
  * useful for selection of 32-bit ARGB colors.
  */
-export function SimpleColorDialog(color) {
+// @ts-ignore
+export var SimpleColorDialog: SimpleColorDialogConstructor = function (
+  color?: number
+) {
   this.__base__ = Dialog;
   this.__base__();
 
@@ -210,7 +226,7 @@ export function SimpleColorDialog(color) {
   this.adjustToContents();
   this.userResizable = true;
   this.setFixedHeight();
-}
+};
 
 SimpleColorDialog.prototype = new Dialog();
 

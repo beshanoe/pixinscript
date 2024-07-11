@@ -84,7 +84,44 @@ import { QuadTreeNode } from "./QuadTreeNode";
  * 2. Hanan Samet, Foundations of Multidimensional and Metric Data Structures,
  *    Morgan Kaufmann, 2006, Section 3.4.
  */
-export function BRQuadTree(objects, bucketCapacity) {
+
+interface BRQuadTree {
+  bucketCapacity: number;
+  objects: Array<any>;
+  root: QuadTreeNode;
+
+  avgDist(rect: Rect, dx: number, dy: number, excludeRect?: Rect): number;
+  build(objects: Array<any>, bucketCapacity?: number, rect?: Rect): void;
+  clear(): void;
+  height(): number;
+  insert(obj: Object): void;
+  isEmpty(): boolean;
+  isTree(): boolean;
+  leafNodeAt(point: Point): QuadTreeNode;
+  minDist(rect: Rect, dx: number, dy: number, excludeRect?: Rect): number;
+  nodeAt(point: Point): QuadTreeNode;
+  numberOfLeafNodes(): number;
+  numberOfNodes(): number;
+  regenerate(bucketCapacity?: number, rect?: Rect): void;
+  remove(obj: Object): void;
+  removeAtPoint(point: Point): void;
+  removeAtRect(rect: Rect): void;
+  search(rect: Rect): Array<any>;
+  searchWithCallback(rect: Rect, callback: Function, data?: Object): void;
+  traverse(callback: Function): void;
+}
+
+export interface BRQuadTreeConstructor {
+  new (objects?: Array<any>, bucketCapacity?: number): BRQuadTree;
+
+  prototype: Object;
+}
+
+//@ts-ignore
+export var BRQuadTree: BRQuadTreeConstructor = function (
+  objects,
+  bucketCapacity
+) {
   this.__base__ = Object;
   this.__base__();
 
@@ -93,7 +130,7 @@ export function BRQuadTree(objects, bucketCapacity) {
    */
 
   function newRect(x0, y0, x1, y1) {
-    return { x0: x0, y0: y0, x1: x1, y1: y1 };
+    return new Rect(x0, y0, x1, y1);
   }
 
   function orderedRect(r) {
@@ -588,7 +625,7 @@ export function BRQuadTree(objects, bucketCapacity) {
   this.insert = function (object) {
     let i = this.objects.length;
     this.objects.push(object);
-    if (this.root == null) this.root = new QuadTreeNode();
+    if (this.root == null) this.root = new QuadTreeNode(new Rect());
     this.insertTree(i, this.root);
   };
 
@@ -842,7 +879,7 @@ export function BRQuadTree(objects, bucketCapacity) {
   this.objects = [];
 
   if (objects) this.build(objects);
-}
+};
 
 BRQuadTree.prototype = new Object();
 

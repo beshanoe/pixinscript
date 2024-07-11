@@ -70,7 +70,37 @@ import { TextAlign_Left, TextAlign_VertCenter } from "./TextAlign";
 export const collapse_icon = ":/process-interface/contract-vert.png";
 export const expand_icon = ":/process-interface/expand-vert.png";
 
-export function SectionBar(parent, title, collapsible) {
+export interface SectionBar {
+  checkBox: CheckBox;
+  section: Control;
+
+  onCheckSection(bar: SectionBar): void;
+  onToggleSection(bar: SectionBar, toggleBegin: Boolean): void;
+
+  enableCheckBox(): void;
+  hasCheckBox(): Boolean;
+  hasSection(): Boolean;
+  isChecked(): Boolean;
+  isCollapsed(): Boolean;
+  isExpanded(): Boolean;
+  setSection(section: Control): void;
+  setTitle(title: String): void;
+  title(): String;
+  toggleSection(): void;
+  updateSection(): void;
+}
+
+export interface SectionBarConstructor {
+  new (parent?: Control, title?: string, collapsible?: boolean): SectionBar;
+  prototype: Control;
+}
+
+// @ts-ignore
+export var SectionBar: SectionBarConstructor = function (
+  parent?: Control,
+  title?: string,
+  collapsible?: boolean
+) {
   this.__base__ = Control;
   if (parent) this.__base__(parent);
   else this.__base__();
@@ -274,7 +304,7 @@ export function SectionBar(parent, title, collapsible) {
         this.isExpanded() ? collapse_icon : expand_icon
       );
   };
-}
+};
 
 SectionBar.prototype = new Control();
 

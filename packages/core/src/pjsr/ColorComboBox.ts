@@ -327,6 +327,23 @@ ComboColor.searchColor = function (rgba) {
 
 // ----------------------------------------------------------------------------
 
+export interface ColorComboBox extends ComboBox {
+  customRGBA: number;
+
+  onColorSelected: (rgba: number) => void;
+  onCurrentColorChanged: (rgba: number) => void;
+
+  colorForIndex(index: number): number;
+  currentColor(): number;
+  setCurrentColor(rgba: number): void;
+}
+
+export interface ColorComboBoxConstructor {
+  new (parent?: Control): ColorComboBox;
+
+  prototype: ComboBox;
+}
+
 /*
  * ColorComboBox
  *
@@ -344,7 +361,8 @@ ComboColor.searchColor = function (rgba) {
  * defined for each ColorComboBox object. The custom color item is managed
  * automatically by the object and appended after the list of standard items.
  */
-export function ColorComboBox(parent) {
+// @ts-ignore
+export var ColorComboBox: ColorComboBoxConstructor = function (parent) {
   this.__base__ = ComboBox;
   if (parent) this.__base__(parent);
   else this.__base__();
@@ -418,7 +436,7 @@ export function ColorComboBox(parent) {
   this.onItemSelected = function (index) {
     if (this.onColorSelected) this.onColorSelected(this.colorForIndex(index));
   };
-}
+};
 
 ColorComboBox.prototype = new ComboBox();
 

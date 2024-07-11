@@ -50,10 +50,34 @@
 // POSSIBILITY OF SUCH DAMAGE.
 // ----------------------------------------------------------------------------
 
+export interface QuadTreeNode {
+  index: Array<any>;
+  ne: QuadTreeNode;
+  nw: QuadTreeNode;
+  rect: Rect;
+  se: QuadTreeNode;
+  sw: QuadTreeNode;
+
+  includes(point: Point): boolean;
+  intersects(rect: Rect): boolean;
+  isLeaf(): boolean;
+  neRect(): Rect;
+  nwRect(): Rect;
+  seRect(): Rect;
+  swRect(): Rect;
+}
+
+export interface QuadTreeNodeConstructor {
+  new (rect: Rect, index?: Array<any>): QuadTreeNode;
+
+  prototype: Object;
+}
+
 /*
  * Quadtree node structure.
  */
-export function QuadTreeNode(rect?, index?) {
+// @ts-ignore
+export var QuadTreeNode: QuadTreeNodeConstructor = function (rect, index) {
   this.__base__ = Object;
   this.__base__();
 
@@ -164,7 +188,7 @@ export function QuadTreeNode(rect?, index?) {
       y1: this.rect.y1,
     };
   };
-}
+};
 
 QuadTreeNode.prototype = new Object();
 

@@ -104,10 +104,38 @@ export function Star(pos, flux, size) {
   this.size = size;
 }
 
+export interface StarDetector {
+  bkgDelta: number;
+  hotPixelFilterRadius: number;
+  invert: boolean;
+  mask: Image;
+  maxDistortion: number;
+  noiseReductionFilterRadius: number;
+  peakResponse: number;
+  sensitivity: number;
+  structureLayers: number;
+  upperLimit: number;
+  xyStretch: number;
+
+  progressCallback(count: number, total: number): boolean;
+
+  getStructureMap(map: Image): void;
+
+  stars(image: Image): Array<any>;
+
+  test(image: Image, createStarMaskWindow?: boolean): void;
+}
+
+export interface StarDetectorConstructor {
+  new (): StarDetector;
+  prototype: Object;
+}
+
 /*
  * Star detection engine
  */
-export function StarDetector() {
+// @ts-ignore
+export var StarDetector: StarDetectorConstructor = function () {
   this.__base__ = Object;
   this.__base__();
 
@@ -680,7 +708,7 @@ export function StarDetector() {
       w.zoomToFit();
     }
   };
-}
+};
 
 StarDetector.prototype = new Object();
 
