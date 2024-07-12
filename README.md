@@ -77,8 +77,10 @@ render(<ScriptDialog />, {
     userResizable: false,
   },
 });
-
 ```
+
+![image](https://github.com/user-attachments/assets/f49cae24-e017-4b62-8a56-928d59e02caf)
+
 
 ### Running the Script
 
