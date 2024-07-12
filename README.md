@@ -37,34 +37,47 @@ PixInScript is a new tool designed to modernize the development of PixInsight sc
 Here is an example of a simple "Hello World" script using PixInScript:
 
 ```javascript
-import React from "react";
+import React, { useState } from "react";
 import { render, useDialog } from "@pixinscript/react";
-import { UILabel, UIPushButton, UIVerticalSizer } from "@pixinscript/ui";
+import {
+  UIHorizontalSizer,
+  UILabel,
+  UIPushButton,
+  UIVerticalSizer,
+} from "@pixinscript/ui";
 
 function ScriptDialog() {
   const dialog = useDialog();
-  const [isVisible, setIsVisible] = React.useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [count, setCount] = useState(0);
 
   return (
     <UIVerticalSizer margin={8} spacing={8}>
       {isVisible && <UILabel text="Hello World!" />}
+      <UILabel text={`Count: ${count}`} />
       <UIPushButton
         text={isVisible ? "Hide message" : "Show message"}
         onClick={() => setIsVisible(!isVisible)}
       />
+      <UIHorizontalSizer spacing={8}>
+        <UIPushButton text="+" onClick={() => setCount(count + 1)} />
+        <UIPushButton text="-" onClick={() => setCount(count - 1)} />
+      </UIHorizontalSizer>
       <UIPushButton text="Close window" onClick={() => dialog.ok()} />
     </UIVerticalSizer>
   );
 }
 
+searchDirectory
 render(<ScriptDialog />, {
   dialog: {
     windowTitle: "Hello World Script",
     minWidth: 400,
     maxHeight: 300,
-    userResizable: false
+    userResizable: false,
   },
 });
+
 ```
 
 ### Running the Script
@@ -83,6 +96,10 @@ The PixInScript library is still evolving. Here are some ongoing efforts and fut
 - **Type Definitions**: Full migration of available objects and processes into TypeScript declarations is ongoing. Community contributions are welcome to enhance type definitions.
 - **UI Components**: Rewriting PixInsight primitive UI components into React components is in progress.
 - **Documentation**: Currently, the project lacks comprehensive documentation or guides. Contributions in this area are highly appreciated.
+
+## Acknowledgements
+
+Thanks to https://github.com/TheAmazingLooser for the initial work on the PixInsight TypeScript definitions. I've used the types for the PixInsight processes from this repository https://github.com/TheAmazingLooser/PixInsight_TypeScript_Definitions.
 
 ## Contributing
 
