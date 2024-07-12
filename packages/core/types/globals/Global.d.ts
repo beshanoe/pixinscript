@@ -38,7 +38,6 @@ const pclVersionBuild: number;
 const pclVersionMajor: number;
 const pclVersionMinor: number;
 const pclVersionRelease: number;
-const undefined;
 
 declare function cerr(text: string): void;
 declare function cflush(): void;
