@@ -1,7 +1,7 @@
 {
   "name": "star-de-emphasizer",
   "private": "true",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -15,14 +15,14 @@
     }
   },
   "dependencies": {
-    "@pixinscript/cli": "^0.1.3",
-    "@pixinscript/core": "^0.1.2",
-    "@pixinscript/react": "^0.1.2",
-    "@pixinscript/ui": "^0.1.2",
+    "@pixinscript/cli": "^0.2.0",
+    "@pixinscript/core": "^0.2.0",
+    "@pixinscript/react": "^0.2.0",
+    "@pixinscript/ui": "^0.2.0",
     "react": "^18.3.1"
   },
   "devDependencies": {
-    "@pixinscript/typescript-config": "^0.0.5",
+    "@pixinscript/typescript-config": "^0.2.0",
     "@types/react": "^18.3.3"
   }
 }

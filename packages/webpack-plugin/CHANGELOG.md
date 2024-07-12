@@ -1,5 +1,11 @@
 # @pixinscript/webpack-plugin
 
+## 0.2.0
+
+### Patch Changes
+
+- Updated all global types
+
 ## 0.1.3
 
 ### Patch Changes

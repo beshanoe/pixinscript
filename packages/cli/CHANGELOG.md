@@ -1,5 +1,16 @@
 # @pixinscript/cli
 
+## 0.2.0
+
+### Patch Changes
+
+- Updated all global types
+- Updated dependencies [12ee1c4]
+- Updated dependencies
+  - @pixinscript/core@0.2.0
+  - @pixinscript/ui@0.2.0
+  - @pixinscript/webpack-plugin@0.2.0
+
 ## 0.1.3
 
 ### Patch Changes

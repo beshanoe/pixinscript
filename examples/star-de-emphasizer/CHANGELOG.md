@@ -1,5 +1,17 @@
 # star-de-emphasizer
 
+## 0.2.3
+
+### Patch Changes
+
+- Updated all global types
+- Updated dependencies [12ee1c4]
+- Updated dependencies
+  - @pixinscript/core@0.2.0
+  - @pixinscript/cli@0.2.0
+  - @pixinscript/react@0.2.0
+  - @pixinscript/ui@0.2.0
+
 ## 0.2.2
 
 ### Patch Changes

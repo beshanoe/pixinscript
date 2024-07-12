@@ -1,5 +1,15 @@
 # @pixinscript/core
 
+## 0.2.0
+
+### Minor Changes
+
+- 12ee1c4: Added actual types from PI docs and update PJSR types
+
+### Patch Changes
+
+- Updated all global types
+
 ## 0.1.2
 
 ### Patch Changes

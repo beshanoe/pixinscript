@@ -1,5 +1,14 @@
 # @pixinscript/react
 
+## 0.2.0
+
+### Patch Changes
+
+- Updated all global types
+- Updated dependencies [12ee1c4]
+- Updated dependencies
+  - @pixinscript/core@0.2.0
+
 ## 0.1.2
 
 ### Patch Changes

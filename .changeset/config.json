@@ -2,7 +2,7 @@
   "$schema": "https://unpkg.com/@changesets/config@1.5.0/schema.json",
   "changelog": "@changesets/cli/changelog",
   "commit": false,
-  "linked": [],
+  "linked": [["@pixinscript/*"]],
   "access": "public",
   "baseBranch": "master",
   "updateInternalDependencies": "patch",

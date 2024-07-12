@@ -1,5 +1,11 @@
 # @pixinscript/typescript-config
 
+## 0.2.0
+
+### Patch Changes
+
+- Updated all global types
+
 ## 0.0.5
 
 ### Patch Changes
