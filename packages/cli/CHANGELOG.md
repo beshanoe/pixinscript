@@ -1,5 +1,15 @@
 # @pixinscript/cli
 
+## 0.2.1
+
+### Patch Changes
+
+- fix possible memory leaks
+- Updated dependencies
+  - @pixinscript/core@0.2.1
+  - @pixinscript/ui@0.2.1
+  - @pixinscript/webpack-plugin@0.2.1
+
 ## 0.2.0
 
 ### Patch Changes

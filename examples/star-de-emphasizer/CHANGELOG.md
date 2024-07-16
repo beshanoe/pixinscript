@@ -1,5 +1,16 @@
 # star-de-emphasizer
 
+## 0.2.4
+
+### Patch Changes
+
+- fix possible memory leaks
+- Updated dependencies
+  - @pixinscript/cli@0.2.1
+  - @pixinscript/core@0.2.1
+  - @pixinscript/react@0.2.1
+  - @pixinscript/ui@0.2.1
+
 ## 0.2.3
 
 ### Patch Changes

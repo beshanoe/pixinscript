@@ -1,5 +1,11 @@
 # @pixinscript/typescript-config
 
+## 0.2.1
+
+### Patch Changes
+
+- fix possible memory leaks
+
 ## 0.2.0
 
 ### Patch Changes

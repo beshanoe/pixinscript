@@ -1,5 +1,13 @@
 # @pixinscript/ui
 
+## 0.2.1
+
+### Patch Changes
+
+- fix possible memory leaks
+- Updated dependencies
+  - @pixinscript/core@0.2.1
+
 ## 0.2.0
 
 ### Patch Changes
