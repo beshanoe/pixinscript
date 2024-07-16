@@ -4,6 +4,8 @@ import "core-js/modules/es.object.assign";
 import "core-js/modules/es.promise";
 import "core-js/modules/es.symbol";
 
+jsAutoGC = true;
+
 console.log = (...args) => console.writeln(args.join(" "));
 console.warn = console.warning;
 console.error = console.critical;

@@ -53,26 +53,20 @@
 /*
  * Horizontal sizer class
  */
-export class HorizontalSizer extends Sizer {
-  __base__: any;
-  constructor() {
-    super();
-    this.__base__ = Sizer;
-    this.__base__(false);
-  }
+export function HorizontalSizer() {
+  this.__base__ = Sizer;
+  this.__base__(false);
 }
+HorizontalSizer.prototype = new Sizer();
 
 /*
  * Vertical sizer class
  */
-export class VerticalSizer extends Sizer {
-  __base__: any;
-  constructor() {
-    super();
-    this.__base__ = Sizer;
-    this.__base__(true);
-  }
+export function VerticalSizer() {
+  this.__base__ = Sizer;
+  this.__base__(true);
 }
+VerticalSizer.prototype = new Sizer();
 
 /*
  * Sizer item alignment
