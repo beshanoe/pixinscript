@@ -1,6 +1,6 @@
 {
   "name": "@pixinscript/cli",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "main": "dist/index.js",
   "license": "MIT",
   "bin": {
@@ -16,6 +16,8 @@
     "@pixinscript/core": "^0.2.1",
     "@pixinscript/ui": "^0.2.1",
     "@pixinscript/webpack-plugin": "^0.2.1",
+    "@types/archiver": "^6.0.3",
+    "archiver": "^7.0.1",
     "babel-loader": "^8.2.2",
     "commander": "^12.1.0",
     "cosmiconfig": "^9.0.0",

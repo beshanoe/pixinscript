@@ -1,7 +1,7 @@
 {
   "name": "star-de-emphasizer",
   "private": "true",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -15,7 +15,7 @@
     }
   },
   "dependencies": {
-    "@pixinscript/cli": "^0.2.1",
+    "@pixinscript/cli": "^0.3.0",
     "@pixinscript/core": "^0.2.1",
     "@pixinscript/react": "^0.2.1",
     "@pixinscript/ui": "^0.2.1",

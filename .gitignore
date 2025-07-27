@@ -2,3 +2,4 @@ node_modules
 packages/*/dist
 examples/*/dist
 .turbo
+CLAUDE.md

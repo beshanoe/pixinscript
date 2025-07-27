@@ -91,6 +91,45 @@ render(<ScriptDialog />, {
 
 2. Load the compiled script into PixInsight.
 
+### CLI Commands
+
+The PixInScript CLI provides several commands for building and packaging scripts:
+
+- **Build with ZIP (default)**:
+    ```sh
+    pixinscript build
+    ```
+    Compiles the script and creates a ZIP archive ready for PixInsight.
+
+- **Build without ZIP**:
+    ```sh
+    pixinscript build --no-zip
+    ```
+    Compiles the script without creating a ZIP archive. Useful for scripts that require code signing.
+
+- **Create ZIP archive**:
+    ```sh
+    pixinscript zip
+    pixinscript zip -f custom-name.zip -p "scripts/"
+    ```
+    Creates a ZIP archive from the dist folder with optional custom filename and internal path structure.
+
+### Workflow for Signed Scripts
+
+For scripts that require code signing:
+
+1. Build without ZIP:
+    ```sh
+    pixinscript build --no-zip
+    ```
+
+2. Sign the `dist/script.js` file using your signing tools
+
+3. Create the final ZIP archive:
+    ```sh
+    pixinscript zip -f signed-script.zip -p "pixinsight/"
+    ```
+
 ## Current State and Future Plans
 
 The PixInScript library is still evolving. Here are some ongoing efforts and future plans:

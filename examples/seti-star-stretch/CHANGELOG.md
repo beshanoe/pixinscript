@@ -1,5 +1,12 @@
 # sandbox-script
 
+## 1.0.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @pixinscript/cli@0.3.0
+
 ## 1.0.3
 
 ### Patch Changes

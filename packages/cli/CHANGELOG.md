@@ -1,5 +1,16 @@
 # @pixinscript/cli
 
+## 0.3.0
+
+### Minor Changes
+
+- Add --no-zip flag and separate zip command for flexible script packaging
+
+  - Add --no-zip flag to build command for scripts requiring separate code signing
+  - Add new 'zip' command to create ZIP archives with configurable filename and internal path structure
+  - Replace webpack-based ZIP creation with archiver library for better performance
+  - Support for signing workflow: build → sign → zip
+
 ## 0.2.1
 
 ### Patch Changes
