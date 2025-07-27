@@ -1,5 +1,11 @@
 # @pixinscript/cli
 
+## 0.3.1
+
+### Patch Changes
+
+- Made build command output verbose error
+
 ## 0.3.0
 
 ### Minor Changes

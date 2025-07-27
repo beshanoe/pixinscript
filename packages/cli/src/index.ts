@@ -35,8 +35,8 @@ export async function build(
       }),
       (err, stats) => {
         if (err || stats?.hasErrors()) {
-          console.error(err);
-          reject(err);
+          console.error(stats.toString());
+          reject(new Error('Compilation failed with errors'));
           return;
         }
 
